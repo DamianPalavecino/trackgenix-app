@@ -13,9 +13,13 @@ function Tasks() {
       });
   }, []);
 
+  const deleteTask = (id) => {
+    saveTasks([...tasks.filter((newListItem) => newListItem._id !== id)]);
+  };
+
   return (
     <div>
-      <Table tasks={tasks} saveTasks={saveTasks} />
+      <Table tasks={tasks} saveTasks={saveTasks} deleteTask={deleteTask} />
     </div>
   );
 }
