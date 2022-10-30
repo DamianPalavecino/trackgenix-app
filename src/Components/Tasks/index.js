@@ -1,10 +1,22 @@
-import styles from './tasks.module.css';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import Table from './Table/table';
 
 function Tasks() {
+  const [tasks, saveTasks] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+      .then((response) => response.json())
+      .then((response) => {
+        saveTasks(response.data);
+      });
+  }, []);
+
   return (
-    <section className={styles.container}>
-      <h2>Tasks</h2>
-    </section>
+    <div>
+      <Table tasks={tasks} saveTasks={saveTasks} />
+    </div>
   );
 }
 
