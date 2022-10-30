@@ -2,13 +2,7 @@ import React from 'react';
 import DeleteButton from '../DeleteButton/deleteButton';
 import styles from './row.module.css';
 
-const Row = ({ task, deleteTask }) => {
-  const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    });
-    deleteTask(id);
-  };
+const Row = ({ task, handleDelete }) => {
   return (
     <tr className={styles.row}>
       <td>{task.description}</td>

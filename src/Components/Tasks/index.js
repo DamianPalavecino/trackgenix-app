@@ -13,13 +13,16 @@ function Tasks() {
       });
   }, []);
 
-  const deleteTask = (id) => {
+  const handleDelete = (id) => {
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'DELETE'
+    });
     saveTasks([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
   return (
     <div>
-      <Table tasks={tasks} saveTasks={saveTasks} deleteTask={deleteTask} />
+      <Table tasks={tasks} handleDelete={handleDelete} />
     </div>
   );
 }
