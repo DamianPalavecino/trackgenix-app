@@ -2,7 +2,7 @@ import React from 'react';
 import Row from '../Row/row';
 import styles from './table.module.css';
 
-const Table = ({ tasks, handleDelete }) => {
+const Table = ({ tasks, openModal }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -14,7 +14,7 @@ const Table = ({ tasks, handleDelete }) => {
       </thead>
       <tbody>
         {tasks.map((task) => {
-          return <Row key={task._id} task={task} handleDelete={handleDelete} />;
+          return <Row key={task._id} task={task} openModal={openModal} />;
         })}
       </tbody>
     </table>

@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './delete-button.module.css';
 
-const DeleteButton = ({ task, handleDelete }) => {
+const DeleteButton = ({ openModal }) => {
   return (
-    <button onClick={() => handleDelete(task._id)} className={styles.deleteButton}>
+    <button onClick={openModal} className={styles.deleteButton}>
       X
     </button>
   );
