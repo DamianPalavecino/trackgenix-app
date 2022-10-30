@@ -7,14 +7,19 @@ const Modal = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <h3>Modal</h3>
-        <button onClick={props.closeModal}>Close</button>
+        <h3>Are you sure?</h3>
+        <p>Are you going to delete task {props.task.description}. Please confirm</p>
+        <button className={styles.buttonClose} onClick={props.closeModal}>
+          Cancel
+        </button>
         <button
+          className={styles.buttonConfirm}
           onClick={() => {
-            props.handleDelete(props.tasks[0]._id);
+            props.handleDelete(props.task._id);
+            props.closeModal;
           }}
         >
-          Delete
+          Confirm
         </button>
       </div>
     </div>
