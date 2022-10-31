@@ -5,3 +5,27 @@
   align-items: center;
   flex-direction: column;
 }
+
+.addButton {
+  background-color: #AACE9B;;
+  color: #373867;
+  border-style: none;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
+}
+
+.addButton:hover {
+  background-color: white;
+  color: #373867;
+  border-style: solid;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 30px;
+  height: 60px;
+  width: 60px;
+}
