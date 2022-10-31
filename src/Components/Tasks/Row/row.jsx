@@ -26,6 +26,9 @@ const Row = ({ task, handleDelete }) => {
           showModal={showModal}
           handleDelete={handleDelete}
         />
+        <a href={`tasks/form`}>
+          <button className={styles.editButton}>Edit</button>
+        </a>
       </td>
     </tr>
   );

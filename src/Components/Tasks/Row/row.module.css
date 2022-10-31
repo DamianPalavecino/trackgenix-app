@@ -8,3 +8,21 @@
   border-bottom: 1px solid #707070;
   color: #373867
 }
+
+.editButton {
+  background-color: #373867;
+  color: white;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 2px;
+}
+
+.editButton:hover {
+  background-color: white;
+  color: #373867;
+  font-weight: 800;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 2px;
+}

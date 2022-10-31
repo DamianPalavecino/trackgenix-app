@@ -17,6 +17,9 @@ const Modal = (props) => {
           onClick={() => {
             props.handleDelete(props.task._id);
             props.closeModal;
+            setTimeout(function () {
+              alert(`${props.task.description} deleted successfully!`);
+            }, 200);
           }}
         >
           Confirm
