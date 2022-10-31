@@ -1,4 +1,4 @@
-import styles from './modal.module.css';
+import styles from './modal-delete.module.css';
 
 const Modal = (props) => {
   if (!props.showModal) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DeleteButton from '../DeleteButton/deleteButton';
-import Modal from '../Modal/modal-delete';
+import Modal from '../ModalDelete/modalDelete';
 import styles from './row.module.css';
 
 const Row = ({ task, handleDelete }) => {
@@ -22,7 +22,6 @@ const Row = ({ task, handleDelete }) => {
         <DeleteButton openModal={openModal} />
         <Modal
           task={task}
-          openModal={openModal}
           closeModal={closeModal}
           showModal={showModal}
           handleDelete={handleDelete}

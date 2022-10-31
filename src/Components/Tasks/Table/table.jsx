@@ -22,11 +22,6 @@ const Table = ({ tasks, handleDelete }) => {
         )}
       </tbody>
     </table>
-    // {tasks === undefined || tasks.length === 0 ? (
-    //   <h3 className={styles.container}>There are no tasks yet!</h3>
-    // ) : (
-    //   <Table tasks={tasks} handleDelete={handleDelete} />
-    // )}
   );
 };
 

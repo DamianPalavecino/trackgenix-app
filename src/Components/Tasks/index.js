@@ -21,10 +21,6 @@ function Tasks() {
     saveTasks([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
-  // if (tasks === undefined) {
-  //   return <h3 className={styles.container}>There are no tasks yet!</h3>;
-  // }
-
   return (
     <div className={styles.container}>
       <h2>Tasks</h2>
