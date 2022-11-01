@@ -1,14 +1,32 @@
 import styles from './modal.module.css';
 
-function Modal({ project, handleDelete, type, showModal, closeModal }) {
+const Modal = ({ project, handleDelete, type, showModal, closeModal }) => {
   if (!showModal) {
     return null;
+  }
+
+  if (type === 'success') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.successModal}>
+          <h3>Project deleted succesfully</h3>
+          <button className={styles.buttonOk} onClick={closeModal}>
+            OK
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (type === 'employees') {
     return (
       <div className={styles.container}>
-        <div className={styles.modal}>
+        <div className={styles.employeeModal}>
+          <h3>Employee List</h3>
+          <tr>
+            <td>Rate</td>
+            <td>Role</td>
+          </tr>
           {project.employees.map((employee) => {
             return (
               <tr key={employee.employeeId}>
@@ -18,7 +36,7 @@ function Modal({ project, handleDelete, type, showModal, closeModal }) {
             );
           })}
           <button className={styles.buttonClose} onClick={closeModal}>
-            Cancel
+            Done
           </button>
         </div>
       </div>
@@ -46,6 +64,6 @@ function Modal({ project, handleDelete, type, showModal, closeModal }) {
       </div>
     );
   }
-}
+};
 
 export default Modal;

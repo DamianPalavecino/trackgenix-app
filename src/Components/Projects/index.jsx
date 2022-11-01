@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Modal from './modal';
 import styles from './projects.module.css';
 
-function Projects() {
+const Projects = () => {
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalType, changeModalType] = useState('');
@@ -20,11 +20,11 @@ function Projects() {
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'DELETE'
     });
-    saveProjects(projects.filter((projects) => projects._id !== id));
+    saveProjects(projects.filter((project) => project._id !== id));
     closeModal();
     setTimeout(() => {
-      alert('Project deleted successfully');
-    }, '1000');
+      openModal({}, 'success');
+    }, '500');
   };
 
   const openModal = (obj, type) => {
@@ -40,31 +40,32 @@ function Projects() {
   return (
     <div className={styles.container}>
       <h2>Projects</h2>
-      <button>Add new Project</button>
-      {projects === undefined || projects.length === 0 ? (
-        <p>There are no projects</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Status</th>
-              <th>Client</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <Modal
-              project={modalObject}
-              handleDelete={handleDelete}
-              type={modalType}
-              showModal={showModal}
-              closeModal={closeModal}
-            />
-            {projects.map((project) => {
+      <a href="/projects/form">
+        <button>Add new Project</button>
+      </a>
+      <table className={styles.table}>
+        <thead className={styles.thead}>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Client</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody className={styles.tbody}>
+          <Modal
+            project={modalObject}
+            handleDelete={handleDelete}
+            type={modalType}
+            showModal={showModal}
+            closeModal={closeModal}
+          />
+          {projects === undefined && <p>There are no projects</p>}
+          {projects !== undefined &&
+            projects.map((project) => {
               return (
                 <tr key={project._id}>
                   <td>{project.name}</td>
@@ -74,28 +75,29 @@ function Projects() {
                   <td>{project.status ? 'Active' : 'Inactive'}</td>
                   <td>{project.clientName}</td>
                   <button
+                    className={styles.button}
                     onClick={() => {
                       openModal(project, 'delete');
                     }}
                   >
                     Delete
                   </button>
-                  <button>Edit</button>
+                  <button className={styles.button}>Edit</button>
                   <button
+                    className={styles.button}
                     onClick={() => {
                       openModal(project, 'employees');
                     }}
                   >
-                    See Employees
+                    Employees
                   </button>
                 </tr>
               );
             })}
-          </tbody>
-        </table>
-      )}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
 
 export default Projects;
