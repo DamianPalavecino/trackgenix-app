@@ -1,9 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import List from './List/List';
+import styles from './super-admins.module.css';
 
 function SuperAdmins() {
-  const [list, adminsList] = useState([]);
+  const [admin, adminsList] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
@@ -13,7 +14,19 @@ function SuperAdmins() {
       });
   }, []);
 
-  return <List list={list} adminsList={adminsList} />;
+  const handleDelete = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'DELETE'
+    });
+    adminsList([...admin.filter((admin) => admin._id !== id)]);
+  };
+
+  return (
+    <div className={styles.container}>
+      <h3>Admins List</h3>
+      <List admin={admin} handleDelete={handleDelete} />
+    </div>
+  );
 }
 
 export default SuperAdmins;

@@ -1,26 +1,25 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
-import './list.module.css';
+import styles from './list.module.css';
 
-const List = ({ list }) => {
+const List = ({ admin, handleDelete }) => {
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map((admin) => {
-            return <ListItem key={admin._id} admin={admin} />;
-          })}
-        </tbody>
-      </table>
-    </div>
+    <table className={styles.table}>
+      <thead className={styles.thead}>
+        <tr className={styles.tr}>
+          <th>Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {admin.map((admin) => {
+          return <ListItem key={admin._id} admin={admin} handleDelete={handleDelete} />;
+        })}
+      </tbody>
+    </table>
   );
 };
 

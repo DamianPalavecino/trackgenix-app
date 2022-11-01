@@ -1,18 +1,17 @@
-table {
+.table {
     margin: 20px auto;
     width: 600px;
     border: 1px solid black;
     border-radius: 5px;
 }
 
-tr {
+.tr {
     display: flex;
     justify-content: space-around;
     margin: 15px;
 }
 
 
-thead {
+.thead {
     background-color: rgba(55, 56, 103, 0.1);
-    font-weight: bold;
 }

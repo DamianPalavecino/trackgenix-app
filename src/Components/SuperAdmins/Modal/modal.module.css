@@ -1,0 +1,39 @@
+.container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal {
+    width: 300px;
+    height: 180px;
+    background-color: white;
+    border-radius: 5px;
+    border: solid 1px grey;
+    margin: auto;
+    padding: 20px;
+    margin-top: 200px;
+}
+
+.cancel {
+    margin: 5px 5px 5px 125px;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.delete {
+    margin: 5px;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #F13312;
+    background-color: #F13312;
+    color: white;
+}
