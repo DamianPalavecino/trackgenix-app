@@ -1,10 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './tasks.module.css';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
     description: ''
   });
+
+  useEffect(async () => {
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get('id');
+    if (taskId !== null) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
+        const data = await response.json();
+        setInputValue({
+          description: data.data.description
+        });
+      } catch (err) {
+        setTimeout(() => {
+          alert('There is no task with id provided');
+        }, 10);
+      }
+    }
+  }, []);
 
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -15,23 +33,45 @@ const Form = () => {
   };
 
   const onSubmit = () => {
-    const postOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(inputValue)
-    };
-    const url = `${process.env.REACT_APP_API_URL}/tasks`;
-    fetch(url, postOptions).then(async (response) => {
-      if (response.status !== 200 && response.status !== 201) {
-        const { message } = await response.json();
-        alert(message);
-      } else {
-        alert('Task was created successfully');
-        redirect();
-      }
-    });
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get('id');
+    if (taskId !== null) {
+      const putOptions = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputValue)
+      };
+      const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
+      fetch(url, putOptions).then(async (response) => {
+        if (response.status !== 200 && response.status !== 201) {
+          const { message } = await response.json();
+          alert(message);
+        } else {
+          alert('Task was successfully edited');
+          redirect();
+        }
+      });
+    } else {
+      const postOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputValue)
+      };
+      const url = `${process.env.REACT_APP_API_URL}/tasks`;
+      fetch(url, postOptions).then(async (response) => {
+        if (response.status !== 200 && response.status !== 201) {
+          const { message } = await response.json();
+          alert(message);
+        } else {
+          alert('Task was created successfully');
+          redirect();
+        }
+      });
+    }
   };
   return (
     <div className={styles.container}>
