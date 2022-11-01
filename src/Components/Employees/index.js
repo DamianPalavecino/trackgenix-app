@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import styles from './list.module.css';
 import Modal from './Modal';
 import Trash from './Icon-awesome-trash.png';
+import Edit from './Icon-edit-employee.png';
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
+  const [showModalEdit, setModalEdit] = useState(false);
   const [checkedEmployees, setCheckedEmployees] = useState([]);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ function Employees() {
 
   const closeModal = () => {
     setModal(false);
+    setModalEdit(false);
   };
 
   const employeesToDelete = (evt) => {
@@ -76,6 +79,13 @@ function Employees() {
         confirmChanges={deleteEmployees}
       ></Modal>
 
+      <Modal
+        title={'Edit employee'}
+        show={showModalEdit}
+        confirmChanges={closeModal}
+        closeModal={closeModal}
+      ></Modal>
+
       <div className={styles.employees}>
         <ul className={styles.header}>
           <li>Name</li>
@@ -102,6 +112,7 @@ function Employees() {
                 })}
               </li>
               <li className={styles.item}>{employee.status ? 'Active' : 'Inactive'}</li>
+              <img className={styles.editBtn} src={Edit} onClick={() => setModalEdit(true)}></img>
             </ul>
           );
         })}
