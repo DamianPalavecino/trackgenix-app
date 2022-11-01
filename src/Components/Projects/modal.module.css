@@ -53,7 +53,7 @@
     align-items: center;
     justify-content: space-around;
     width: 250px;
-    height: 250px;
+    height: 270px;
     background-color: #ffffff;
     color: #373867;
     border-radius: 5px;
@@ -61,8 +61,8 @@
     font-size: 16px;
     box-shadow: 0px 10px 23px #0000001f;
     margin: auto;
-    margin-top: 200px;
-    padding: 10px;
+    margin-top: 100px;
+    padding: 5px;
 }
 
 .buttonConfirm {
@@ -79,4 +79,5 @@
     border-radius: 5px;
     color: white;
     margin-left: 10px;
+    margin-bottom: 10px;
 }

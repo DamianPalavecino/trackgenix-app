@@ -52,6 +52,7 @@ const Projects = () => {
             <th>End Date</th>
             <th>Status</th>
             <th>Client</th>
+            <th>Employees</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -74,6 +75,16 @@ const Projects = () => {
                   <td>{project.endDate}</td>
                   <td>{project.status ? 'Active' : 'Inactive'}</td>
                   <td>{project.clientName}</td>
+                  <td>
+                    <button
+                      className={styles.button}
+                      onClick={() => {
+                        openModal(project, 'employees');
+                      }}
+                    >
+                      Employees
+                    </button>
+                  </td>
                   <button
                     className={styles.button}
                     onClick={() => {
@@ -83,14 +94,6 @@ const Projects = () => {
                     Delete
                   </button>
                   <button className={styles.button}>Edit</button>
-                  <button
-                    className={styles.button}
-                    onClick={() => {
-                      openModal(project, 'employees');
-                    }}
-                  >
-                    Employees
-                  </button>
                 </tr>
               );
             })}
