@@ -4,7 +4,7 @@ import List from './List/List';
 import styles from './super-admins.module.css';
 
 function SuperAdmins() {
-  const [admin, adminsList] = useState([]);
+  const [admins, adminsList] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
@@ -18,7 +18,7 @@ function SuperAdmins() {
     await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE'
     });
-    adminsList([...admin.filter((admin) => admin._id !== id)]);
+    adminsList([...admins.filter((admins) => admins._id !== id)]);
   };
 
   return (
@@ -27,7 +27,7 @@ function SuperAdmins() {
       <a href={`super-admins/form`}>
         <button className={styles.addBtn}>Add Admin +</button>
       </a>
-      <List admin={admin} handleDelete={handleDelete} />
+      <List admins={admins} handleDelete={handleDelete} />
     </div>
   );
 }

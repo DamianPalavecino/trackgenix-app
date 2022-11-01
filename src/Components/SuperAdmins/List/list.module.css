@@ -1,7 +1,7 @@
 .table {
     margin: 20px auto;
     width: 650px;
-    border: 1px solid rgba(55, 56, 103, 0.1);
+    border: 1px solid #37386719;
     border-radius: 5px;
 }
 
@@ -13,5 +13,5 @@
 
 
 .thead {
-    background-color: rgba(55, 56, 103, 0.1);
+    background-color: #37386719;
 }

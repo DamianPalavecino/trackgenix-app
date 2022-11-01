@@ -3,7 +3,7 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import styles from './listItem.module.css';
 
-const ListItem = ({ admin, handleDelete }) => {
+const ListItem = ({ admins, handleDelete }) => {
   const [showModal, setShowModal] = useState(false);
 
   const modalClose = () => {
@@ -14,17 +14,17 @@ const ListItem = ({ admin, handleDelete }) => {
     setShowModal(true);
   };
 
-  const status = admin.status ? 'true' : 'false';
+  const status = admins.status ? 'true' : 'false';
   return (
     <tr className={styles.listItem}>
-      <td className={styles.td}>{admin.name}</td>
-      <td className={styles.td}>{admin.lastName}</td>
-      <td className={styles.td}>{admin.email}</td>
+      <td className={styles.td}>{admins.name}</td>
+      <td className={styles.td}>{admins.lastName}</td>
+      <td className={styles.td}>{admins.email}</td>
       <td className={styles.td}>{status}</td>
       <td>
         <Button modalOpen={modalOpen} />
         <Modal
-          admin={admin}
+          admins={admins}
           modalClose={modalClose}
           showModal={showModal}
           handleDelete={handleDelete}

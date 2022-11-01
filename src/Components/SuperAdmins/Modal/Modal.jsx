@@ -8,7 +8,7 @@ const Modal = (props) => {
     <div className={styles.container}>
       <div className={styles.modal}>
         <p>Are you sure?</p>
-        <p>Do you really want to delete admin: {props.admin.email}</p>
+        <p>Do you really want to delete admin: {props.admins.email}</p>
         <p>This process cannot be undone</p>
         <button className={styles.cancel} onClick={props.modalClose}>
           Cancel
@@ -16,9 +16,9 @@ const Modal = (props) => {
         <button
           className={styles.delete}
           onClick={() => {
-            props.handleDelete(props.admin._id);
+            props.handleDelete(props.admins._id);
             props.modalClose;
-            alert(`Admin ${props.admin.email} was successfully deleted`);
+            alert(`Admin ${props.admins.email} was successfully deleted`);
           }}
         >
           Delete

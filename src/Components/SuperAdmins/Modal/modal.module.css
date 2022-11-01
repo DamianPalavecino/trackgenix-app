@@ -6,15 +6,15 @@
     bottom: 0;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,0.5);
+    background-color: #0000007F;
 }
 
 .modal {
     width: 300px;
     height: 180px;
-    background-color: white;
+    background-color: #FFFF;
     border-radius: 5px;
-    border: solid 1px grey;
+    border: solid 1px #37386719;
     margin: auto;
     padding: 20px;
     margin-top: 200px;
@@ -25,7 +25,7 @@
     width: 80px;
     height: 40px;
     border-radius: 5px;
-    background-color: white;
+    background-color: #FFFF;
 }
 
 .delete {
@@ -35,5 +35,5 @@
     border-radius: 5px;
     border-color: #F13312;
     background-color: #F13312;
-    color: white;
+    color: #FFFF;;
 }
