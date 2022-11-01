@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import Modal from './modal';
 import styles from './projects.module.css';
 
 function Projects() {
   const [projects, saveProjects] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, changeModalType] = useState('');
+  const [modalObject, setModalObject] = useState();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/projects`)
@@ -17,12 +21,26 @@ function Projects() {
       method: 'DELETE'
     });
     saveProjects(projects.filter((projects) => projects._id !== id));
+    closeModal();
+    setTimeout(() => {
+      alert('Project deleted successfully');
+    }, '1000');
+  };
+
+  const openModal = (obj, type) => {
+    setModalObject(obj);
+    changeModalType(type);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
     <div className={styles.container}>
       <h2>Projects</h2>
-      <button>Create</button>
+      <button>Add new Project</button>
       {projects === undefined || projects.length === 0 ? (
         <p>There are no projects</p>
       ) : (
@@ -39,6 +57,13 @@ function Projects() {
             </tr>
           </thead>
           <tbody>
+            <Modal
+              project={modalObject}
+              handleDelete={handleDelete}
+              type={modalType}
+              showModal={showModal}
+              closeModal={closeModal}
+            />
             {projects.map((project) => {
               return (
                 <tr key={project._id}>
@@ -48,9 +73,21 @@ function Projects() {
                   <td>{project.endDate}</td>
                   <td>{project.status ? 'Active' : 'Inactive'}</td>
                   <td>{project.clientName}</td>
-                  <button onClick={() => handleDelete(project._id)}>Delete</button>
+                  <button
+                    onClick={() => {
+                      openModal(project, 'delete');
+                    }}
+                  >
+                    Delete
+                  </button>
                   <button>Edit</button>
-                  <button>Employees</button>
+                  <button
+                    onClick={() => {
+                      openModal(project, 'employees');
+                    }}
+                  >
+                    See Employees
+                  </button>
                 </tr>
               );
             })}
