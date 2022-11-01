@@ -26,7 +26,7 @@ const Row = ({ task, handleDelete }) => {
           showModal={showModal}
           handleDelete={handleDelete}
         />
-        <a href={`tasks/form`}>
+        <a href={`tasks/form?id=${task._id}`}>
           <button className={styles.editButton}>Edit</button>
         </a>
       </td>
