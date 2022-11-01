@@ -3,11 +3,13 @@ import styles from './list.module.css';
 import Modal from './Modal';
 import Trash from './Icon-awesome-trash.png';
 import Edit from './Icon-edit-employee.png';
+import Add from './Icon-add-employee.png';
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
   const [showModalEdit, setModalEdit] = useState(false);
+  const [showModalToAdd, setModalAdd] = useState(false);
   const [checkedEmployees, setCheckedEmployees] = useState([]);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ function Employees() {
   const closeModal = () => {
     setModal(false);
     setModalEdit(false);
+    setModalAdd(false);
   };
 
   const employeesToDelete = (evt) => {
@@ -70,6 +73,15 @@ function Employees() {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
+      <div className={styles.addBtn}>
+        <p>Add employee</p>
+        <img
+          src={Add}
+          onClick={() => {
+            setModalAdd(true);
+          }}
+        />
+      </div>
       <p className={styles.successMessage} id="showSuccess"></p>
 
       <Modal
@@ -82,6 +94,13 @@ function Employees() {
       <Modal
         title={'Edit employee'}
         show={showModalEdit}
+        confirmChanges={closeModal}
+        closeModal={closeModal}
+      ></Modal>
+
+      <Modal
+        title={'Add employee'}
+        show={showModalToAdd}
         confirmChanges={closeModal}
         closeModal={closeModal}
       ></Modal>
