@@ -29,5 +29,3 @@ const Modal = (props) => {
 };
 
 export default Modal;
-
-// onClick={() => handleDelete(admin._id)}

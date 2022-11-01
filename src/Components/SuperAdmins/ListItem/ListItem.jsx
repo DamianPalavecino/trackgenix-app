@@ -30,6 +30,11 @@ const ListItem = ({ admin, handleDelete }) => {
           handleDelete={handleDelete}
         />
       </td>
+      <td>
+        <a href={`super-admins/form`}>
+          <button className={styles.addBtn}>Edit</button>
+        </a>
+      </td>
     </tr>
   );
 };
