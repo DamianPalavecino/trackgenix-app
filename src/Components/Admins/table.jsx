@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './row';
+import Row from './Row';
 import styles from './table.module.css';
 
 const Table = ({ admins, deleteAdmin }) => {
@@ -8,14 +8,14 @@ const Table = ({ admins, deleteAdmin }) => {
       <thead>
         <tr>
           <th id="name">Name</th>
-          <th id="lastName">Last Name</th>
+          <th id="last-name">Last Name</th>
           <th id="email">Email</th>
           <th id="actions">Actions</th>
         </tr>
       </thead>
       <tbody>
         {admins === undefined || admins.length === 0 ? (
-          <td>There are no tasks yet!</td>
+          <td>No admins added</td>
         ) : (
           admins.map((admin) => {
             return <Row key={admin._id} admin={admin} deleteAdmin={deleteAdmin} />;

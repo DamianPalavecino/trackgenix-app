@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Table from './table';
+import Table from './Table';
 import styles from './admins.module.css';
 
 function Admins() {
