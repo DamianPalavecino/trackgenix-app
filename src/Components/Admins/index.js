@@ -1,63 +1,33 @@
-import styles from './admins.module.css';
+import React from 'react';
 import { useEffect, useState } from 'react';
-import AddAdmin from './addAdmins/AddAdmin';
+import Table from './table';
+import styles from './admins.module.css';
 
 function Admins() {
   const [admins, saveAdmins] = useState([]);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+  useEffect(async () => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
       .then((response) => {
         saveAdmins(response.data);
       });
   }, []);
 
-  const deleteAdmin = (adminId) => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
+  const deleteAdmin = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE'
     });
-    const updatedAdminList = admins.filter((admin) => admin._id !== adminId);
-    saveAdmins(updatedAdminList);
+    saveAdmins([...admins.filter((newListItem) => newListItem._id !== id)]);
   };
 
   return (
     <section className={styles.container}>
-      <AddAdmin AddAdmin={AddAdmin} />
-      <h2>Admin list</h2>
-      <table>
-        <thead>
-          <tr>
-            <th id="name">Name</th>
-            <th id="lastName">Last Name</th>
-            <th id="email">Email Address</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {admins.map((admin) => {
-            return (
-              <tr key={admin._id}>
-                <td key={admin.name}>{admin.name}</td>
-                <td key={admin.lastName}>{admin.lastName}</td>
-                <td key={admin.email}>{admin.email}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      deleteAdmin(admin._id);
-                    }}
-                  >
-                    delete
-                  </button>
-                </td>
-                <td>
-                  <button>edit</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <h2>Admins</h2>
+      <Table admins={admins} deleteAdmin={deleteAdmin} />
+      <a href={`admins/form`}>
+        <button className={styles.addButton}>Add admin</button>
+      </a>
     </section>
   );
 }
