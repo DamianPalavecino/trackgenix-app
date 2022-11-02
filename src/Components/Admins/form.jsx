@@ -6,7 +6,8 @@ const AdminsForm = () => {
     name: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    status: ''
   });
 
   useEffect(async () => {
@@ -20,7 +21,8 @@ const AdminsForm = () => {
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
-          password: data.data.password
+          password: data.data.password,
+          status: data.data.status
         });
       } catch (err) {
         alert('Admin not found');
@@ -63,7 +65,13 @@ const AdminsForm = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(inputValue)
+        body: JSON.stringify({
+          name: inputValue.name,
+          lastName: inputValue.lastName,
+          email: inputValue.email,
+          password: inputValue.password,
+          status: false
+        })
       };
       const url = `${process.env.REACT_APP_API_URL}/admins`;
       fetch(url, postOptions).then(async (response) => {
@@ -79,7 +87,7 @@ const AdminsForm = () => {
   };
   return (
     <div className={styles.container}>
-      <h3>Admins</h3>
+      <h3>Admin</h3>
       <form>
         <div>
           <div>
@@ -132,6 +140,19 @@ const AdminsForm = () => {
               value={inputValue.password}
               onChange={onChangeInput}
               placeholder="Password"
+            />
+          </div>
+          <div>
+            <label>Status</label>
+          </div>
+          <div>
+            <input
+              className={styles.formInput}
+              type="boolean"
+              name="status"
+              value={inputValue.status}
+              onChange={onChangeInput}
+              placeholder="true/false"
             />
           </div>
         </div>
