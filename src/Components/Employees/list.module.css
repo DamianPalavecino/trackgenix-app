@@ -60,3 +60,11 @@
   color: rgb(2, 129, 9);
   font-weight: 500;
 }
+
+.form {
+  display: flex;
+  margin: 50px;
+  align-self: center;
+  flex-direction: column;
+  width: 30%;
+}

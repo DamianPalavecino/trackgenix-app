@@ -75,12 +75,14 @@ function Employees() {
       <h2>Employees</h2>
       <div className={styles.addBtn}>
         <p>Add employee</p>
-        <img
-          src={Add}
-          onClick={() => {
-            setModalAdd(true);
-          }}
-        />
+        <a href="/employees/form">
+          <img
+            src={Add}
+            onClick={() => {
+              setModalAdd(true);
+            }}
+          />
+        </a>
       </div>
       <p className={styles.successMessage} id="showSuccess"></p>
 
