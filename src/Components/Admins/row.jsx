@@ -26,7 +26,7 @@ const Row = ({ admin, deleteAdmin }) => {
           showModal={showModal}
           deleteAdmin={deleteAdmin}
         />
-        <a href={`admins/form`}>
+        <a href={`admins/form?id=${admin._id}`}>
           <button>Edit</button>
         </a>
       </td>
