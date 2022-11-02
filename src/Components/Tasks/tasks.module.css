@@ -7,7 +7,7 @@
 }
 
 .addButton {
-  background-color: #AACE9B;;
+  background-color: #AACE9B;
   color: #373867;
   border-style: none;
   font-size: 30px;
@@ -19,7 +19,7 @@
 }
 
 .addButton:hover {
-  background-color: white;
+  background-color: #ffffff;
   color: #373867;
   border-style: solid;
   font-size: 30px;
@@ -40,9 +40,9 @@ form {
   align-items: center;
   width: 500px;
   height: 150px;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 5px;
-  border: solid 1px grey;
+  border: solid 1px #808080;
   margin: auto;
 }
 
@@ -55,14 +55,14 @@ input {
   width: 384px;
   height: 38px;
   border-radius: 5px;
-  border: solid 1px grey;
+  border: solid 1px #808080;
 }
 
 .confirmButton {
   padding: 10px 24px;
   background: #AACE9B;
   border-radius: 5px;
-  color: white;
+  color: #ffffff;
   margin-left: 10px;
 }
 
@@ -70,6 +70,6 @@ input {
   padding: 10px 24px;
   background: #F13312;
   border-radius: 5px;
-  color: white;
+  color: #ffffff;
   margin-left: 10px;
 }

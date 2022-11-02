@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Table from './Table/table';
 import styles from './tasks.module.css';
 
-function Tasks() {
+const Tasks = () => {
   const [tasks, saveTasks] = useState([]);
 
   useEffect(async () => {
@@ -30,6 +30,6 @@ function Tasks() {
       <Table tasks={tasks} handleDelete={handleDelete} />
     </div>
   );
-}
+};
 
 export default Tasks;

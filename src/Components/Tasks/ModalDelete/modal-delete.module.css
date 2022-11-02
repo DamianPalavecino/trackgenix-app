@@ -1,5 +1,5 @@
 .container {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     right: 0;
@@ -12,9 +12,9 @@
 .modal {
     width: 500px;
     height: 150px;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 5px;
-    border: solid 1px grey;
+    border: solid 1px #808080;
     margin: auto;
     margin-top: 200px;
 }
@@ -23,7 +23,7 @@
     padding: 10px 24px;
     background: #F13312;
     border-radius: 5px;
-    color: white;
+    color: #ffffff;
     margin-left: 10px;
 }
 
@@ -31,6 +31,6 @@
     padding: 10px 24px;
     background: #AACE9B;
     border-radius: 5px;
-    color: white;
+    color: #ffffff;
     margin-left: 10px;
 }
