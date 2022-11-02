@@ -31,7 +31,7 @@ const ListItem = ({ admins, handleDelete }) => {
         />
       </td>
       <td>
-        <a href={`super-admins/form`}>
+        <a href={`super-admins/form?id=${admins._id}`}>
           <button className={styles.addBtn}>Edit</button>
         </a>
       </td>
