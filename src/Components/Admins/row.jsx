@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DeleteButton from './DeleteButton';
+import DeleteButton from './deleteButton';
 import Modal from './modalDelete';
 
 const Row = ({ admin, deleteAdmin }) => {
