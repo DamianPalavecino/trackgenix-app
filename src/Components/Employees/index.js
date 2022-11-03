@@ -35,7 +35,7 @@ function Employees() {
   };
 
   const employeesToDelete = (evt) => {
-    if (evt.target.checked == true) {
+    if (evt.target.checked === true) {
       setCheckedEmployees((current) => [...current, evt.target.id]);
     } else {
       setCheckedEmployees((current) => current.filter((employee) => employee !== evt.target.id));
@@ -52,7 +52,9 @@ function Employees() {
       }
     };
     setModal(false);
-    setEmployees((current) => current.filter((x) => !checkedEmployees.includes(x._id)));
+    setEmployees((current) =>
+      current.filter((checkedEmployee) => !checkedEmployees.includes(checkedEmployee._id))
+    );
 
     showSuccesMessage();
 
