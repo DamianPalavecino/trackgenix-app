@@ -6,9 +6,10 @@ const Form = () => {
     description: ''
   });
 
+  const params = new URLSearchParams(window.location.search);
+  const taskId = params.get('id');
+
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const taskId = params.get('id');
     if (taskId !== null) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
@@ -17,9 +18,7 @@ const Form = () => {
           description: data.data.description
         });
       } catch (err) {
-        setTimeout(() => {
-          alert('There is no task with id provided');
-        }, 10);
+        alert('There is no task with id provided');
       }
     }
   }, []);
@@ -33,8 +32,6 @@ const Form = () => {
   };
 
   const onSubmit = () => {
-    const params = new URLSearchParams(window.location.search);
-    const taskId = params.get('id');
     if (taskId !== null) {
       const putOptions = {
         method: 'PUT',
@@ -45,11 +42,11 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
       fetch(url, putOptions).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Task was successfully edited');
+          alert(message);
           redirect();
         }
       });
@@ -63,11 +60,11 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/tasks`;
       fetch(url, postOptions).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Task was created successfully');
+          alert(message);
           redirect();
         }
       });
