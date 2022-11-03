@@ -10,9 +10,10 @@ const Form = () => {
     status: ''
   });
 
+  const param = new URLSearchParams(window.location.search);
+  const idAdmin = param.get('id');
+
   useEffect(async () => {
-    const param = new URLSearchParams(window.location.search);
-    const idAdmin = param.get('id');
     if (idAdmin !== null) {
       try {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
@@ -41,9 +42,8 @@ const Form = () => {
   };
 
   const onSubmit = () => {
-    const param = new URLSearchParams(window.location.search);
-    const idAdmin = param.get('id');
     if (idAdmin !== null) {
+      input.status = input.status === 'active' ? true : false;
       const put = {
         method: 'PUT',
         headers: {
@@ -51,7 +51,6 @@ const Form = () => {
         },
         body: JSON.stringify(input)
       };
-      console.log(JSON.stringify(input));
       const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
       fetch(url, put).then(async (res) => {
         if (res.status !== 200 && res.status !== 201) {
@@ -63,6 +62,7 @@ const Form = () => {
         }
       });
     } else {
+      input.status = false;
       const post = {
         method: 'POST',
         headers: {
@@ -121,14 +121,16 @@ const Form = () => {
             onChange={onChangeInput}
           />
           <label>Status</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="status"
-            value={false}
-            defaultValue={input.status}
-            onChange={onChangeInput}
-          />
+          {idAdmin ? (
+            <select name="status" onChange={onChangeInput}>
+              <option value="inactive">Inactive</option>
+              <option value="active">Active</option>
+            </select>
+          ) : (
+            <select name="status" onChange={onChangeInput}>
+              <option value="inactive">Inactive</option>
+            </select>
+          )}
           <div>
             <button type="button" onClick={redirect} className={styles.cancel}>
               cancel

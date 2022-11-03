@@ -14,13 +14,12 @@ const ListItem = ({ admins, handleDelete }) => {
     setShowModal(true);
   };
 
-  const status = admins.status ? 'true' : 'false';
   return (
     <tr className={styles.listItem}>
       <td className={styles.td}>{admins.name}</td>
       <td className={styles.td}>{admins.lastName}</td>
       <td className={styles.td}>{admins.email}</td>
-      <td className={styles.td}>{status}</td>
+      <td className={styles.td}>{admins.status ? 'Active' : 'Inactive'}</td>
       <td>
         <Button modalOpen={modalOpen} />
         <Modal
