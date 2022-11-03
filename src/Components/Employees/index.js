@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './list.module.css';
+import styles from './employees.module.css';
 import Modal from './Modal';
 import Trash from './Icon-awesome-trash.png';
 import Edit from './Icon-edit-employee.png';
@@ -133,7 +133,9 @@ function Employees() {
                 })}
               </li>
               <li className={styles.item}>{employee.status ? 'Active' : 'Inactive'}</li>
-              <img className={styles.editBtn} src={Edit} onClick={() => setModalEdit(true)}></img>
+              <a href={`/employees/form?id=${employee._id}`}>
+                <img className={styles.editBtn} src={Edit}></img>
+              </a>
             </ul>
           );
         })}

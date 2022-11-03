@@ -61,10 +61,16 @@
   font-weight: 500;
 }
 
-.form {
+.containerForm {
   display: flex;
-  margin: 50px;
   align-self: center;
+}
+
+.items {
+  display: flex;
   flex-direction: column;
-  width: 30%;
+}
+
+.doneBtn {
+  margin: 10px;
 }
