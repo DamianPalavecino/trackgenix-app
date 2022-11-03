@@ -1,16 +1,16 @@
 import React from 'react';
-import Row from './Row';
 import styles from './table.module.css';
+import Row from './Row';
 
 const Table = ({ admins, deleteAdmin }) => {
   return (
     <table className={styles.table}>
       <thead>
         <tr>
-          <th id="name">Name</th>
-          <th id="last-name">Last Name</th>
-          <th id="email">Email</th>
-          <th id="actions">Actions</th>
+          <th>Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

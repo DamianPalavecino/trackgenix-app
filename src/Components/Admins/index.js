@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Table from './Table';
 import styles from './admins.module.css';
 
-function Admins() {
+const Admins = () => {
   const [admins, saveAdmins] = useState([]);
 
   useEffect(async () => {
@@ -25,11 +25,11 @@ function Admins() {
     <section className={styles.container}>
       <h2>Admins</h2>
       <Table admins={admins} deleteAdmin={deleteAdmin} />
-      <a href={`admins/form`}>
+      <a href={'admins/form'}>
         <button className={styles.addButton}>Add admin</button>
       </a>
     </section>
   );
-}
+};
 
 export default Admins;
