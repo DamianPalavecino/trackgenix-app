@@ -26,9 +26,7 @@ const Form = () => {
           status: data.data.status
         });
       } catch (error) {
-        setTimeout(() => {
-          alert('Admin does not exist');
-        }, 10);
+        alert('Admin does not exist');
       }
     }
   }, []);
@@ -53,11 +51,11 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
       fetch(url, put).then(async (res) => {
+        const { message } = await res.json();
         if (res.status !== 200 && res.status !== 201) {
-          const { message } = await res.json();
           alert(message);
         } else {
-          alert('Admin was succsessfully edited');
+          alert(message);
           redirect();
         }
       });
@@ -72,11 +70,11 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins`;
       fetch(url, post).then(async (res) => {
+        const { message } = await res.json();
         if (res.status !== 200 && res.status !== 201) {
-          const { message } = await res.json();
           alert(message);
         } else {
-          alert('Admin was created successfully');
+          alert(message);
           redirect();
         }
       });

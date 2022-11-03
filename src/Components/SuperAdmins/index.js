@@ -24,7 +24,7 @@ function SuperAdmins() {
   return (
     <div className={styles.container}>
       <h3>Admins List</h3>
-      <a href={`super-admins/form`}>
+      <a href={'super-admins/form'}>
         <button className={styles.addBtn}>Add Admin +</button>
       </a>
       <List admins={admins} handleDelete={handleDelete} />
