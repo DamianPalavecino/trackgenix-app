@@ -10,29 +10,28 @@ const ProjectForm = () => {
     startDate: '',
     endDate: '',
     description: '',
-    clientName: ''
+    clientName: '',
+    employees: []
   });
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
 
-  if (id) {
-    useEffect(async () => {
-      if (id) {
-        fetch(url + '/' + id)
-          .then((res) => res.json())
-          .then((data) =>
-            setInputValue({
-              name: data.data.name,
-              startDate: fixDate(data.data.startDate),
-              endDate: fixDate(data.data.endDate),
-              description: data.data.description,
-              clientName: data.data.clientName
-            })
-          );
-      }
-    }, []);
-  }
+  useEffect(async () => {
+    if (id) {
+      fetch(url + '/' + id)
+        .then((res) => res.json())
+        .then((data) =>
+          setInputValue({
+            name: data.data.name,
+            startDate: fixDate(data.data.startDate),
+            endDate: fixDate(data.data.endDate),
+            description: data.data.description,
+            clientName: data.data.clientName
+          })
+        );
+    }
+  }, []);
 
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -44,7 +43,6 @@ const ProjectForm = () => {
 
   const onSubmit = () => {
     if (id) {
-      console.log(inputValue);
       const put = {
         method: 'PUT',
         headers: {
@@ -52,7 +50,6 @@ const ProjectForm = () => {
         },
         body: JSON.stringify(inputValue)
       };
-      console.log(JSON.stringify(inputValue));
       fetch(url + '/' + id, put).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
@@ -114,6 +111,25 @@ const ProjectForm = () => {
           defaultValue={inputValue.clientName}
           onChange={onChangeInput}
         ></input>
+        {id ? (
+          <>
+            <table className={styles.table}>
+              <caption>Employees</caption>
+              <tr>
+                <th>Rate</th>
+                <th>Role</th>
+              </tr>
+              {/* {inputValue.employees.map((employee) => {
+                return (
+                  <tr key={employee.employeeId}>
+                    <td>{employee.role}</td>
+                    <td>{employee.rate}</td>
+                  </tr>
+                );
+              })} */}
+            </table>
+          </>
+        ) : null}
         <div>
           <button className={styles.button} onClick={redirect}>
             Back
