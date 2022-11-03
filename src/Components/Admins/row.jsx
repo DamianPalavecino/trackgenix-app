@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DeleteButton from './DeleteButton';
-import Modal from './ModalDelete';
+import Modal from './modalDelete';
 
 const Row = ({ admin, deleteAdmin }) => {
   const [showModal, setShowModal] = useState(false);

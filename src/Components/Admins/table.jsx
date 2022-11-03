@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './table.module.css';
-import Row from './Row';
+import Row from './row';
 
 const Table = ({ admins, deleteAdmin }) => {
   return (

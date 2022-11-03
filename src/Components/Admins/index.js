@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Table from './Table';
+import Table from './table';
 import styles from './admins.module.css';
 
 const Admins = () => {
