@@ -10,6 +10,7 @@ const Table = ({ admins, deleteAdmin }) => {
           <th>Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>

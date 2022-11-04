@@ -18,6 +18,7 @@ const Row = ({ admin, deleteAdmin }) => {
       <td>{admin.name}</td>
       <td>{admin.lastName}</td>
       <td>{admin.email}</td>
+      <td>{admin.status ? 'active' : 'inactive'}</td>
       <td>
         <DeleteButton openModal={openModal} />
         <Modal
