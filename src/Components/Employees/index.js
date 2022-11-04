@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './list.module.css';
+import styles from './employees.module.css';
 import Modal from './Modal';
 import Trash from './Icon-awesome-trash.png';
 import Edit from './Icon-edit-employee.png';
