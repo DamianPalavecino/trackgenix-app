@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './Row';
+import Row from './row';
 import styles from './table.module.css';
 
 const Table = ({ admins, deleteAdmin }) => {
@@ -7,10 +7,11 @@ const Table = ({ admins, deleteAdmin }) => {
     <table className={styles.table}>
       <thead>
         <tr>
-          <th id="name">Name</th>
-          <th id="last-name">Last Name</th>
-          <th id="email">Email</th>
-          <th id="actions">Actions</th>
+          <th>Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

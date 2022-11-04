@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
 
+const params = new URLSearchParams(window.location.search);
+const adminId = params.get('id');
+
 const AdminsForm = () => {
   const [inputValue, setInputValue] = useState({
     name: '',
@@ -11,8 +14,6 @@ const AdminsForm = () => {
   });
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const adminId = params.get('id');
     if (adminId !== null) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
@@ -30,6 +31,8 @@ const AdminsForm = () => {
     }
   }, []);
 
+  console.log(inputValue);
+
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
@@ -39,9 +42,8 @@ const AdminsForm = () => {
   };
 
   const onSubmit = () => {
-    const params = new URLSearchParams(window.location.search);
-    const adminId = params.get('id');
     if (adminId !== null) {
+      inputValue.status = inputValue.status === 'active' ? true : false;
       const putOptions = {
         method: 'PUT',
         headers: {
@@ -50,6 +52,7 @@ const AdminsForm = () => {
         body: JSON.stringify(inputValue)
       };
       const url = `${process.env.REACT_APP_API_URL}/admins/${adminId}`;
+      console.log(inputValue);
       fetch(url, putOptions).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
@@ -85,6 +88,7 @@ const AdminsForm = () => {
       });
     }
   };
+
   return (
     <div className={styles.container}>
       <h3>Admin</h3>
@@ -144,16 +148,20 @@ const AdminsForm = () => {
           </div>
           <div>
             <label>Status</label>
-          </div>
-          <div>
-            <input
-              className={styles.formInput}
-              type="boolean"
-              name="status"
-              value={inputValue.status}
-              onChange={onChangeInput}
-              placeholder="true/false"
-            />
+            {adminId ? (
+              <select
+                name="status"
+                onChange={onChangeInput}
+                defaultvalue={inputValue.status ? 'active' : 'inactive'}
+              >
+                <option value="inactive">Inactive</option>
+                <option value="active">Active</option>
+              </select>
+            ) : (
+              <select name="status" onChange={onChangeInput}>
+                <option value="inactive">Inactive</option>
+              </select>
+            )}
           </div>
         </div>
         <div>

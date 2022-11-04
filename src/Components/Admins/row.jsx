@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DeleteButton from './DeleteButton';
-import Modal from './ModalDelete';
+import DeleteButton from './deleteButton';
+import Modal from './modalDelete';
 
 const Row = ({ admin, deleteAdmin }) => {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +18,7 @@ const Row = ({ admin, deleteAdmin }) => {
       <td>{admin.name}</td>
       <td>{admin.lastName}</td>
       <td>{admin.email}</td>
+      <td>{admin.status ? 'active' : 'inactive'}</td>
       <td>
         <DeleteButton openModal={openModal} />
         <Modal
