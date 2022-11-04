@@ -9,6 +9,8 @@ import Projects from '../Projects';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 import EmployeesForm from '../Employees/AddEmployee';
+import SuperAdminForm from '../SuperAdmins/Form/Form';
+import TasksForm from '../Tasks/form';
 
 function Layout() {
   let currentScreen = <Home />;
@@ -18,6 +20,9 @@ function Layout() {
       break;
     case '/super-admins':
       currentScreen = <SuperAdmins />;
+      break;
+    case '/super-admins/form':
+      currentScreen = <SuperAdminForm />;
       break;
     case '/employees':
       currentScreen = <Employees />;
@@ -33,6 +38,9 @@ function Layout() {
       break;
     case '/tasks':
       currentScreen = <Tasks />;
+      break;
+    case '/tasks/form':
+      currentScreen = <TasksForm />;
       break;
     default:
       break;
