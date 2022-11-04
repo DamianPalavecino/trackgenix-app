@@ -127,7 +127,7 @@ function Employees() {
               <li className={styles.item}>{employee.email}</li>
               <li className={styles.item}>
                 {employee.projects.map((project, i) => {
-                  if (project.projectId !== null) {
+                  if (project.projectId) {
                     `${i + 1}.${project.projectId.name}`;
                   }
                 })}
