@@ -1,0 +1,16 @@
+.table {
+    margin: 20px auto;
+    width: 650px;
+    border: 1px solid #37386719;
+    border-radius: 5px;
+}
+
+.tr {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+.thead {
+    background-color: #37386719;
+}
