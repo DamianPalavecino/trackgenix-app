@@ -38,6 +38,7 @@ const AddEmployee = () => {
 
   const editEmployee = async () => {
     const urlEdit = `${process.env.REACT_APP_API_URL}/employees/${idEdit}`;
+    userInput.status = userInput.status === 'active' ? true : false;
     const options = {
       method: 'PUT',
       headers: {
@@ -96,10 +97,21 @@ const AddEmployee = () => {
         <label htmlFor="password">Password</label>
         <input
           name="password"
-          type="text"
+          type="password"
           onChange={onChange}
           value={userInput.password || ''}
         ></input>
+        <label htmlFor="status">Status</label>
+        {idEdit ? (
+          <select name="status" onChange={onChange}>
+            <option value="inactive">Inactive</option>
+            <option value="active">Active</option>
+          </select>
+        ) : (
+          <select>
+            <option name="inactive">Inactive</option>
+          </select>
+        )}
         <button
           className={style.doneBtn}
           type="button"

@@ -5,7 +5,7 @@ import Trash from './Icon-awesome-trash.png';
 import Edit from './Icon-edit-employee.png';
 import Add from './Icon-add-employee.png';
 
-function Employees() {
+const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
   const [showModalEdit, setModalEdit] = useState(false);
@@ -35,7 +35,7 @@ function Employees() {
   };
 
   const employeesToDelete = (evt) => {
-    if (evt.target.checked == true) {
+    if (evt.target.checked) {
       setCheckedEmployees((current) => [...current, evt.target.id]);
     } else {
       setCheckedEmployees((current) => current.filter((employee) => employee !== evt.target.id));
@@ -143,6 +143,6 @@ function Employees() {
       <img src={Trash} className={styles.deleteBtn} onClick={() => setModal(true)} />
     </section>
   );
-}
+};
 
 export default Employees;
