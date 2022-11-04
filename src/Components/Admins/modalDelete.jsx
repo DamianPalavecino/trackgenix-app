@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './modal-delete.module.css';
 
-const Modal = (props) => {
-  if (!props.showModal) {
+const Modal = ({ showModal, closeModal, admin, deleteAdmin }) => {
+  if (!showModal) {
     return null;
   }
   return (
@@ -10,14 +10,14 @@ const Modal = (props) => {
       <div className={styles.confirmationModal}>
         <h3>Confirm delete</h3>
         <p>Are you sure you want to delete?</p>
-        <button className={styles.buttonClose} onClick={props.closeModal}>
+        <button className={styles.buttonClose} onClick={closeModal}>
           Cancel
         </button>
         <button
           className={styles.buttonConfirm}
           onClick={() => {
-            props.deleteAdmin(props.admin._id);
-            props.closeModal;
+            deleteAdmin(admin._id);
+            closeModal;
             alert('Deleted successfully!');
           }}
         >

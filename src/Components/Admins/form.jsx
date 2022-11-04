@@ -10,7 +10,7 @@ const AdminsForm = () => {
     lastName: '',
     email: '',
     password: '',
-    status: ''
+    status: false
   });
 
   useEffect(async () => {
@@ -31,8 +31,6 @@ const AdminsForm = () => {
     }
   }, []);
 
-  console.log(inputValue);
-
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
@@ -52,7 +50,6 @@ const AdminsForm = () => {
         body: JSON.stringify(inputValue)
       };
       const url = `${process.env.REACT_APP_API_URL}/admins/${adminId}`;
-      console.log(inputValue);
       fetch(url, putOptions).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           const { message } = await response.json();
@@ -152,7 +149,7 @@ const AdminsForm = () => {
               <select
                 name="status"
                 onChange={onChangeInput}
-                defaultvalue={inputValue.status ? 'active' : 'inactive'}
+                defaultValue={inputValue.status ? 'active' : 'inactive'}
               >
                 <option value="inactive">Inactive</option>
                 <option value="active">Active</option>
