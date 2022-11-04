@@ -10,9 +10,9 @@ const ProjectForm = () => {
     startDate: '',
     endDate: '',
     description: '',
-    clientName: '',
-    employees: []
+    clientName: ''
   });
+
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
@@ -33,12 +33,12 @@ const ProjectForm = () => {
     }
   }, []);
 
-  const onChangeInput = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
-
   const redirect = () => {
     window.location.assign('/projects');
+  };
+
+  const onChangeInput = (e) => {
+    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
   const onSubmit = () => {
@@ -51,11 +51,11 @@ const ProjectForm = () => {
         body: JSON.stringify(inputValue)
       };
       fetch(url + '/' + id, put).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Project was successfully edited');
+          alert(message);
           redirect();
         }
       });
@@ -67,12 +67,12 @@ const ProjectForm = () => {
         },
         body: JSON.stringify(inputValue)
       };
-      fetch(url, post).then(async (response) => {
+      fetch(`${process.env.REACT_APP_API_URL}/projects`, post).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Project was created successfully');
+          alert(message);
           redirect();
         }
       });
@@ -81,7 +81,6 @@ const ProjectForm = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Add New Project</h2>
       <form className={styles.form}>
         <label>Project Name</label>
         <input name="name" defaultValue={inputValue.name} onChange={onChangeInput}></input>
@@ -111,30 +110,11 @@ const ProjectForm = () => {
           defaultValue={inputValue.clientName}
           onChange={onChangeInput}
         ></input>
-        {id ? (
-          <>
-            <table className={styles.table}>
-              <caption>Employees</caption>
-              <tr>
-                <th>Rate</th>
-                <th>Role</th>
-              </tr>
-              {/* {inputValue.employees.map((employee) => {
-                return (
-                  <tr key={employee.employeeId}>
-                    <td>{employee.role}</td>
-                    <td>{employee.rate}</td>
-                  </tr>
-                );
-              })} */}
-            </table>
-          </>
-        ) : null}
         <div>
-          <button className={styles.button} onClick={redirect}>
+          <button type="button" className={styles.button} onClick={redirect}>
             Back
           </button>
-          <button className={styles.button} onClick={onSubmit}>
+          <button type="button" className={styles.button} onClick={onSubmit}>
             Upload
           </button>
         </div>
