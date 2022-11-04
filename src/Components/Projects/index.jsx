@@ -64,7 +64,7 @@ const Projects = () => {
             showModal={showModal}
             closeModal={closeModal}
           />
-          {projects !== undefined && projects.length > 0 ? (
+          {projects && projects.length > 0 ? (
             projects.map((project) => {
               return (
                 <tr key={project._id}>
@@ -97,7 +97,7 @@ const Projects = () => {
               );
             })
           ) : (
-            <p> There are no projects </p>
+            <p>There are no projects</p>
           )}
         </tbody>
       </table>
