@@ -1,18 +1,18 @@
 .table {
-    margin: auto;
-    box-shadow: 0 0 20px #26000000;
-    border-collapse:collapse;
-  }
+  margin: auto;
+  box-shadow: 0 0 20px #26000000;
+  border-collapse:collapse;
+}
 
-  .table thead{
+.table thead{
   background-color: #1A373867;
   color: #373867;
   text-align: center;
   font-weight: bold;
-  }
+}
 
-  .table td, th {
-    text-align: center;
-    padding: 12px 15px;
-    color: #373867;
-  }
+.table td, th {
+  text-align: center;
+  padding: 12px 15px;
+  color: #373867;
+}
