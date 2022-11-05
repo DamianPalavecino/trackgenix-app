@@ -27,9 +27,13 @@ const Row = ({ admin, deleteAdmin }) => {
           showModal={showModal}
           deleteAdmin={deleteAdmin}
         />
-        <a href={`admins/form?id=${admin._id}`}>
-          <button>Edit</button>
-        </a>
+        <button
+          onClick={() => {
+            window.location.assign(`admins/form?id=${admin._id}`);
+          }}
+        >
+          Edit
+        </button>
       </td>
     </tr>
   );

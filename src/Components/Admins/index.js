@@ -25,9 +25,14 @@ const Admins = () => {
     <section className={styles.container}>
       <h2>Admins</h2>
       <Table admins={admins} deleteAdmin={deleteAdmin} />
-      <a href={'admins/form'}>
-        <button className={styles.addButton}>Add admin</button>
-      </a>
+      <button
+        onClick={() => {
+          window.location.assign('admins/form');
+        }}
+        className={styles.addButton}
+      >
+        Add admin
+      </button>
     </section>
   );
 };
