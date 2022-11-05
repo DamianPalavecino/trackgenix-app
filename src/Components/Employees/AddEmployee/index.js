@@ -120,6 +120,9 @@ const AddEmployee = () => {
         >
           Done
         </button>
+        <button type="button" onClick={redirect}>
+          Back
+        </button>
       </form>
     </div>
   );

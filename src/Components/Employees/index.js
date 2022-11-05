@@ -20,7 +20,7 @@ const Employees = () => {
       });
   }, []);
 
-  const showSuccesMessage = () => {
+  const showSuccessMessage = () => {
     const element = document.getElementById('showSuccess');
     element.innerHTML = 'Employee(s) deleted';
     setTimeout(() => {
@@ -56,7 +56,7 @@ const Employees = () => {
       current.filter((checkedEmployee) => !checkedEmployees.includes(checkedEmployee._id))
     );
 
-    showSuccesMessage();
+    showSuccessMessage();
 
     checkedEmployees.forEach((employeeId) => {
       const url = `${process.env.REACT_APP_API_URL}/employees/${employeeId}`;
