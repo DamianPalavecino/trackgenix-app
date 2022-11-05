@@ -15,7 +15,7 @@ const Table = ({ admins, deleteAdmin }) => {
         </tr>
       </thead>
       <tbody>
-        {admins === undefined || admins.length === 0 ? (
+        {!admins || admins.length <= 0 ? (
           <td>No admins added</td>
         ) : (
           admins.map((admin) => {
