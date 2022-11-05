@@ -14,7 +14,7 @@ const AdminsForm = () => {
   });
 
   useEffect(async () => {
-    if (adminId !== null) {
+    if (adminId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await response.json();
@@ -40,7 +40,7 @@ const AdminsForm = () => {
   };
 
   const onSubmit = () => {
-    if (adminId !== null) {
+    if (adminId) {
       inputValue.status = inputValue.status === 'active' ? true : false;
       const putOptions = {
         method: 'PUT',
@@ -51,11 +51,11 @@ const AdminsForm = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins/${adminId}`;
       fetch(url, putOptions).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Admin updated successfully');
+          alert(message);
           redirect();
         }
       });
@@ -75,11 +75,11 @@ const AdminsForm = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins`;
       fetch(url, postOptions).then(async (response) => {
+        const { message } = await response.json();
         if (response.status !== 200 && response.status !== 201) {
-          const { message } = await response.json();
           alert(message);
         } else {
-          alert('Admin created successfully');
+          alert(message);
           redirect();
         }
       });
