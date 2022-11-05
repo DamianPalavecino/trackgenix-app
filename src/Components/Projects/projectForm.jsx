@@ -10,7 +10,8 @@ const ProjectForm = () => {
     startDate: '',
     endDate: '',
     description: '',
-    clientName: ''
+    clientName: '',
+    status: false
   });
 
   const fixDate = (date) => {
@@ -27,7 +28,8 @@ const ProjectForm = () => {
             startDate: fixDate(data.data.startDate),
             endDate: fixDate(data.data.endDate),
             description: data.data.description,
-            clientName: data.data.clientName
+            clientName: data.data.clientName,
+            status: data.data.status
           })
         );
     }
@@ -43,6 +45,7 @@ const ProjectForm = () => {
 
   const onSubmit = () => {
     if (id) {
+      inputValue.status = inputValue.status === 'active';
       const put = {
         method: 'PUT',
         headers: {
@@ -110,6 +113,23 @@ const ProjectForm = () => {
           defaultValue={inputValue.clientName}
           onChange={onChangeInput}
         ></input>
+        <label>Status</label>
+        {id ? (
+          <select
+            name="status"
+            onChange={onChangeInput}
+            defaultValue={inputValue.status ? 'active' : 'inactive'}
+          >
+            <option value="inactive">Inactive</option>
+            <option value="active">Active</option>
+          </select>
+        ) : (
+          <select name="status" onChange={onChangeInput}>
+            <option selected value="inactive">
+              Inactive
+            </option>
+          </select>
+        )}
         <div>
           <button type="button" className={styles.button} onClick={redirect}>
             Back
