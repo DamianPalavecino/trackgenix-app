@@ -120,7 +120,12 @@ function Employees() {
         {employees.map((employee) => {
           return (
             <ul className={styles.list} key={employee._id}>
-              <input type="checkbox" onChange={employeesToDelete} id={employee._id}></input>
+              <input
+                className={styles.inputCheckbox}
+                type="checkbox"
+                onChange={employeesToDelete}
+                id={employee._id}
+              ></input>
               <li className={styles.item}>{employee.name}</li>
               <li className={styles.item}>{employee.lastName}</li>
               <li className={styles.item}>{employee.phone}</li>
