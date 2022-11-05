@@ -16,7 +16,7 @@ function Employees() {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
       .then((response) => response.json())
       .then((response) => {
-        setEmployees(response.data);
+        setEmployees(response.data || []);
       });
   }, []);
 
