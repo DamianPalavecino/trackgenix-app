@@ -6,6 +6,7 @@ import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
+import ProjectForm from '../Projects/projectForm';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 import SuperAdminForm from '../SuperAdmins/Form/Form';
@@ -28,6 +29,9 @@ function Layout() {
       break;
     case '/projects':
       currentScreen = <Projects />;
+      break;
+    case '/projects/form':
+      currentScreen = <ProjectForm />;
       break;
     case '/time-sheets':
       currentScreen = <TimeSheets />;

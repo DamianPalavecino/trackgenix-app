@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #373867;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input {
+    width: 250px;
+    height: 30px;
+    margin: 10px;
+}
+
+.button {
+    width: 80px;
+    height: 40px;
+    background: #AACE9B;
+    font-weight: 700;
+    color: #373867;
+    border: none;
+    box-shadow: 0px 4px 4px #00000040;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
