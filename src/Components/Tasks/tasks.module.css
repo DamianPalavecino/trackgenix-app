@@ -30,9 +30,7 @@
   width: 60px;
 }
 
-/* form styles */
-
-form {
+.form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -46,12 +44,12 @@ form {
   margin: auto;
 }
 
-label {
+.form label {
   display: flex;
   margin-bottom: 10px;
 }
 
-input {
+.form input {
   width: 384px;
   height: 38px;
   border-radius: 5px;

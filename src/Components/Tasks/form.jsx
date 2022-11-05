@@ -73,14 +73,13 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h3>Tasks</h3>
-      <form>
+      <form className={styles.form}>
         <div>
           <div>
             <label>Description</label>
           </div>
           <div>
             <input
-              className={styles.formInput}
               type="text"
               name="description"
               value={inputValue.description}
