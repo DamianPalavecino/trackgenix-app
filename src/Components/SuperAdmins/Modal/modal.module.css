@@ -1,0 +1,39 @@
+.container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #0000007F;
+}
+
+.modal {
+    width: 300px;
+    height: 180px;
+    background-color: #FFFF;
+    border-radius: 5px;
+    border: solid 1px #37386719;
+    margin: auto;
+    padding: 20px;
+    margin-top: 200px;
+}
+
+.cancel {
+    margin: 5px 5px 5px 125px;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #FFFF;
+}
+
+.delete {
+    margin: 5px;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #F13312;
+    background-color: #F13312;
+    color: #FFFF;;
+}
