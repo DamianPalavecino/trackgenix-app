@@ -35,7 +35,7 @@ const Employees = () => {
   };
 
   const employeesToDelete = (evt) => {
-    if (evt.target.checked === true) {
+    if (evt.target.checked) {
       setCheckedEmployees((current) => [...current, evt.target.id]);
     } else {
       setCheckedEmployees((current) => current.filter((employee) => employee !== evt.target.id));
