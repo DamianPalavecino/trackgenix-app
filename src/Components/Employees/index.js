@@ -68,6 +68,7 @@ const Employees = () => {
         }
         return response.json();
       });
+      setCheckedEmployees((current) => current.filter((employee) => employee != employeeId));
     });
   };
 
