@@ -8,8 +8,6 @@ import Add from './Icon-add-employee.png';
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
-  const [showModalEdit, setModalEdit] = useState(false);
-  const [showModalToAdd, setModalAdd] = useState(false);
   const [checkedEmployees, setCheckedEmployees] = useState([]);
 
   useEffect(() => {
@@ -19,6 +17,10 @@ const Employees = () => {
         setEmployees(response.data || []);
       });
   }, []);
+
+  const redirect = () => {
+    window.location.assign('/employees/form');
+  };
 
   const showSuccesMessage = () => {
     const element = document.getElementById('showSuccess');
@@ -30,8 +32,6 @@ const Employees = () => {
 
   const closeModal = () => {
     setModal(false);
-    setModalEdit(false);
-    setModalAdd(false);
   };
 
   const employeesToDelete = (evt) => {
@@ -76,12 +76,7 @@ const Employees = () => {
       <h2>Employees</h2>
       <div className={styles.addBtn}>
         <p>Add employee</p>
-        <img
-          src={Add}
-          onClick={() => {
-            setModalAdd(true);
-          }}
-        />
+        <img src={Add} onClick={redirect} />
       </div>
       <p className={styles.successMessage} id="showSuccess"></p>
 
@@ -90,20 +85,6 @@ const Employees = () => {
         show={showModal}
         closeModal={closeModal}
         confirmChanges={deleteEmployees}
-      ></Modal>
-
-      <Modal
-        title={'Edit employee'}
-        show={showModalEdit}
-        confirmChanges={closeModal}
-        closeModal={closeModal}
-      ></Modal>
-
-      <Modal
-        title={'Add employee'}
-        show={showModalToAdd}
-        confirmChanges={closeModal}
-        closeModal={closeModal}
       ></Modal>
 
       <div className={styles.employees}>
@@ -137,7 +118,7 @@ const Employees = () => {
                 })}
               </li>
               <li className={styles.item}>{employee.status ? 'Active' : 'Inactive'}</li>
-              <img className={styles.editBtn} src={Edit} onClick={() => setModalEdit(true)}></img>
+              <img className={styles.editBtn} src={Edit}></img>
             </ul>
           );
         })}
