@@ -43,7 +43,6 @@ const Employees = () => {
 
   const deleteEmployees = () => {
     setModal(false);
-
     const options = {
       method: 'DELETE',
       headers: {

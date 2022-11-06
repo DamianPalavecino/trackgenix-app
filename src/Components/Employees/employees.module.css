@@ -42,12 +42,12 @@
   list-style: none;
 }
 
-.item {
-  color: #028108;
-}
-
 .td {
   text-align: center;
+}
+
+.li {
+  list-style: none;
 }
 
 .table {
@@ -68,18 +68,4 @@
   margin-left: 200px;
   color: #028108;
   font-weight: 500;
-}
-
-.containerForm {
-  display: flex;
-  align-self: center;
-}
-
-.items {
-  display: flex;
-  flex-direction: column;
-}
-
-.doneBtn {
-  margin: 10px;
 }
