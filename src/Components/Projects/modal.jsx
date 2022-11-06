@@ -23,18 +23,24 @@ const Modal = ({ project, handleDelete, type, showModal, closeModal }) => {
       <div className={styles.container}>
         <div className={styles.employeeModal}>
           <h3>Employee List</h3>
-          <tr>
-            <td>Rate</td>
-            <td>Role</td>
-          </tr>
-          {project.employees.map((employee) => {
-            return (
-              <tr key={employee.employeeId}>
-                <td>{employee.rate}</td>
-                <td>{employee.role}</td>
+          {project.employees.length > 0 ? (
+            <>
+              <tr>
+                <td>Rate</td>
+                <td>Role</td>
               </tr>
-            );
-          })}
+              {project.employees.map((employee) => {
+                return (
+                  <tr key={employee.employeeId}>
+                    <td>{employee.rate}</td>
+                    <td>{employee.role}</td>
+                  </tr>
+                );
+              })}
+            </>
+          ) : (
+            <h4>There are no employees assigned to this project</h4>
+          )}
           <button className={styles.buttonClose} onClick={closeModal}>
             Done
           </button>

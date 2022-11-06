@@ -16,6 +16,11 @@
     margin: 10px;
 }
 
+.table caption {
+    color: #373867;
+    font-weight: 700;
+}
+
 .button {
     width: 80px;
     height: 40px;
