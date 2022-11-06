@@ -73,7 +73,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <h3>Tasks</h3>
-      <form>
+      <form className={styles.form}>
         <div>
           <div>
             <label>Description</label>
