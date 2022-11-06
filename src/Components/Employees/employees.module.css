@@ -45,6 +45,18 @@
   list-style: none;
 }
 
+.td {
+  text-align: center;
+}
+
+.li {
+  list-style: none;
+}
+
+.table {
+  width: 90%;
+}
+
 .header {
   display: flex;
   justify-content: space-around;

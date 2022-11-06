@@ -86,43 +86,52 @@ const Employees = () => {
         closeModal={closeModal}
         confirmChanges={deleteEmployees}
       ></Modal>
-
-      <div className={styles.employees}>
-        <ul className={styles.header}>
-          <li>Name</li>
-          <li>Last Name</li>
-          <li>Phone</li>
-          <li>Email</li>
-          <li>Projects</li>
-          <li>Status</li>
-          <li>Actions</li>
-        </ul>
-        {employees.map((employee) => {
-          return (
-            <ul className={styles.list} key={employee._id}>
-              <input
-                className={styles.inputCheckbox}
-                type="checkbox"
-                onChange={employeesToDelete}
-                id={employee._id}
-              ></input>
-              <li className={styles.item}>{employee.name}</li>
-              <li className={styles.item}>{employee.lastName}</li>
-              <li className={styles.item}>{employee.phone}</li>
-              <li className={styles.item}>{employee.email}</li>
-              <li className={styles.item}>
-                {employee.projects.map((project, i) => {
-                  if (project.projectId) {
-                    `${i + 1}.${project.projectId.name}`;
-                  }
-                })}
-              </li>
-              <li className={styles.item}>{employee.status ? 'Active' : 'Inactive'}</li>
-              <img className={styles.editBtn} src={Edit}></img>
-            </ul>
-          );
-        })}
-      </div>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th className={styles.td}></th>
+            <th className={styles.td}>Name</th>
+            <th className={styles.td}>Last Name</th>
+            <th className={styles.td}>Phone</th>
+            <th className={styles.td}>Email</th>
+            <th className={styles.td}>Projects</th>
+            <th className={styles.td}>Status</th>
+            <th className={styles.td}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employees.map((employee) => {
+            return (
+              <tr key={employee._id}>
+                <td className={styles.td}>
+                  <input type="checkbox" onChange={employeesToDelete} id={employee._id}></input>
+                </td>
+                <td className={styles.td}>{employee.name}</td>
+                <td className={styles.td}>{employee.lastName}</td>
+                <td className={styles.td}>{employee.phone}</td>
+                <td className={styles.td}>{employee.email}</td>
+                <td>
+                  <ul>
+                    {employee.projects.map((project) => {
+                      if (project.projectId) {
+                        return (
+                          <li key={employee._id} className={styles.li}>
+                            {project.projectId.name}
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </td>
+                <td className={styles.td}>{employee.status ? 'Active' : 'Inactive'}</td>
+                <td className={styles.td}>
+                  <img src={Edit}></img>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
       <img src={Trash} className={styles.deleteBtn} onClick={() => setModal(true)} />
     </section>
   );
