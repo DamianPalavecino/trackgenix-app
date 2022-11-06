@@ -8,6 +8,7 @@ import Add from './Icon-add-employee.png';
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
+  const [showModalProjects, setModalProjects] = useState(false);
   const [checkedEmployees, setCheckedEmployees] = useState([]);
 
   useEffect(() => {
@@ -18,11 +19,7 @@ const Employees = () => {
       });
   }, []);
 
-  const redirect = () => {
-    window.location.assign('/employees/form');
-  };
-
-  const showSuccesMessage = () => {
+  const showSuccessMessage = () => {
     const element = document.getElementById('showSuccess');
     element.innerHTML = 'Employee(s) deleted';
     setTimeout(() => {
@@ -32,6 +29,7 @@ const Employees = () => {
 
   const closeModal = () => {
     setModal(false);
+    setModalProjects(false);
   };
 
   const employeesToDelete = (evt) => {
@@ -40,6 +38,7 @@ const Employees = () => {
     } else {
       setCheckedEmployees((current) => current.filter((employee) => employee !== evt.target.id));
     }
+    return checkedEmployees;
   };
 
   const deleteEmployees = () => {
@@ -54,9 +53,7 @@ const Employees = () => {
     setEmployees((current) =>
       current.filter((checkedEmployee) => !checkedEmployees.includes(checkedEmployee._id))
     );
-
-    showSuccesMessage();
-
+    showSuccessMessage();
     checkedEmployees.forEach(async (employeeId) => {
       const url = `${process.env.REACT_APP_API_URL}/employees/${employeeId}`;
 
@@ -70,6 +67,10 @@ const Employees = () => {
       });
       setCheckedEmployees((current) => current.filter((employee) => employee != employeeId));
     });
+  };
+
+  const redirect = () => {
+    window.location.assign('/employees/form');
   };
 
   return (
@@ -86,6 +87,13 @@ const Employees = () => {
         show={showModal}
         closeModal={closeModal}
         confirmChanges={deleteEmployees}
+      ></Modal>
+
+      <Modal
+        title={'Projects'}
+        show={showModalProjects}
+        confirmChanges={closeModal}
+        closeModal={closeModal}
       ></Modal>
       <table className={styles.table}>
         <thead>
@@ -126,7 +134,9 @@ const Employees = () => {
                 </td>
                 <td className={styles.td}>{employee.status ? 'Active' : 'Inactive'}</td>
                 <td className={styles.td}>
-                  <img src={Edit} onClick={redirect}></img>
+                  <a href={`/employees/form?id=${employee._id}`}>
+                    <img src={Edit}></img>
+                  </a>
                 </td>
               </tr>
             );

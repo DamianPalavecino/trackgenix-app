@@ -7,7 +7,7 @@
 }
 
 .employees {
-  width: 80%;
+  width: 100%;
 }
 
 .deleteBtn {
@@ -35,13 +35,10 @@
 }
 
 .list {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
-.item {
-  width: 300;
+.li {
   list-style: none;
 }
 

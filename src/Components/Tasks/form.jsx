@@ -80,7 +80,6 @@ const Form = () => {
           </div>
           <div>
             <input
-              className={styles.formInput}
               type="text"
               name="description"
               value={inputValue.description}
