@@ -54,13 +54,9 @@ const ProjectForm = () => {
         body: JSON.stringify(inputValue)
       };
       fetch(url + '/' + id, put).then(async (response) => {
-        const { message } = await response.json();
-        if (response.status !== 200 && response.status !== 201) {
-          alert(message);
-        } else {
-          alert(message);
-          redirect();
-        }
+        const { message, error } = await response.json();
+        alert(message);
+        if (!error) redirect();
       });
     } else {
       const post = {
@@ -71,13 +67,9 @@ const ProjectForm = () => {
         body: JSON.stringify(inputValue)
       };
       fetch(`${process.env.REACT_APP_API_URL}/projects`, post).then(async (response) => {
-        const { message } = await response.json();
-        if (response.status !== 200 && response.status !== 201) {
-          alert(message);
-        } else {
-          alert(message);
-          redirect();
-        }
+        const { message, error } = await response.json();
+        alert(message);
+        if (!error) redirect();
       });
     }
   };
