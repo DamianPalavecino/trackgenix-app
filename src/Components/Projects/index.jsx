@@ -85,14 +85,16 @@ const Projects = () => {
                     </button>
                   </td>
                   <button
-                    className={styles.button}
+                    className={styles.actionsButton}
                     onClick={() => {
                       openModal(project, 'delete');
                     }}
                   >
                     Delete
                   </button>
-                  <button className={styles.button}>Edit</button>
+                  <a href={`projects/form?id=${project._id}`}>
+                    <button className={styles.actionsButton}>Edit</button>
+                  </a>
                 </tr>
               );
             })

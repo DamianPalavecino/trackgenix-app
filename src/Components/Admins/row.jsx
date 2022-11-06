@@ -29,7 +29,7 @@ const Row = ({ admin, deleteAdmin }) => {
         />
         <button
           onClick={() => {
-            window.location.assign('admins/form');
+            window.location.assign(`admins/form?id=${admin._id}`);
           }}
         >
           Edit
