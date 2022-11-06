@@ -55,11 +55,10 @@ const Employees = () => {
       current.filter((checkedEmployee) => !checkedEmployees.includes(checkedEmployee._id))
     );
     showSuccessMessage();
-
-    checkedEmployees.forEach((employeeId) => {
+    checkedEmployees.forEach(async (employeeId) => {
       const url = `${process.env.REACT_APP_API_URL}/employees/${employeeId}`;
 
-      fetch(url, options).then(async (response) => {
+      await fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           return response.json().then(({ message }) => {
             throw new Error(message);
