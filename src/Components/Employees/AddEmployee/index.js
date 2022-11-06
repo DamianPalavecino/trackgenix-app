@@ -49,7 +49,11 @@ const AddEmployee = () => {
     try {
       const response = await fetch(urlEdit, options);
       const data = await response.json();
-      alert('Employee edited', data.message);
+      if (response.status !== 200 && response.status !== 201) {
+        alert('Error, employee was not edited', data);
+      } else {
+        alert('Employee edited', data.message);
+      }
       redirect();
     } catch (error) {
       alert('Error');
@@ -67,7 +71,11 @@ const AddEmployee = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      alert('Employee added', data.message);
+      if (response.status !== 200 && response.status !== 201) {
+        alert('Error, employee was not created', data);
+      } else {
+        alert('Employee added', data.message);
+      }
       redirect();
     } catch (error) {
       alert('Error');
@@ -115,7 +123,6 @@ const AddEmployee = () => {
         <button
           className={style.doneBtn}
           type="button"
-          value="Submit"
           onClick={idEdit ? editEmployee : addEmployee}
         >
           Done

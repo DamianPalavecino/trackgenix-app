@@ -8,8 +8,7 @@ import Add from './Icon-add-employee.png';
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
   const [showModal, setModal] = useState(false);
-  const [showModalEdit, setModalEdit] = useState(false);
-  const [showModalToAdd, setModalAdd] = useState(false);
+  const [showModalProjects, setModalProjects] = useState(false);
   const [checkedEmployees, setCheckedEmployees] = useState([]);
 
   useEffect(() => {
@@ -30,16 +29,17 @@ const Employees = () => {
 
   const closeModal = () => {
     setModal(false);
-    setModalEdit(false);
-    setModalAdd(false);
+    setModalProjects(false);
   };
 
   const employeesToDelete = (evt) => {
+    console.log(evt.target.id);
     if (evt.target.checked) {
       setCheckedEmployees((current) => [...current, evt.target.id]);
     } else {
       setCheckedEmployees((current) => current.filter((employee) => employee !== evt.target.id));
     }
+    return checkedEmployees;
   };
 
   const deleteEmployees = () => {
@@ -55,7 +55,6 @@ const Employees = () => {
     setEmployees((current) =>
       current.filter((checkedEmployee) => !checkedEmployees.includes(checkedEmployee._id))
     );
-
     showSuccessMessage();
 
     checkedEmployees.forEach((employeeId) => {
@@ -69,7 +68,12 @@ const Employees = () => {
         }
         return response.json();
       });
+      setCheckedEmployees((current) => current.filter((employee) => employee != employeeId));
     });
+  };
+
+  const redirect = () => {
+    window.location.assign('/employees/form');
   };
 
   return (
@@ -77,14 +81,7 @@ const Employees = () => {
       <h2>Employees</h2>
       <div className={styles.addBtn}>
         <p>Add employee</p>
-        <a href="/employees/form">
-          <img
-            src={Add}
-            onClick={() => {
-              setModalAdd(true);
-            }}
-          />
-        </a>
+        <img src={Add} onClick={redirect} />
       </div>
       <p className={styles.successMessage} id="showSuccess"></p>
 
@@ -96,52 +93,59 @@ const Employees = () => {
       ></Modal>
 
       <Modal
-        title={'Edit employee'}
-        show={showModalEdit}
+        title={'Projects'}
+        show={showModalProjects}
         confirmChanges={closeModal}
         closeModal={closeModal}
       ></Modal>
-
-      <Modal
-        title={'Add employee'}
-        show={showModalToAdd}
-        confirmChanges={closeModal}
-        closeModal={closeModal}
-      ></Modal>
-
-      <div className={styles.employees}>
-        <ul className={styles.header}>
-          <li>Name</li>
-          <li>Last Name</li>
-          <li>Phone</li>
-          <li>Email</li>
-          <li>Projects</li>
-          <li>Status</li>
-          <li>Actions</li>
-        </ul>
-        {employees.map((employee) => {
-          return (
-            <ul className={styles.list} key={employee._id}>
-              <input type="checkbox" onChange={employeesToDelete} id={employee._id}></input>
-              <li className={styles.item}>{employee.name}</li>
-              <li className={styles.item}>{employee.lastName}</li>
-              <li className={styles.item}>{employee.phone}</li>
-              <li className={styles.item}>{employee.email}</li>
-              <li className={styles.item}>
-                {employee.projects.map((project, i) => {
-                  if (project.projectId) {
-                    `${i + 1}.${project.projectId.name}`;
-                  }
-                })}
-              </li>
-              <li className={styles.item}>{employee.status ? 'Active' : 'Inactive'}</li>
-              <a href={`/employees/form?id=${employee._id}`}>
-                <img className={styles.editBtn} src={Edit}></img>
-              </a>
-            </ul>
-          );
-        })}
-      </div>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th className={styles.td}></th>
+            <th className={styles.td}>Name</th>
+            <th className={styles.td}>Last Name</th>
+            <th className={styles.td}>Phone</th>
+            <th className={styles.td}>Email</th>
+            <th className={styles.td}>Projects</th>
+            <th className={styles.td}>Status</th>
+            <th className={styles.td}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employees.map((employee) => {
+            return (
+              <tr key={employee._id}>
+                <td className={styles.td}>
+                  <input type="checkbox" onChange={employeesToDelete} id={employee._id}></input>
+                </td>
+                <td className={styles.td}>{employee.name}</td>
+                <td className={styles.td}>{employee.lastName}</td>
+                <td className={styles.td}>{employee.phone}</td>
+                <td className={styles.td}>{employee.email}</td>
+                <td>
+                  <ul>
+                    {employee.projects.map((project) => {
+                      if (project.projectId) {
+                        return (
+                          <li key={employee._id} className={styles.li}>
+                            {project.projectId.name}
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </td>
+                <td className={styles.td}>{employee.status ? 'Active' : 'Inactive'}</td>
+                <td className={styles.td}>
+                  <a href={`/employees/form?id=${employee._id}`}>
+                    <img src={Edit}></img>
+                  </a>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
       <img src={Trash} className={styles.deleteBtn} onClick={() => setModal(true)} />
     </section>
   );

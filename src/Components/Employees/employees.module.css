@@ -7,7 +7,7 @@
 }
 
 .employees {
-  width: 80%;
+  width: 100%;
 }
 
 .deleteBtn {
@@ -35,14 +35,23 @@
 }
 
 .list {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 
-.item {
-  width: 300;
+.li {
   list-style: none;
+}
+
+.item {
+  color: #028108;
+}
+
+.td {
+  text-align: center;
+}
+
+.table {
+  width: 90%;
 }
 
 .header {
