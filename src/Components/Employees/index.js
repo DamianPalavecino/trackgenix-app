@@ -57,10 +57,10 @@ const Employees = () => {
 
     showSuccesMessage();
 
-    checkedEmployees.forEach((employeeId) => {
+    checkedEmployees.forEach(async (employeeId) => {
       const url = `${process.env.REACT_APP_API_URL}/employees/${employeeId}`;
 
-      fetch(url, options).then(async (response) => {
+      await fetch(url, options).then(async (response) => {
         if (response.status !== 200 && response.status !== 201) {
           return response.json().then(({ message }) => {
             throw new Error(message);
@@ -125,7 +125,7 @@ const Employees = () => {
                 </td>
                 <td className={styles.td}>{employee.status ? 'Active' : 'Inactive'}</td>
                 <td className={styles.td}>
-                  <img src={Edit}></img>
+                  <img src={Edit} onClick={redirect}></img>
                 </td>
               </tr>
             );
