@@ -1,4 +1,5 @@
 import styles from './modal.module.css';
+import Button from '../Button';
 
 const Modal = ({ children, variant = 'modal', showModal, closeModal, text, title }) => {
   if (!showModal) {
@@ -8,9 +9,7 @@ const Modal = ({ children, variant = 'modal', showModal, closeModal, text, title
   return (
     <div className={styles.modalContainer}>
       <div className={styles[variant]}>
-        <button className={styles.closeButton} onClick={closeModal}>
-          X
-        </button>
+        <Button variant={'closeButton'} onClick={closeModal} text="X" />
         {title ? <h3>{title}</h3> : null}
         <p>{text}</p>
         {children}
