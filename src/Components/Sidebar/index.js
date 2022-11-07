@@ -53,12 +53,3 @@ const Sidebar = () => (
 );
 
 export default Sidebar;
-
-/*{
-</nav><nav className={styles.navbar}>
-<div className={styles.appName}>
-  Track<span>GENIX</span>
-</div>
-
-</nav></></>
-</header> */

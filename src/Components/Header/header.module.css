@@ -26,6 +26,10 @@
 
 @media screen and (max-width: 1280px) {
   .appName {
-    display: none;
+    font-size: 80%;
+  }
+
+  .container .logo {
+    width: 50px;
   }
 }

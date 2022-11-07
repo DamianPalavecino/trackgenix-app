@@ -1,46 +1,49 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #373867;
-    flex: 1;
-    height: 100%;
-    padding: 5% 0%;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #373867;
+  flex: 1;
+  height: 100%;
+  padding: 5% 0%;
+}
 
-  .routes {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    padding: 10%;
-  }
+.routes {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 1%;
+}
 
-  .routes > li {
-    padding: 10%;
-  }
+.routes > li {
+  padding: 10%;
+}
 
+.routes > li > a {
+  font-size: 15px;
+  padding: 5px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: #FFFFFF;
+}
+
+.icon {
+  height: 15px;
+  width: auto;
+}
+
+li img {
+  margin: 0px 10px;
+}
+
+@media screen and (max-width: 1280px) {
   .routes > li > a {
     font-size: 15px;
-    padding: 5px;
-    font-weight: 500;
-    line-height: 18px;
-    text-decoration: none;
-    text-transform: capitalize;
-    color: #FFFFFF;
   }
 
-  .icon {
-    height: 15px;
-    width: auto;
+  li > img {
+    display: none;
   }
-
-  li img {
-    margin: 0px 10px;
-  }
-
-  @media screen and (max-width: 1280px) {
-  .routes > li > a {
-    font-size: rem;
-  }
-
-  }
+}
