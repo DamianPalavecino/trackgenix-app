@@ -1,57 +1,31 @@
 .container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5%;
-    height: 50px;
-    background-color: #EA3354;
+    height: 100%;
   }
-  
-  .brand {
+
+.brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
     font-size: 1rem;
+    background-color: #37386766;
+    flex: 1;
   }
-  
-  .socialIcon {
-    margin-left: 15px;
+
+.headline {
+    background-color: #AACE9B;
+    flex: 5;
   }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5%;
-    min-height: 100px;
-    background-color: #F0F4F9;
+
+.appName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #373867;
   }
-  
+
+@media screen and (max-width: 1280px) {
   .appName {
-    font-size: 2rem;
-    font-weight: bold;
+    display: none;
   }
-  
-  .rutes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    list-style-type: none;
-  }
-  
-  .rutes > li > a {
-    margin-left: 15px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    text-transform: capitalize;
-    color: black;
-  }
-  
-  @media screen and (min-width: 750px) {
-    .container {
-      padding: 0 20%;
-    }
-  
-    .navbar {
-      padding: 0 20%;
-    }
-  }
+}
