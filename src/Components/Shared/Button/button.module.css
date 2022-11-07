@@ -173,5 +173,6 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    color: inherit;
     font-weight: 800;
 }
