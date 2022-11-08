@@ -6,3 +6,7 @@
     border-collapse: collapse;
     border: solid 2px #3738671a;
 }
+
+.noData {
+    color: #ff0000;
+}

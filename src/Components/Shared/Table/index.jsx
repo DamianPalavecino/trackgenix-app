@@ -7,16 +7,16 @@ const Table = ({ headers, data, handleDelete }) => {
       <thead>
         <tr>
           {headers.map((header, index) => {
-            return (
-              <th key={index} className={styles.tableHeader}>
-                {header}
-              </th>
-            );
+            return <th key={index}>{header}</th>;
           })}
         </tr>
       </thead>
-      <tbody className={styles.tbody}>
-        <Row data={data} headers={headers} handleDelete={handleDelete} />
+      <tbody>
+        {data && data.length > 0 ? (
+          <Row data={data} headers={headers} handleDelete={handleDelete} />
+        ) : (
+          <p className={styles.noData}>There is no data available</p>
+        )}
       </tbody>
     </table>
   );
