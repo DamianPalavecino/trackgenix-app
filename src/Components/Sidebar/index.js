@@ -7,37 +7,37 @@ const Sidebar = () => (
       <li>
         <Link to="/">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/home.svg`} />
-          Home
+          <h2>Home</h2>
         </Link>
       </li>
       <li>
         <Link to="/admins">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
-          Admins
+          <h2>Admins</h2>
         </Link>
       </li>
       <li>
         <Link to="/super-admins">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
-          Super Admins
+          <h2>Super Admins</h2>
         </Link>
       </li>
       <li>
         <Link to="/projects">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
-          Projects
+          <h2>Projects</h2>
         </Link>
       </li>
       <li>
         <Link to="time-sheets">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
-          Timesheets
+          <h2>Timesheets</h2>
         </Link>
       </li>
       <li>
         <Link to="/tasks">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
-          Tasks
+          <h2>Tasks</h2>
         </Link>
       </li>
     </ul>
@@ -45,7 +45,7 @@ const Sidebar = () => (
       <li>
         <Link to="/">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/logout.svg`} />
-          Logout
+          <h2>Logout</h2>
         </Link>
       </li>
     </ul>

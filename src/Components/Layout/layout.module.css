@@ -17,3 +17,13 @@
 .content {
   flex: 5;
 }
+
+@media screen and (max-width: 768px) {
+  .main {
+    display: none;
+  }
+
+  li > img {
+    display: none;
+  }
+}
