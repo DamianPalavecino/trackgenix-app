@@ -13,13 +13,16 @@ const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
       </thead>
       <tbody>
         {data && data.length > 0 ? (
-          <Row
-            data={data}
-            headers={headers}
-            handleDelete={handleDelete}
-            editItem={editItem}
-            showInfo={showInfo}
-          />
+          data.map((item) => {
+            <Row
+              key={item._id}
+              data={item}
+              headers={headers}
+              handleDelete={handleDelete}
+              editItem={editItem}
+              showInfo={showInfo}
+            />;
+          })
         ) : (
           <p className={styles.noData}>There is no data available</p>
         )}
