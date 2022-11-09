@@ -49,15 +49,14 @@ const ProjectForm = () => {
   }, []);
 
   const redirect = () => {
-    history.push('/projects');
+    history.goBack();
   };
 
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (id) {
       inputValue.status = inputValue.status === 'active';
       const put = {

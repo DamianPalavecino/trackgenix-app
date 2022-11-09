@@ -102,26 +102,34 @@ const Projects = () => {
           toggleModal('employees');
           history.goBack();
         }}
-        title="Employees"
+        title="Employees List"
       >
-        <table>
-          <tr>
-            <th>Rate</th>
-            <th>Role</th>
-          </tr>
-          {employees.map((employee) => {
-            return (
-              <tr key={employee.employeeId}>
-                <td>{employee.rate}</td>
-                <td>{employee.role}</td>
+        {employees.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Rate</th>
+                <th>Role</th>
               </tr>
-            );
-          })}
-        </table>
+            </thead>
+            <tbody>
+              {employees.map((employee) => {
+                return (
+                  <tr key={employee.employeeId}>
+                    <td>{employee.rate}</td>
+                    <td>{employee.role}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <p>There are no employees in this project</p>
+        )}
       </Modal>
       <h2>Projects</h2>
       <Button
-        text="Add Admin +"
+        text="Add Project +"
         variant="addButton"
         onClick={() => history.push('/projects/form')}
       />

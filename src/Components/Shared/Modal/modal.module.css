@@ -24,10 +24,9 @@
     color: #373867;
   }
 
-  .modal table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .modal table, .modal th, .modal td {
+    border: solid 2px #373867;
+    border-collapse: collapse;
   }
 
   .errorModal {
