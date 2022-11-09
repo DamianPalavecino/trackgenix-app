@@ -12,7 +12,7 @@ const Form = () => {
   const taskId = params.id;
 
   useEffect(async () => {
-    if (taskId !== null) {
+    if (taskId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
         const data = await response.json();
@@ -34,7 +34,7 @@ const Form = () => {
   };
 
   const onSubmit = () => {
-    if (taskId !== null) {
+    if (taskId) {
       const putOptions = {
         method: 'PUT',
         headers: {
