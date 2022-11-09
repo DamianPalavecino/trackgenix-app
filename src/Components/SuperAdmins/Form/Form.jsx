@@ -16,7 +16,7 @@ const Form = () => {
   const idAdmin = params.id;
 
   useEffect(async () => {
-    if (idAdmin !== null) {
+    if (idAdmin) {
       try {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
         const data = await res.json();
@@ -42,7 +42,7 @@ const Form = () => {
   };
 
   const onSubmit = () => {
-    if (idAdmin !== null) {
+    if (idAdmin) {
       input.status = input.status === 'active' ? true : false;
       const put = {
         method: 'PUT',

@@ -76,6 +76,12 @@ const SuperAdmins = () => {
           text="No"
         />
       </Modal>
+      <h2>Super Admins</h2>
+      <Button
+        text="Add Admins +"
+        variant="addButton"
+        onClick={() => history.push('super-admins/form')}
+      />
       <Table
         headers={['name', 'lastName', 'email', 'actions']}
         data={admins}
