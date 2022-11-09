@@ -2,6 +2,9 @@ import Button from '../Button';
 import styles from './row.module.css';
 
 const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
+  const fixDate = (date) => {
+    return date.slice(0, 10);
+  };
   return (
     <tr className={styles.row} key={data._id}>
       {headers.map((header, index) => {
@@ -17,6 +20,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
             </td>
           );
         }
+        if (header.includes('updatedAt')) return <td key={index}>{fixDate(data[header])}</td>;
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
