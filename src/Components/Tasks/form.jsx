@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import styles from './tasks.module.css';
+import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
     description: ''
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const taskId = params.get('id');
+  const params = useParams();
+  const history = useHistory();
+  const taskId = params.id;
 
   useEffect(async () => {
     if (taskId !== null) {
@@ -28,7 +30,7 @@ const Form = () => {
   };
 
   const redirect = () => {
-    window.location.assign('/tasks');
+    history.push('/tasks');
   };
 
   const onSubmit = () => {
