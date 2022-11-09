@@ -56,32 +56,36 @@ const Tasks = () => {
     <div className={styles.container}>
       <Modal
         showModal={showModal.confirm}
-        closeModal={() => toggleModal('confirm')}
-        title="Are you sure"
+        closeModal={() => {
+          toggleModal('confirm');
+          history.goBack();
+        }}
+        title="Are you sure?"
         text="You are going to delete this task"
       >
-        <Button
-          onClick={() => {
-            handleDelete(params.id);
-          }}
-          text="Yes"
-          variant="confirmButton"
-        />
-        <Button
-          onClick={() => {
-            toggleModal('confirm');
-            history.goBack();
-          }}
-          text="No"
-        />
+        <span>
+          <Button
+            onClick={() => {
+              handleDelete(params.id);
+            }}
+            text="Yes"
+            variant="confirmButton"
+          />
+          <Button
+            onClick={() => {
+              toggleModal('confirm');
+              history.goBack();
+            }}
+            text="No"
+          />
+        </span>
       </Modal>
       <Modal
         showModal={showModal.success}
         closeModal={() => toggleModal('success')}
         text="Task Deleted"
-      >
-        <Button onClick={() => toggleModal('success')} text="OK" />
-      </Modal>
+        variant={'successModal'}
+      ></Modal>
       <h2>Tasks</h2>
       <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
       <Table
