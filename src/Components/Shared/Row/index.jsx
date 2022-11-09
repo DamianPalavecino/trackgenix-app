@@ -8,8 +8,12 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
         if (header === 'actions') {
           return (
             <td className={styles.td} key={index}>
-              <Button onClick={editItem} text="Edit" variant="editButton" />
-              <Button onClick={handleDelete} text="Delete" variant="confirmButton" />
+              <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />
+              <Button
+                onClick={() => handleDelete(data._id)}
+                text="Delete"
+                variant="confirmButton"
+              />
             </td>
           );
         }
