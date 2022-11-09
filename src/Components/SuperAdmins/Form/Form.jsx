@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -10,8 +11,9 @@ const Form = () => {
     status: ''
   });
 
-  const param = new URLSearchParams(window.location.search);
-  const idAdmin = param.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const idAdmin = params.id;
 
   useEffect(async () => {
     if (idAdmin !== null) {
@@ -36,7 +38,7 @@ const Form = () => {
   };
 
   const redirect = () => {
-    window.location.assign('/super-admins');
+    history.push('/super-admins');
   };
 
   const onSubmit = () => {
