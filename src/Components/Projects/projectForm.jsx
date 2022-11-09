@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './projectForm.module.css';
+import { useHistory, useParams } from 'react-router-dom';
 
 const ProjectForm = () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const id = params.id;
   const url = `${process.env.REACT_APP_API_URL}/projects`;
   const [inputValue, setInputValue] = useState({
     name: '',
@@ -36,7 +38,7 @@ const ProjectForm = () => {
   }, []);
 
   const redirect = () => {
-    window.location.assign('/projects');
+    history.push('/projects');
   };
 
   const onChangeInput = (e) => {
