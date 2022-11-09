@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/Modal';
 import Table from '../Shared/Table';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
@@ -57,24 +57,29 @@ const SuperAdmins = () => {
     <div className={styles.container}>
       <Modal
         showModal={showModal.confirm}
-        closeModal={() => toggleModal('confirm')}
+        closeModal={() => {
+          toggleModal('confirm');
+          history.goBack();
+        }}
         title="Are you sure"
-        text="You are going to delete this project"
+        text="You are going to delete one admin"
       >
-        <Button
-          onClick={() => {
-            handleDelete(params.id);
-          }}
-          text="Yes"
-          variant="deleteButton"
-        />
-        <Button
-          onClick={() => {
-            toggleModal('confirm');
-            history.goBack();
-          }}
-          text="No"
-        />
+        <span>
+          <Button
+            onClick={() => {
+              handleDelete(params.id);
+            }}
+            text="Yes"
+            variant="deleteButton"
+          />
+          <Button
+            onClick={() => {
+              toggleModal('confirm');
+              history.goBack();
+            }}
+            text="No"
+          />
+        </span>
       </Modal>
       <h2>Super Admins</h2>
       <Button
