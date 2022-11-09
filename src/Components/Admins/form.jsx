@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './admins.module.css';
-
-const params = new URLSearchParams(window.location.search);
-const adminId = params.get('id');
+import { useParams, useHistory } from 'react-router-dom';
 
 const AdminsForm = () => {
   const [inputValue, setInputValue] = useState({
@@ -12,6 +10,9 @@ const AdminsForm = () => {
     password: '',
     status: false
   });
+  const params = useParams();
+  const history = useHistory();
+  const adminId = params.id;
 
   useEffect(async () => {
     if (adminId) {
@@ -36,7 +37,7 @@ const AdminsForm = () => {
   };
 
   const redirect = () => {
-    window.location.assign('/admins');
+    history.push('/admins');
   };
 
   const onSubmit = () => {
