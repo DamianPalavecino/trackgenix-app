@@ -33,9 +33,8 @@ const Admins = () => {
     history.push(`admins/form/${id}`);
   };
 
-  const deleteRow = (id) => {
-    console.log(id);
-    history.push(`admins/${id}`);
+  const openDeleteModal = (id) => {
+    history.push(`admins/delete/${id}`);
     toggleModal('confirm');
   };
 
@@ -62,8 +61,20 @@ const Admins = () => {
         title="Are you sure"
         text="You are going to delete this project"
       >
-        <Button onClick={() => deleteAdmin(params.id)} text="Yes" />
-        <Button onClick={() => toggleModal('confirm')} text="No" />
+        <Button
+          onClick={() => {
+            deleteAdmin(params.id);
+          }}
+          text="Yes"
+          variant="confirmButton"
+        />
+        <Button
+          onClick={() => {
+            toggleModal('confirm');
+            history.goBack();
+          }}
+          text="No"
+        />
       </Modal>
       <Modal
         showModal={showModal.success}
@@ -78,7 +89,7 @@ const Admins = () => {
         deleteAdmin={deleteAdmin}
         headers={['name', 'lastName', 'email', 'status', 'actions']}
         editItem={editAdmin}
-        handleDelete={deleteRow}
+        handleDelete={openDeleteModal}
       />
       <Button
         text="Add admin"
