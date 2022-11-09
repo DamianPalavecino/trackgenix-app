@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 const Projects = () => {
   const [projects, saveProjects] = useState([]);
-  const [showModal, setShowModal] = useState({ confirm: false, success: false });
+  const [showModal, setShowModal] = useState({ confirm: false, success: false, employees: false });
   const history = useHistory();
   const params = useParams();
 
@@ -57,26 +57,34 @@ const Projects = () => {
       <Modal
         showModal={showModal.confirm}
         closeModal={() => toggleModal('confirm')}
-        title="Are you sure"
-        text="You are going to delete this project"
+        title="Are you sure?"
+        text="Do you really want to delete this project?
+        This process cannot be undone."
       >
-        <Button
-          onClick={() => {
-            handleDelete(params.id);
-          }}
-          text="Yes"
-        />
-        <Button onClick={() => toggleModal('confirm')} text="No" />
+        <span>
+          <Button onClick={() => toggleModal('confirm')} variant={'cancelButton'} text="No" />
+          <Button
+            onClick={() => {
+              handleDelete(params.id);
+            }}
+            text="Yes"
+            variant={'confirmButton'}
+          />
+        </span>
       </Modal>
       <Modal
         showModal={showModal.success}
         closeModal={() => toggleModal('success')}
-        text="Project Deleted"
-      >
-        <Button onClick={() => toggleModal('success')} text="OK" />
-      </Modal>
+        text="Project deleted successfully"
+        variant={'successModal'}
+      />
+      <Modal showModal={showModal.employees}></Modal>
       <h2>Projects</h2>
-      <Button text="Add Admin +" onClick={() => history.push('/projects/form')} />
+      <Button
+        text="Add Admin +"
+        variant="addButton"
+        onClick={() => history.push('/projects/form')}
+      />
       <Table
         headers={[
           'name',
@@ -91,6 +99,7 @@ const Projects = () => {
         data={projects}
         handleDelete={openDeleteModal}
         editItem={editRow}
+        showInfo={toggleModal}
       />
     </div>
   );
