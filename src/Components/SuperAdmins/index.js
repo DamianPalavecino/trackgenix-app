@@ -76,19 +76,6 @@ const SuperAdmins = () => {
           text="No"
         />
       </Modal>
-      <Modal
-        showModal={showModal.success}
-        closeModal={() => toggleModal('success')}
-        text="Project Deleted"
-      >
-        <Button onClick={() => toggleModal('success')} text="OK" />
-      </Modal>
-      <h3>Admins List</h3>
-      <Button
-        text="Add Admin +"
-        variant="addButton"
-        onClick={() => history.push('super-admins/form')}
-      />
       <Table
         headers={['name', 'lastName', 'email', 'actions']}
         data={admins}
