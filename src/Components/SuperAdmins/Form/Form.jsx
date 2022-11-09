@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import Modal from '../../Shared/Modal/Modal';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -14,6 +16,8 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const idAdmin = params.id;
+  const [showModal, setShowModal] = useState({ error: false, success: false });
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(async () => {
     if (idAdmin) {
@@ -41,6 +45,13 @@ const Form = () => {
     history.push('/super-admins');
   };
 
+  const toggleModal = (modal) => {
+    setShowModal({
+      ...showModal,
+      [modal]: !showModal[modal]
+    });
+  };
+
   const onSubmit = () => {
     if (idAdmin) {
       input.status = input.status === 'active' ? true : false;
@@ -53,12 +64,12 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
       fetch(url, put).then(async (res) => {
-        const { message } = await res.json();
-        if (res.status !== 200 && res.status !== 201) {
-          alert(message);
+        const { message, error } = await res.json();
+        setModalMessage(message);
+        if (!error) {
+          toggleModal('success');
         } else {
-          alert(message);
-          redirect();
+          toggleModal('error');
         }
       });
     } else {
@@ -72,23 +83,38 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/admins`;
       fetch(url, post).then(async (res) => {
-        const { message } = await res.json();
-        if (res.status !== 200 && res.status !== 201) {
-          alert(message);
+        const { message, error } = await res.json();
+        setModalMessage(message);
+        if (!error) {
+          toggleModal('success');
         } else {
-          alert(message);
-          redirect();
+          toggleModal('error');
         }
       });
     }
   };
 
   return (
-    <section>
-      <h2>Edit Admin</h2>
+    <section className={styles.container}>
+      <Modal
+        showModal={showModal.error}
+        closeModal={() => toggleModal('error')}
+        text={modalMessage}
+        variant="errorModal"
+      />
+      <Modal
+        showModal={showModal.success}
+        closeModal={() => {
+          toggleModal('success');
+          redirect();
+        }}
+        text={modalMessage}
+        variant="successModal"
+      />
+      <h2>{idAdmin ? 'Edit' : 'Create'} Admin</h2>
       <form className={styles.form}>
         <div className={styles.div}>
-          <label>First Name</label>
+          <label className={styles.label}>First Name</label>
           <input
             className={styles.input}
             type="text"
@@ -96,7 +122,7 @@ const Form = () => {
             defaultValue={input.name}
             onChange={onChangeInput}
           />
-          <label>Last Name</label>
+          <label className={styles.label}>Last Name</label>
           <input
             className={styles.input}
             type="text"
@@ -104,7 +130,7 @@ const Form = () => {
             defaultValue={input.lastName}
             onChange={onChangeInput}
           />
-          <label>Email</label>
+          <label className={styles.label}>Email</label>
           <input
             className={styles.input}
             type="text"
@@ -112,7 +138,7 @@ const Form = () => {
             defaultValue={input.email}
             onChange={onChangeInput}
           />
-          <label>Password</label>
+          <label className={styles.label}>Password</label>
           <input
             className={styles.input}
             type="password"
@@ -120,24 +146,24 @@ const Form = () => {
             defaultValue={input.password}
             onChange={onChangeInput}
           />
-          <label>Status</label>
+          <label className={styles.label}>Status</label>
           {idAdmin ? (
-            <select name="status" onChange={onChangeInput}>
+            <select name="status" onChange={onChangeInput} className={styles.select}>
               <option value="inactive">Inactive</option>
               <option value="active">Active</option>
             </select>
           ) : (
-            <select name="status" onChange={onChangeInput}>
+            <select name="status" onChange={onChangeInput} className={styles.select}>
               <option value="inactive">Inactive</option>
             </select>
           )}
           <div>
-            <button type="button" onClick={redirect} className={styles.cancel}>
-              cancel
-            </button>
-            <button type="button" onClick={onSubmit} className={styles.save}>
-              save
-            </button>
+            <Button text="Back" onClick={redirect} />
+            <Button
+              variant={idAdmin ? 'editButton' : 'addButton'}
+              text={idAdmin ? 'Edit' : 'Create'}
+              onClick={onSubmit}
+            />
           </div>
         </div>
       </form>
