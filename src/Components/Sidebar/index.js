@@ -23,6 +23,12 @@ const Sidebar = () => (
         </Link>
       </li>
       <li>
+        <Link to="/employees">
+          <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
+          <h2>Employees</h2>
+        </Link>
+      </li>
+      <li>
         <Link to="/projects">
           <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/list.svg`} />
           <h2>Projects</h2>

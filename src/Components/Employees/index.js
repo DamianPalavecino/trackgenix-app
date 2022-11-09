@@ -6,10 +6,10 @@ import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
 
 const Employees = () => {
-  const params = useParams();
-  const history = useHistory();
   const [employees, setEmployees] = useState([]);
   const [showModal, setShowModal] = useState({ info: false, delete: false, success: false });
+  const params = useParams();
+  const history = useHistory();
 
   useEffect(async () => {
     await fetch(`${process.env.REACT_APP_API_URL}/employees`)
@@ -24,12 +24,8 @@ const Employees = () => {
       method: 'DELETE'
     });
     setEmployees([...employees.filter((newListItem) => newListItem._id !== id)]);
-    toggleModal('delete', 'success');
+    toggleModal('confirm', 'success');
     history.push('/employees');
-  };
-
-  const editEmployee = (id) => {
-    history.push(`employees/form/${id}`);
   };
 
   const toggleModal = (modal, secondModal) => {
@@ -47,23 +43,37 @@ const Employees = () => {
     }
   };
 
+  const openDeleteModal = (id) => {
+    history.push(`employees/delete/${id}`);
+    toggleModal('confirm');
+  };
+
+  const editEmployee = (id) => {
+    history.push(`employees/form/${id}`);
+  };
+
   return (
     <section className={styles.container}>
       <Modal
+        showModal={showModal.confirm}
+        closeModal={() => toggleModal('confirm')}
         title="Are you sure?"
-        text="You are going to delete the row"
-        showModal={showModal.delete}
-        closeModal={() => toggleModal('delete')}
+        text="You are going to delete this employee"
       >
         <Button text="yes" onClick={() => deleteEmployee(params.id)} />
-        <Button text="no" onClick={() => toggleModal('delete')} />
+        <Button
+          text="no"
+          onClick={() => {
+            toggleModal('confirm');
+            history.goBack();
+          }}
+        />
       </Modal>
 
       <h2>Employees</h2>
 
       <Table
         data={employees}
-        deleteEmployee={deleteEmployee}
         headers={[
           'name',
           'lastName',
@@ -75,7 +85,7 @@ const Employees = () => {
           'actions'
         ]}
         editItem={editEmployee}
-        handleDelete={deleteEmployee}
+        handleDelete={openDeleteModal}
       />
 
       <Button

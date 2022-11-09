@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import style from '../employees.module.css';
+import { useParams, useHistory } from 'react-router-dom';
 
 const AddEmployee = () => {
+  const params = useParams();
+  const history = useHistory();
+  const idEdit = params.id;
   const url = `${process.env.REACT_APP_API_URL}/employees/`;
 
   const redirect = () => {
-    window.location.assign('/employees');
+    history.push('/employees');
   };
 
   const [userInput, setUserInput] = useState({
@@ -16,8 +20,6 @@ const AddEmployee = () => {
     password: '',
     status: false
   });
-  const params = new URLSearchParams(document.location.search);
-  const idEdit = params.get('id');
 
   if (idEdit) {
     useEffect(() => {
@@ -53,8 +55,8 @@ const AddEmployee = () => {
         alert('Error, employee was not edited', data);
       } else {
         alert('Employee edited', data.message);
+        redirect();
       }
-      redirect();
     } catch (error) {
       alert('Error');
     }
@@ -75,8 +77,8 @@ const AddEmployee = () => {
         alert('Error, employee was not created', data);
       } else {
         alert('Employee added', data.message);
+        redirect();
       }
-      redirect();
     } catch (error) {
       alert('Error');
     }
