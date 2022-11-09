@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './projectForm.module.css';
+import Modal from '../Shared/Modal/Modal';
+import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
 const ProjectForm = () => {
@@ -7,6 +9,8 @@ const ProjectForm = () => {
   const params = useParams();
   const id = params.id;
   const url = `${process.env.REACT_APP_API_URL}/projects`;
+  const [showModal, setShowModal] = useState({ success: false, error: false });
+  const [message, setMessage] = useState('');
   const [inputValue, setInputValue] = useState({
     name: '',
     startDate: '',
@@ -18,6 +22,13 @@ const ProjectForm = () => {
 
   const fixDate = (date) => {
     return date.slice(0, 10);
+  };
+
+  const toggleModal = (modal) => {
+    setShowModal({
+      ...showModal,
+      [modal]: !showModal[modal]
+    });
   };
 
   useEffect(async () => {
@@ -45,7 +56,8 @@ const ProjectForm = () => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (id) {
       inputValue.status = inputValue.status === 'active';
       const put = {
@@ -57,8 +69,12 @@ const ProjectForm = () => {
       };
       fetch(url + '/' + id, put).then(async (response) => {
         const { message, error } = await response.json();
-        alert(message);
-        if (!error) redirect();
+        setMessage(message);
+        if (!error) {
+          toggleModal('success');
+        } else {
+          toggleModal('error');
+        }
       });
     } else {
       const post = {
@@ -70,22 +86,48 @@ const ProjectForm = () => {
       };
       fetch(`${process.env.REACT_APP_API_URL}/projects`, post).then(async (response) => {
         const { message, error } = await response.json();
-        alert(message);
-        if (!error) redirect();
+        setMessage(message);
+        if (!error) {
+          toggleModal('success');
+        } else {
+          toggleModal('error');
+        }
       });
     }
   };
 
   return (
     <div className={styles.container}>
+      <h2>{id ? 'Edit' : 'Create'} Project</h2>
+      <Modal
+        showModal={showModal.success}
+        variant={'successModal'}
+        closeModal={() => {
+          toggleModal('success');
+          redirect();
+        }}
+        text={message}
+      ></Modal>
+      <Modal
+        showModal={showModal.error}
+        variant={'errorModal'}
+        closeModal={() => toggleModal('error')}
+        text={message}
+      ></Modal>
       <form className={styles.form}>
         <label>Project Name</label>
-        <input name="name" defaultValue={inputValue.name} onChange={onChangeInput}></input>
+        <input
+          name="name"
+          defaultValue={inputValue.name}
+          onChange={onChangeInput}
+          placeholder="Project Name"
+        ></input>
         <label>Description</label>
         <textarea
           name="description"
           defaultValue={inputValue.description}
           onChange={onChangeInput}
+          placeholder="Description"
         ></textarea>
         <label>Start Date</label>
         <input
@@ -106,31 +148,28 @@ const ProjectForm = () => {
           name="clientName"
           defaultValue={inputValue.clientName}
           onChange={onChangeInput}
+          placeholder="Client Name"
         ></input>
-        <label>Status</label>
         {id ? (
-          <select
-            name="status"
-            onChange={onChangeInput}
-            defaultValue={inputValue.status ? 'active' : 'inactive'}
-          >
-            <option value="inactive">Inactive</option>
-            <option value="active">Active</option>
-          </select>
-        ) : (
-          <select name="status" onChange={onChangeInput}>
-            <option selected value="inactive">
-              Inactive
-            </option>
-          </select>
-        )}
+          <div>
+            <label>Status</label>
+            <select
+              name="status"
+              onChange={onChangeInput}
+              defaultValue={inputValue.status ? 'active' : 'inactive'}
+            >
+              <option value="inactive">Inactive</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+        ) : null}
         <div>
-          <button type="button" className={styles.button} onClick={redirect}>
-            Back
-          </button>
-          <button type="button" className={styles.button} onClick={onSubmit}>
-            Upload
-          </button>
+          <Button variant={'cancelButton'} text="Back" onClick={redirect} />
+          <Button
+            variant={id ? 'editButton' : 'addButton'}
+            text={id ? 'Edit' : 'Create'}
+            onClick={onSubmit}
+          />
         </div>
       </form>
     </div>
