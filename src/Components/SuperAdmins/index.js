@@ -1,13 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import List from './List/List';
-import styles from './super-admins.module.css';
+import Table from '../Shared/Table';
 
 function SuperAdmins() {
   const [admins, adminsList] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+    fetch(`${process.env.REACT_APP_API_URL}/superAdmins`)
       .then((response) => response.json())
       .then((response) => {
         adminsList(response.data);
@@ -15,20 +14,18 @@ function SuperAdmins() {
   }, []);
 
   const handleDelete = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/superAdmins/${id}`, {
       method: 'DELETE'
     });
     adminsList([...admins.filter((admins) => admins._id !== id)]);
   };
 
   return (
-    <div className={styles.container}>
-      <h3>Admins List</h3>
-      <a href={'super-admins/form'}>
-        <button className={styles.addBtn}>Add Admin +</button>
-      </a>
-      <List admins={admins} handleDelete={handleDelete} />
-    </div>
+    <Table
+      data={admins}
+      headers={['name', 'lastName', 'email', 'actions']}
+      handleDelete={handleDelete}
+    />
   );
 }
 
