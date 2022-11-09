@@ -24,6 +24,12 @@
     color: #373867;
   }
 
+  .modal table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .errorModal {
     background-color: #F13312;
     color: #ffffff;

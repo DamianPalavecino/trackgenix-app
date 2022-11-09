@@ -26,7 +26,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
-              <Button onClick={showInfo} text={header} />
+              <Button onClick={() => showInfo(data._id)} text={header} />
             </td>
           );
         } else {

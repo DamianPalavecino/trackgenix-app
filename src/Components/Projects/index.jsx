@@ -8,6 +8,7 @@ import { useHistory, useParams } from 'react-router-dom';
 const Projects = () => {
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false, employees: false });
+  const [employees, saveEmployees] = useState([]);
   const history = useHistory();
   const params = useParams();
 
@@ -52,6 +53,13 @@ const Projects = () => {
     history.push(`projects/form/${id}`);
   };
 
+  const showEmployeesModal = (id) => {
+    history.push(`projects/${id}/employees`);
+    toggleModal('employees');
+    const data = projects.find((project) => project._id === id);
+    saveEmployees(data.employees);
+  };
+
   return (
     <div className={styles.container}>
       <Modal
@@ -88,7 +96,29 @@ const Projects = () => {
         text="Project deleted successfully"
         variant={'successModal'}
       />
-      <Modal showModal={showModal.employees}></Modal>
+      <Modal
+        showModal={showModal.employees}
+        closeModal={() => {
+          toggleModal('employees');
+          history.goBack();
+        }}
+        title="Employees"
+      >
+        <table>
+          <tr>
+            <th>Rate</th>
+            <th>Role</th>
+          </tr>
+          {employees.map((employee) => {
+            return (
+              <tr key={employee.employeeId}>
+                <td>{employee.rate}</td>
+                <td>{employee.role}</td>
+              </tr>
+            );
+          })}
+        </table>
+      </Modal>
       <h2>Projects</h2>
       <Button
         text="Add Admin +"
@@ -109,7 +139,7 @@ const Projects = () => {
         data={projects}
         handleDelete={openDeleteModal}
         editItem={editRow}
-        showInfo={toggleModal}
+        showInfo={showEmployeesModal}
       />
     </div>
   );
