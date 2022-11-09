@@ -56,13 +56,23 @@ const Projects = () => {
     <div className={styles.container}>
       <Modal
         showModal={showModal.confirm}
-        closeModal={() => toggleModal('confirm')}
+        closeModal={() => {
+          toggleModal('confirm');
+          history.goBack();
+        }}
         title="Are you sure?"
         text="Do you really want to delete this project?
         This process cannot be undone."
       >
         <span>
-          <Button onClick={() => toggleModal('confirm')} variant={'cancelButton'} text="No" />
+          <Button
+            onClick={() => {
+              toggleModal('confirm');
+              history.goBack();
+            }}
+            variant={'cancelButton'}
+            text="No"
+          />
           <Button
             onClick={() => {
               handleDelete(params.id);
