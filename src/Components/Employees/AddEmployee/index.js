@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import style from '../employees.module.css';
+import style from './employeesForm.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 
 const AddEmployee = () => {
@@ -89,8 +89,8 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className={style.containerForm}>
-      <form className={style.items}>
+    <div className={style.container}>
+      <form className={style.form}>
         <label htmlFor="name">Name</label>
         <input name="name" type="text" onChange={onChange} value={userInput.name || ''}></input>
         <label htmlFor="lastName">Last Name</label>
