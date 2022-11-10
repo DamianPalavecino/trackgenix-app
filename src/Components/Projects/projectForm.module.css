@@ -3,33 +3,36 @@
     flex-direction: column;
     align-items: center;
     color: #373867;
+    margin-top: 30px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+}
+
+.form label {
+    font-weight: 700;
 }
 
 .form input {
     width: 250px;
     height: 30px;
-    margin: 10px;
+}
+
+.form input, .form select, .form textarea {
+    margin: 20px 0 20px 0;
+    padding: 7px 9px;
+    border: 1px solid #373867;
+    border-radius: 8px;
+}
+
+.form textarea {
+    height: 60px;
 }
 
 .table caption {
     color: #373867;
     font-weight: 700;
 }
-
-.button {
-    width: 80px;
-    height: 40px;
-    background: #AACE9B;
-    font-weight: 700;
-    color: #373867;
-    border: none;
-    box-shadow: 0px 4px 4px #00000040;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
