@@ -54,7 +54,7 @@ const Form = () => {
 
   const onSubmit = () => {
     if (idAdmin) {
-      input.status = input.status === 'active' ? true : false;
+      input.status = input.status === 'active';
       const put = {
         method: 'PUT',
         headers: {
@@ -146,17 +146,15 @@ const Form = () => {
             defaultValue={input.password}
             onChange={onChangeInput}
           />
-          <label className={styles.label}>Status</label>
           {idAdmin ? (
-            <select name="status" onChange={onChangeInput} className={styles.select}>
-              <option value="inactive">Inactive</option>
-              <option value="active">Active</option>
-            </select>
-          ) : (
-            <select name="status" onChange={onChangeInput} className={styles.select}>
-              <option value="inactive">Inactive</option>
-            </select>
-          )}
+            <>
+              <label className={styles.label}>Status</label>
+              <select name="status" onChange={onChangeInput} className={styles.select}>
+                <option value="inactive">Inactive</option>
+                <option value="active">Active</option>
+              </select>
+            </>
+          ) : null}
           <div>
             <Button text="Back" onClick={redirect} />
             <Button

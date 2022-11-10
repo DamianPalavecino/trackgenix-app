@@ -61,7 +61,7 @@ const SuperAdmins = () => {
           toggleModal('confirm');
           history.goBack();
         }}
-        title="Are you sure"
+        title="Are you sure?"
         text="You are going to delete one admin"
       >
         <span>
@@ -88,7 +88,7 @@ const SuperAdmins = () => {
         onClick={() => history.push('super-admins/form')}
       />
       <Table
-        headers={['name', 'lastName', 'email', 'actions']}
+        headers={['name', 'lastName', 'email', 'status', 'actions']}
         data={admins}
         editItem={editAdmin}
         handleDelete={openDeleteModal}
