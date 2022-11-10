@@ -33,7 +33,8 @@ const Layout = () => {
               <Route exact path={'/admins'} component={Admins} />
               <Route exact path={'/admins/form'} component={AdminsForm} />
               <Route path={'/admins/delete/:id'} component={Admins} />
-              <Route path={'/admins/form/:id'} component={AdminsForm} />
+              <Route path={'/projects/form/:id'} component={ProjectForm} />
+              <Route path={'/employees/form/:id'} component={EmployeesForm} />
               <Route exact path={'/super-admins'} component={SuperAdmins} />
               <Route exact path={'/super-admins/form'} component={SuperAdminForm} />
               <Route exact path={'/employees'} component={Employees} />
