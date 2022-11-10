@@ -105,24 +105,7 @@ const Projects = () => {
         title="Employees List"
       >
         {employees.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Rate</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees.map((employee) => {
-                return (
-                  <tr key={employee.employeeId}>
-                    <td>{employee.rate}</td>
-                    <td>{employee.role}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <Table headers={['rate', 'role']} data={employees} />
         ) : (
           <p>There are no employees in this project</p>
         )}
