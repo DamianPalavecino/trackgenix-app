@@ -1,7 +1,11 @@
 import Button from '../Button';
 import styles from './row.module.css';
 
-const Row = ({ data, headers, editItem, handleRelatedEntity, handleDelete }) => {
+const Row = ({ data, headers, handleDelete, editItem, handleRelatedEntity }) => {
+  const fixDate = (date) => {
+    return date.slice(0, 10);
+  };
+
   return (
     <tr className={styles.row} key={data._id}>
       {headers.map((header, index) => {
@@ -21,7 +25,7 @@ const Row = ({ data, headers, editItem, handleRelatedEntity, handleDelete }) => 
         }
         if (header === 'status') return <td key={index}>{data[header] ? 'Active' : 'Inactive'}</td>;
         if (header.includes('Date') && data[header])
-          return <td key={index}>{data[header].slice(0, 10)}</td>;
+          return <td key={index}>{fixDate(data[header])}</td>;
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
