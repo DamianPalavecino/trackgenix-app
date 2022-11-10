@@ -7,7 +7,7 @@ import Table from '../Shared/Table';
 
 const Employees = () => {
   const [employees, setEmployees] = useState([]);
-  const [showModal, setShowModal] = useState({ info: false, delete: false, success: false });
+  const [showModal, setShowModal] = useState({ delete: false, success: false });
   const params = useParams();
   const history = useHistory();
 
@@ -56,18 +56,30 @@ const Employees = () => {
     <section className={styles.container}>
       <Modal
         showModal={showModal.confirm}
-        closeModal={() => toggleModal('confirm')}
+        closeModal={() => {
+          toggleModal('confirm');
+          history.goBack();
+        }}
         title="Are you sure?"
         text="You are going to delete this employee"
       >
-        <Button text="yes" onClick={() => deleteEmployee(params.id)} />
-        <Button
-          text="no"
-          onClick={() => {
-            toggleModal('confirm');
-            history.goBack();
-          }}
-        />
+        <span>
+          <Button
+            onClick={() => {
+              toggleModal('confirm');
+              history.goBack();
+            }}
+            variant={'cancelButton'}
+            text="No"
+          />
+          <Button
+            onClick={() => {
+              deleteEmployee(params.id);
+            }}
+            text="Yes"
+            variant={'confirmButton'}
+          />
+        </span>
       </Modal>
 
       <h2>Employees</h2>

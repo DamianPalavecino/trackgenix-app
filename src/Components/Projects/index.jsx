@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import styles from './projects.module.css';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Projects = () => {

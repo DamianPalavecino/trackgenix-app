@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './projectForm.module.css';
-import Modal from '../Shared/Modal/Modal';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
