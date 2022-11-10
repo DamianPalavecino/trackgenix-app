@@ -81,6 +81,12 @@ const SuperAdmins = () => {
           />
         </span>
       </Modal>
+      <Modal
+        showModal={showModal.success}
+        closeModal={() => toggleModal('success')}
+        text="Admin deleted successfully"
+        variant={'successModal'}
+      />
       <h2>Super Admins</h2>
       <Button
         text="Add Admins +"
