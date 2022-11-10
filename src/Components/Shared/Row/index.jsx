@@ -20,7 +20,8 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
             </td>
           );
         }
-        if (header.includes('updatedAt')) return <td key={index}>{fixDate(data[header])}</td>;
+        if (header.includes('updatedAt' || 'Date' || 'date'))
+          return <td key={index}>{fixDate(data[header])}</td>;
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>

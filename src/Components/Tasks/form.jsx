@@ -39,7 +39,7 @@ const Form = () => {
   };
 
   const redirect = () => {
-    history.push('/tasks');
+    history.goBack();
   };
 
   const toggleModal = (modal) => {
