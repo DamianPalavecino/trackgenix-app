@@ -132,7 +132,7 @@ const Admins = () => {
         handleRelatedEntity={handleRelatedEntity}
       />
       <div className={styles.selectEntity}>
-        {entity === 'projects' ? (
+        {entity === 'projects' && (
           <Button
             text={'Add projects'}
             onClick={() => {
@@ -140,8 +140,6 @@ const Admins = () => {
             }}
             variant="addButton"
           />
-        ) : (
-          ''
         )}
       </div>
     </section>

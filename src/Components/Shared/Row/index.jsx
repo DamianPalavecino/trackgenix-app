@@ -24,7 +24,7 @@ const Row = ({ data, headers, handleDelete, editItem, handleRelatedEntity }) => 
           );
         }
         if (header.includes('updatedAt') || header.includes('Date') || header.includes('date'))
-          return <td key={index}>{fixDate(data[header])}</td>;
+          return <td key={index}>{data[header] && fixDate(data[header])}</td>;
         if (header === 'status') return <td key={index}>{data[header] ? 'Active' : 'Inactive'}</td>;
         if (Array.isArray(data[header])) {
           return (
