@@ -1,16 +1,27 @@
 import { useState, useEffect } from 'react';
 import styles from './tasks.module.css';
+import { useHistory, useParams } from 'react-router-dom';
+import Button from '../Shared/Button';
+import Modal from '../Shared/Modal/Modal';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
     description: ''
   });
 
-  const params = new URLSearchParams(window.location.search);
-  const taskId = params.get('id');
+  const [showModal, setShowModal] = useState({
+    success: false,
+    error: false
+  });
+
+  const [message, setMessage] = useState('');
+
+  const params = useParams();
+  const history = useHistory();
+  const taskId = params.id;
 
   useEffect(async () => {
-    if (taskId !== null) {
+    if (taskId) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
         const data = await response.json();
@@ -28,11 +39,18 @@ const Form = () => {
   };
 
   const redirect = () => {
-    window.location.assign('/tasks');
+    history.goBack();
+  };
+
+  const toggleModal = (modal) => {
+    setShowModal({
+      ...showModal,
+      [modal]: !showModal[modal]
+    });
   };
 
   const onSubmit = () => {
-    if (taskId !== null) {
+    if (taskId) {
       const putOptions = {
         method: 'PUT',
         headers: {
@@ -42,12 +60,12 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
       fetch(url, putOptions).then(async (response) => {
-        const { message } = await response.json();
-        if (response.status !== 200 && response.status !== 201) {
-          alert(message);
+        const { message, error } = await response.json();
+        setMessage(message);
+        if (!error) {
+          toggleModal('success');
         } else {
-          alert(message);
-          redirect();
+          toggleModal('error');
         }
       });
     } else {
@@ -60,18 +78,33 @@ const Form = () => {
       };
       const url = `${process.env.REACT_APP_API_URL}/tasks`;
       fetch(url, postOptions).then(async (response) => {
-        const { message } = await response.json();
-        if (response.status !== 200 && response.status !== 201) {
-          alert(message);
+        const { message, error } = await response.json();
+        setMessage(message);
+        if (!error) {
+          toggleModal('success');
         } else {
-          alert(message);
-          redirect();
+          toggleModal('error');
         }
       });
     }
   };
   return (
     <div className={styles.container}>
+      <Modal
+        showModal={showModal.success}
+        closeModal={() => {
+          toggleModal('success');
+          redirect();
+        }}
+        text={message}
+        variant={'successModal'}
+      />
+      <Modal
+        showModal={showModal.error}
+        closeModal={() => toggleModal('error')}
+        text={message}
+        variant={'errorModal'}
+      />
       <h3>Tasks</h3>
       <form className={styles.form}>
         <div>
@@ -89,12 +122,12 @@ const Form = () => {
           </div>
         </div>
         <div>
-          <button type="button" onClick={redirect} className={styles.cancelButton}>
-            Cancel
-          </button>
-          <button type="button" onClick={onSubmit} className={styles.confirmButton}>
-            Upload
-          </button>
+          <Button onClick={redirect} variant={'cancelButton'} text="Back" />
+          <Button
+            variant={taskId ? 'editButton' : 'addButton'}
+            text={taskId ? 'Edit' : 'Create'}
+            onClick={onSubmit}
+          />
         </div>
       </form>
     </div>
