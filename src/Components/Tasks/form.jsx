@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/Modal';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({

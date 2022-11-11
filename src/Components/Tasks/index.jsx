@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/Modal';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './tasks.module.css';
 
