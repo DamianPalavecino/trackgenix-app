@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import style from '../employees.module.css';
+import { useParams, useHistory } from 'react-router-dom';
+import Button from '../../Shared/Button';
+import Modal from '../../Shared/Modal';
 
 const AddEmployee = () => {
+  const params = useParams();
+  const history = useHistory();
+  const idEdit = params.id;
   const url = `${process.env.REACT_APP_API_URL}/employees/`;
+  const [showModal, setShowModal] = useState({ success: false, error: false });
+  const [message, setMessage] = useState('');
 
   const redirect = () => {
-    window.location.assign('/employees');
+    history.goBack();
   };
 
   const [userInput, setUserInput] = useState({
@@ -16,8 +24,6 @@ const AddEmployee = () => {
     password: '',
     status: false
   });
-  const params = new URLSearchParams(document.location.search);
-  const idEdit = params.get('id');
 
   if (idEdit) {
     useEffect(() => {
@@ -38,7 +44,7 @@ const AddEmployee = () => {
 
   const editEmployee = async () => {
     const urlEdit = `${process.env.REACT_APP_API_URL}/employees/${idEdit}`;
-    userInput.status = userInput.status === 'active' ? true : false;
+    userInput.status = userInput.status === 'active';
     const options = {
       method: 'PUT',
       headers: {
@@ -48,13 +54,13 @@ const AddEmployee = () => {
     };
     try {
       const response = await fetch(urlEdit, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        alert('Error, employee was not edited', data);
+      const { message, error } = await response.json();
+      setMessage(message);
+      if (!error) {
+        toggleModal('success');
       } else {
-        alert('Employee edited', data.message);
+        toggleModal('error');
       }
-      redirect();
     } catch (error) {
       alert('Error');
     }
@@ -70,13 +76,13 @@ const AddEmployee = () => {
     };
     try {
       const response = await fetch(url, options);
-      const data = await response.json();
-      if (response.status !== 200 && response.status !== 201) {
-        alert('Error, employee was not created', data);
+      const { message, error } = await response.json();
+      setMessage(message);
+      if (!error) {
+        toggleModal('success');
       } else {
-        alert('Employee added', data.message);
+        toggleModal('error');
       }
-      redirect();
     } catch (error) {
       alert('Error');
     }
@@ -86,8 +92,31 @@ const AddEmployee = () => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   };
 
+  const toggleModal = (modal) => {
+    setShowModal({
+      ...showModal,
+      [modal]: !showModal[modal]
+    });
+  };
+
   return (
     <div className={style.containerForm}>
+      <h2>{idEdit ? 'Edit' : 'Create'} Employees</h2>
+      <Modal
+        showModal={showModal.success}
+        variant={'successModal'}
+        closeModal={() => {
+          toggleModal('success');
+          redirect();
+        }}
+        text={message}
+      ></Modal>
+      <Modal
+        showModal={showModal.error}
+        variant={'errorModal'}
+        closeModal={() => toggleModal('error')}
+        text={message}
+      ></Modal>
       <form className={style.items}>
         <label htmlFor="name">Name</label>
         <input name="name" type="text" onChange={onChange} value={userInput.name || ''}></input>
@@ -109,27 +138,21 @@ const AddEmployee = () => {
           onChange={onChange}
           value={userInput.password || ''}
         ></input>
-        <label htmlFor="status">Status</label>
         {idEdit ? (
-          <select name="status" onChange={onChange}>
-            <option value="inactive">Inactive</option>
-            <option value="active">Active</option>
-          </select>
-        ) : (
-          <select>
-            <option name="inactive">Inactive</option>
-          </select>
-        )}
-        <button
-          className={style.doneBtn}
-          type="button"
+          <div>
+            <label htmlFor="status">Status</label>
+            <select name="status" onChange={onChange}>
+              <option value="inactive">Inactive</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+        ) : null}
+        <Button variant={'cancelButton'} text="Back" onClick={redirect} />
+        <Button
+          variant={idEdit ? 'editButton' : 'addButton'}
+          text={idEdit ? 'Edit' : 'Create'}
           onClick={idEdit ? editEmployee : addEmployee}
-        >
-          Done
-        </button>
-        <button type="button" onClick={redirect}>
-          Back
-        </button>
+        />
       </form>
     </div>
   );
