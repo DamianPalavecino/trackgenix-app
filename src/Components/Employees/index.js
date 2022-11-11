@@ -115,7 +115,11 @@ const Employees = () => {
       </Modal>
 
       <h2>Employees</h2>
-
+      <Button
+        text="Add Employee +"
+        variant="addButton"
+        onClick={() => history.push('employees/form')}
+      />
       <Table
         data={employees}
         headers={[
@@ -131,12 +135,6 @@ const Employees = () => {
         editItem={editEmployee}
         handleDelete={openDeleteModal}
         showInfo={showProjectsInfo}
-      />
-
-      <Button
-        text="Add Employee +"
-        variant="addButton"
-        onClick={() => history.push('employees/form')}
       />
     </section>
   );
