@@ -150,7 +150,7 @@ const AdminsForm = () => {
               <select
                 name="status"
                 onChange={onChangeInput}
-                defaultValue={inputValue.status ? 'active' : 'inactive'}
+                value={inputValue.status ? 'active' : 'inactive'}
               >
                 <option value="inactive">Inactive</option>
                 <option value="active">Active</option>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/';
+import Modal from '../Shared/Modal/Modal';
 import Table from '../Shared/Table';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';

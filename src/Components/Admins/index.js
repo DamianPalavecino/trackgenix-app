@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Table from '../Shared/Table';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
-import Modal from '../Shared/Modal';
+import Modal from '../Shared/Modal/Modal';
 
 const Admins = () => {
   const history = useHistory();

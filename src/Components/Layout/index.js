@@ -10,7 +10,7 @@ import Projects from '../Projects';
 import ProjectForm from '../Projects/projectForm';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
-import EmployeesForm from '../Employees/AddEmployee';
+import EmployeesForm from '../Employees/Form';
 import AdminsForm from '../Admins/form';
 import SuperAdminForm from '../SuperAdmins/Form/Form';
 import TasksForm from '../Tasks/form';
@@ -40,14 +40,19 @@ const Layout = () => {
               <Route exact path={'/super-admins/form'} component={SuperAdminForm} />
               <Route exact path={'/super-admins/form/:id'} component={SuperAdminForm} />
               <Route exact path={'/employees'} component={Employees} />
+              <Route exact path={'/employees/:id/projects'} component={Employees} />
+              <Route exact path={'/employees/delete/:id'} component={Employees} />
               <Route exact path={'/employees/form'} component={EmployeesForm} />
+              <Route exact path={'/employees/form/:id'} component={EmployeesForm} />
               <Route exact path={'/projects'} component={Projects} />
               <Route exact path={'/projects/:id/employees'} component={Projects} />
               <Route exact path={'/projects/delete/:id'} component={Projects} />
               <Route exact path={'/projects/form'} component={ProjectForm} />
               <Route exact path={'/projects/form/:id'} component={ProjectForm} />
               <Route exact path={'/tasks'} component={Tasks} />
+              <Route exact path={'/tasks/delete/:id'} component={Tasks} />
               <Route exact path={'/tasks/form'} component={TasksForm} />
+              <Route path={'/tasks/form/:id'} component={TasksForm} />
               <Route exact path={'/time-sheets'} component={TimeSheets} />
               <Redirect to="/" />
             </Switch>
