@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import style from '../employees.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from '../../Shared/Button';
-import Modal from '../../Shared/Modal';
+import Modal from '../../Shared/Modal/Modal';
+import styles from './form.module.css';
 
 const AddEmployee = () => {
   const params = useParams();
@@ -100,7 +100,7 @@ const AddEmployee = () => {
   };
 
   return (
-    <div className={style.containerForm}>
+    <div className={styles.container}>
       <h2>{idEdit ? 'Edit' : 'Create'} Employees</h2>
       <Modal
         showModal={showModal.success}
@@ -117,42 +117,78 @@ const AddEmployee = () => {
         closeModal={() => toggleModal('error')}
         text={message}
       ></Modal>
-      <form className={style.items}>
-        <label htmlFor="name">Name</label>
-        <input name="name" type="text" onChange={onChange} value={userInput.name || ''}></input>
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          name="lastName"
-          type="text"
-          onChange={onChange}
-          value={userInput.lastName || ''}
-        ></input>
-        <label htmlFor="phone">Phone</label>
-        <input name="phone" type="text" onChange={onChange} value={userInput.phone || ''}></input>
-        <label htmlFor="email">Email</label>
-        <input name="email" type="text" onChange={onChange} value={userInput.email || ''}></input>
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          type="password"
-          onChange={onChange}
-          value={userInput.password || ''}
-        ></input>
-        {idEdit ? (
+      <form className={styles.form}>
+        <div className={styles.div}>
+          <label className={styles.label} htmlFor="name">
+            Name
+          </label>
+          <input
+            className={styles.input}
+            name="name"
+            type="text"
+            onChange={onChange}
+            value={userInput.name || ''}
+          ></input>
+          <label className={styles.label} htmlFor="lastName">
+            Last Name
+          </label>
+          <input
+            className={styles.input}
+            name="lastName"
+            type="text"
+            onChange={onChange}
+            value={userInput.lastName || ''}
+          ></input>
+          <label className={styles.label} htmlFor="phone">
+            Phone
+          </label>
+          <input
+            className={styles.input}
+            name="phone"
+            type="text"
+            onChange={onChange}
+            value={userInput.phone || ''}
+          ></input>
+          <label className={styles.label} htmlFor="email">
+            Email
+          </label>
+          <input
+            className={styles.input}
+            name="email"
+            type="text"
+            onChange={onChange}
+            value={userInput.email || ''}
+          ></input>
+          <label className={styles.label} htmlFor="password">
+            Password
+          </label>
+          <input
+            className={styles.input}
+            name="password"
+            type="password"
+            onChange={onChange}
+            value={userInput.password || ''}
+          ></input>
+          {idEdit ? (
+            <>
+              <label className={styles.label} htmlFor="status">
+                Status
+              </label>
+              <select className={styles.select} name="status" onChange={onChange}>
+                <option value="inactive">Inactive</option>
+                <option value="active">Active</option>
+              </select>
+            </>
+          ) : null}
           <div>
-            <label htmlFor="status">Status</label>
-            <select name="status" onChange={onChange}>
-              <option value="inactive">Inactive</option>
-              <option value="active">Active</option>
-            </select>
+            <Button variant={'cancelButton'} text="Back" onClick={redirect} />
+            <Button
+              variant={idEdit ? 'editButton' : 'addButton'}
+              text={idEdit ? 'Edit' : 'Create'}
+              onClick={idEdit ? editEmployee : addEmployee}
+            />
           </div>
-        ) : null}
-        <Button variant={'cancelButton'} text="Back" onClick={redirect} />
-        <Button
-          variant={idEdit ? 'editButton' : 'addButton'}
-          text={idEdit ? 'Edit' : 'Create'}
-          onClick={idEdit ? editEmployee : addEmployee}
-        />
+        </div>
       </form>
     </div>
   );
