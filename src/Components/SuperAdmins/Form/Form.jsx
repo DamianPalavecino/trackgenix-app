@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
-import Modal from '../../Shared/Modal/Modal';
+import Modal from '../../Shared/Modal/';
 import Button from '../../Shared/Button';
 
 const Form = () => {
