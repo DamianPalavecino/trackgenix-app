@@ -119,7 +119,7 @@ const Form = () => {
             className={styles.input}
             type="text"
             name="name"
-            defaultValue={input.name}
+            value={input.name}
             onChange={onChangeInput}
           />
           <label className={styles.label}>Last Name</label>
@@ -127,7 +127,7 @@ const Form = () => {
             className={styles.input}
             type="text"
             name="lastName"
-            defaultValue={input.lastName}
+            value={input.lastName}
             onChange={onChangeInput}
           />
           <label className={styles.label}>Email</label>
@@ -135,7 +135,7 @@ const Form = () => {
             className={styles.input}
             type="text"
             name="email"
-            defaultValue={input.email}
+            value={input.email}
             onChange={onChangeInput}
           />
           <label className={styles.label}>Password</label>
@@ -143,7 +143,7 @@ const Form = () => {
             className={styles.input}
             type="password"
             name="password"
-            defaultValue={input.password}
+            value={input.password}
             onChange={onChangeInput}
           />
           {idAdmin ? (
