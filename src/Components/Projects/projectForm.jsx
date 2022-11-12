@@ -117,14 +117,14 @@ const ProjectForm = () => {
         <label>Project Name</label>
         <input
           name="name"
-          defaultValue={inputValue.name}
+          value={inputValue.name}
           onChange={onChangeInput}
           placeholder="Project Name"
         ></input>
         <label>Description</label>
         <textarea
           name="description"
-          defaultValue={inputValue.description}
+          value={inputValue.description}
           onChange={onChangeInput}
           placeholder="Description"
         ></textarea>
@@ -132,20 +132,20 @@ const ProjectForm = () => {
         <input
           name="startDate"
           type="date"
-          defaultValue={inputValue.startDate}
+          value={inputValue.startDate}
           onChange={onChangeInput}
         ></input>
         <label>End Date</label>
         <input
           name="endDate"
           type="date"
-          defaultValue={inputValue.endDate}
+          value={inputValue.endDate}
           onChange={onChangeInput}
         ></input>
         <label>Client</label>
         <input
           name="clientName"
-          defaultValue={inputValue.clientName}
+          value={inputValue.clientName}
           onChange={onChangeInput}
           placeholder="Client Name"
         ></input>
@@ -155,7 +155,7 @@ const ProjectForm = () => {
             <select
               name="status"
               onChange={onChangeInput}
-              defaultValue={inputValue.status ? 'active' : 'inactive'}
+              value={inputValue.status ? 'active' : 'inactive'}
             >
               <option value="inactive">Inactive</option>
               <option value="active">Active</option>

@@ -11,27 +11,38 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
       {headers.map((header, index) => {
         if (header === 'actions') {
           return (
-            <td className={styles.td} key={index}>
+            <td key={index}>
               <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />
               <Button
-                onClick={() => handleDelete(data._id)}
+                onClick={() => {
+                  handleDelete(data._id);
+                }}
                 text="Delete"
                 variant="confirmButton"
               />
             </td>
           );
         }
-        if (header.includes('updatedAt' || 'Date' || 'date'))
-          return <td key={index}>{fixDate(data[header])}</td>;
+        if (header.includes('updatedAt') || header.includes('Date') || header.includes('date'))
+          return <td key={index}>{data[header] && fixDate(data[header])}</td>;
         if (header === 'status') return <td key={index}>{data[header] ? 'Active' : 'Inactive'}</td>;
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
-              <Button onClick={() => showInfo(data._id)} text={header} />
+              <Button
+                onClick={() => {
+                  showInfo(data[header]);
+                }}
+                text={header}
+              />
             </td>
           );
         } else {
-          return <td key={index}>{data[header]}</td>;
+          return (
+            <td className={styles.td} key={index}>
+              {data[header]}
+            </td>
+          );
         }
       })}
     </tr>

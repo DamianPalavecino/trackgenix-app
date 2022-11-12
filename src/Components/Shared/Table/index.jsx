@@ -1,5 +1,5 @@
-import styles from './table.module.css';
 import Row from '../Row';
+import styles from './table.module.css';
 
 const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
   return (

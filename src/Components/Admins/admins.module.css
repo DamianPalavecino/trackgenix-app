@@ -5,3 +5,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.selectEntity {
+    margin: 20px;
+}
+
+.title {
+    text-transform: uppercase;
+}
