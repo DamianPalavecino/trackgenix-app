@@ -1,7 +1,7 @@
 import Button from '../Button';
 import styles from './row.module.css';
 
-const Row = ({ data, headers, handleDelete, editItem, handleRelatedEntity }) => {
+const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
@@ -31,7 +31,7 @@ const Row = ({ data, headers, handleDelete, editItem, handleRelatedEntity }) => 
             <td key={index}>
               <Button
                 onClick={() => {
-                  handleRelatedEntity(data[header]);
+                  showInfo(data[header]);
                 }}
                 text={header}
               />

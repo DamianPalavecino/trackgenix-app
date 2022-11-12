@@ -69,6 +69,20 @@ const Admins = () => {
     toggleModal('info');
   };
 
+  const headers =
+    entity === 'projects'
+      ? [
+          'name',
+          'description',
+          'clientName',
+          'status',
+          'startDate',
+          'endDate',
+          'employees',
+          'actions'
+        ]
+      : ['name', 'lastName', 'email', 'actions'];
+
   return (
     <section className={styles.container}>
       <Modal
@@ -113,23 +127,10 @@ const Admins = () => {
       <h1 className={styles.title}>{entity}</h1>
       <Table
         data={entityData}
-        headers={
-          entity === 'projects'
-            ? [
-                'name',
-                'description',
-                'clientName',
-                'status',
-                'startDate',
-                'endDate',
-                'employees',
-                'actions'
-              ]
-            : ['name', 'lastName', 'email', 'actions']
-        }
+        headers={headers}
         editItem={editAdmin}
         handleDelete={openDeleteModal}
-        handleRelatedEntity={handleRelatedEntity}
+        showInfos={handleRelatedEntity}
       />
       <div className={styles.selectEntity}>
         {entity === 'projects' && (
