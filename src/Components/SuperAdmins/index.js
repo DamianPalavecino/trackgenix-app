@@ -5,19 +5,18 @@ import Modal from '../Shared/Modal/Modal';
 import Table from '../Shared/Table';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdmins } from '../../redux/super-admins/thunks';
 
 const SuperAdmins = () => {
-  const [admins, adminsList] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
+  const adminsList = useSelector((state) => state.superAdmins.list);
+  const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        adminsList(response.data);
-      });
+    dispatch(getAdmins());
   }, []);
 
   const editAdmin = (id) => {
@@ -28,7 +27,7 @@ const SuperAdmins = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE'
     });
-    adminsList([...admins.filter((admins) => admins._id !== id)]);
+    dispatch(getAdmins());
     toggleModal('confirm', 'success');
     history.push('/super-admins');
   };
@@ -95,7 +94,7 @@ const SuperAdmins = () => {
       />
       <Table
         headers={['name', 'lastName', 'email', 'status', 'actions']}
-        data={admins}
+        data={adminsList}
         editItem={editAdmin}
         handleDelete={openDeleteModal}
       />
