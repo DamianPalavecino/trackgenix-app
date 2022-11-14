@@ -3,27 +3,32 @@ import styles from './employees.module.css';
 import Table from '../Shared/Table';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees } from '../../redux/employees/thunks';
+import Spinner from '../Shared/Spinner';
 
 const Employees = () => {
   const dispatch = useDispatch();
-  const { list, isLoading, error } = useSelector((state) => state.employees);
+  const { list, isPending, error } = useSelector((state) => state.employees);
 
   useEffect(() => {
     dispatch(getEmployees());
   }, []);
 
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
-
   if (error) {
-    return <h3>{error}</h3>;
+    return (
+      <div className={styles.container}>
+        <h3>{error}</h3>
+      </div>
+    );
   }
 
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      <Table data={list} headers={['name', 'lastName', 'phone', 'email', 'password', 'status']} />
+      {isPending ? (
+        <Spinner entity="Employees" />
+      ) : (
+        <Table data={list} headers={['name', 'lastName', 'phone', 'email', 'password', 'status']} />
+      )}
     </section>
   );
 };
