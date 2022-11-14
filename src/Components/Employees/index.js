@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import styles from './employees.module.css';
 import Table from '../Shared/Table';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees } from '../../redux/employees/thunks';
 
 const Employees = () => {
