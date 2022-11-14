@@ -10,7 +10,7 @@ import { getAdmins } from '../../redux/super-admins/thunks';
 
 const SuperAdmins = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
-  const adminsList = useSelector((state) => state.superAdmins.list);
+  const { list: adminsList, isPending, error } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
@@ -18,6 +18,14 @@ const SuperAdmins = () => {
   useEffect(() => {
     dispatch(getAdmins());
   }, []);
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <h3>{error}</h3>
+      </div>
+    );
+  }
 
   const editAdmin = (id) => {
     history.push(`super-admins/form/${id}`);
@@ -92,12 +100,18 @@ const SuperAdmins = () => {
         variant="addButton"
         onClick={() => history.push('super-admins/form')}
       />
-      <Table
-        headers={['name', 'lastName', 'email', 'status', 'actions']}
-        data={adminsList}
-        editItem={editAdmin}
-        handleDelete={openDeleteModal}
-      />
+      {isPending ? (
+        <div className={styles.container}>
+          <h3>Loading...</h3>
+        </div>
+      ) : (
+        <Table
+          headers={['name', 'lastName', 'email', 'status', 'actions']}
+          data={adminsList}
+          editItem={editAdmin}
+          handleDelete={openDeleteModal}
+        />
+      )}
     </div>
   );
 };
