@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import Spinner from '../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getTasks } from '../../redux/tasks/thunks';
@@ -9,7 +10,7 @@ import styles from './tasks.module.css';
 
 const Tasks = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
-  const { list: tasksList, error } = useSelector((state) => state.tasks);
+  const { list: tasksList, error, isPending } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
@@ -19,7 +20,11 @@ const Tasks = () => {
   }, []);
 
   if (error) {
-    return <h3>{error}</h3>;
+    return (
+      <div className={styles.container}>
+        <h3>{error}</h3>
+      </div>
+    );
   }
 
   const editTask = (id) => {
@@ -91,12 +96,16 @@ const Tasks = () => {
       ></Modal>
       <h2>Tasks</h2>
       <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
-      <Table
-        data={tasksList}
-        handleDelete={openDeleteModal}
-        headers={['description', 'updatedAt', 'actions']}
-        editItem={editTask}
-      />
+      {isPending ? (
+        <Spinner entity="Tasks" />
+      ) : (
+        <Table
+          data={tasksList}
+          handleDelete={openDeleteModal}
+          headers={['description', 'updatedAt', 'actions']}
+          editItem={editTask}
+        />
+      )}
     </div>
   );
 };

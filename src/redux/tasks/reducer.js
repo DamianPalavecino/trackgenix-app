@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   error: ''
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const tasksReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_TASKS_PENDING:
       return {
@@ -17,19 +17,17 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        list: action.payload,
-        error: ''
+        list: action.payload
       };
     case GET_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     default:
       return state;
   }
 };
 
-export default reducer;
+export default tasksReducer;

@@ -1,7 +1,7 @@
 import { getTasksPending, getTasksFulfilled, getTasksRejected } from './actions';
 
 export const getTasks = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(getTasksPending());
     fetch(`${process.env.REACT_APP_API_URL}/tasks`)
       .then((response) => response.json())
