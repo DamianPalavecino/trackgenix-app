@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   list: [],
-  isLoading: false,
+  isPending: false,
   error: ''
 };
 
@@ -15,18 +15,18 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case GET_EMPLOYEES_PENDING:
       return {
         ...state,
-        isLoading: true
+        isPending: true
       };
     case GET_EMPLOYEES_FULFILLED:
       return {
         ...state,
-        isLoading: false,
+        isPending: false,
         list: action.payload
       };
     case GET_EMPLOYEES_REJECTED:
       return {
         ...state,
-        isLoading: false,
+        isPending: false,
         error: action.payload
       };
     default:

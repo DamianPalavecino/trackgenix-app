@@ -10,10 +10,10 @@ export const getEmployeesPending = () => {
   };
 };
 
-export const getEmployeesFulfilled = (payload) => {
+export const getEmployeesFulfilled = (data) => {
   return {
     type: GET_EMPLOYEES_FULFILLED,
-    payload
+    payload: data
   };
 };
 
