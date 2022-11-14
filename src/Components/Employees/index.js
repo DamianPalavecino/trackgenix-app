@@ -7,7 +7,7 @@ import { getEmployees } from '../../redux/employees/thunks';
 
 const Employees = () => {
   const dispatch = useDispatch();
-  const { list: employees, isLoading, error } = useSelector((state) => state.employees);
+  const { list, isLoading, error } = useSelector((state) => state.employees);
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -24,10 +24,7 @@ const Employees = () => {
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
-      <Table
-        data={employees}
-        headers={['name', 'lastName', 'phone', 'email', 'password', 'status']}
-      />
+      <Table data={list} headers={['name', 'lastName', 'phone', 'email', 'password', 'status']} />
     </section>
   );
 };

@@ -5,7 +5,7 @@ import {
 } from './constants';
 
 const INITIAL_STATE = {
-  employees: [],
+  list: [],
   isLoading: false,
   error: ''
 };
