@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   error: ''
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const employeesReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_EMPLOYEES_PENDING:
       return {
@@ -21,19 +21,17 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: '',
         list: action.payload
       };
     case GET_EMPLOYEES_REJECTED:
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     default:
       return state;
   }
 };
 
-export default reducer;
+export default employeesReducer;
