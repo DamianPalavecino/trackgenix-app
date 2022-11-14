@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
 import Table from '../Shared/Table';
+import Spinner from '../Shared/Spinner';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -101,9 +102,7 @@ const SuperAdmins = () => {
         onClick={() => history.push('super-admins/form')}
       />
       {isPending ? (
-        <div className={styles.container}>
-          <h3>Loading...</h3>
-        </div>
+        <Spinner entity="Super Admins" />
       ) : (
         <Table
           headers={['name', 'lastName', 'email', 'status', 'actions']}

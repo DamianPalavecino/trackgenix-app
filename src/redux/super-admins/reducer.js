@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   error: ''
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+const superAdminReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_ADMINS_PENDING:
       return {
@@ -23,12 +23,11 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        list: []
+        error: action.payload
       };
     default:
       return state;
   }
 };
 
-export default reducer;
+export default superAdminReducer;

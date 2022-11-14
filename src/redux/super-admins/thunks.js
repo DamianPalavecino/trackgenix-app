@@ -1,7 +1,7 @@
 import { getAdminsPending, getAdminsFulfilled, getAdminsRejected } from './actions';
 
 export const getAdmins = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(getAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
