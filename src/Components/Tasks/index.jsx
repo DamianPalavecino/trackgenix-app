@@ -2,21 +2,20 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { getTasks } from '../../redux/tasks/thunks';
 import styles from './tasks.module.css';
 
 const Tasks = () => {
-  const [tasks, saveTasks] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
+  const listTasks = useSelector((state) => state.tasks.list);
+  const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
 
   useEffect(async () => {
-    await fetch(`${process.env.REACT_APP_API_URL}/tasks`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveTasks(response.data);
-      });
+    dispatch(getTasks());
   }, []);
 
   const editTask = (id) => {
@@ -47,7 +46,7 @@ const Tasks = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'DELETE'
     });
-    saveTasks([...tasks.filter((newListItem) => newListItem._id !== id)]);
+    dispatch(getTasks());
     toggleModal('confirm', 'success');
     history.push('/tasks');
   };
@@ -89,7 +88,7 @@ const Tasks = () => {
       <h2>Tasks</h2>
       <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
       <Table
-        data={tasks}
+        data={listTasks}
         handleDelete={openDeleteModal}
         headers={['description', 'updatedAt', 'actions']}
         editItem={editTask}
