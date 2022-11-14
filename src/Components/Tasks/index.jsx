@@ -9,7 +9,7 @@ import styles from './tasks.module.css';
 
 const Tasks = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
-  const listTasks = useSelector((state) => state.tasks.list);
+  const { list: tasksList, error } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
@@ -17,6 +17,10 @@ const Tasks = () => {
   useEffect(async () => {
     dispatch(getTasks());
   }, []);
+
+  if (error) {
+    return <h3>{error}</h3>;
+  }
 
   const editTask = (id) => {
     history.push(`tasks/form/${id}`);
@@ -88,7 +92,7 @@ const Tasks = () => {
       <h2>Tasks</h2>
       <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
       <Table
-        data={listTasks}
+        data={tasksList}
         handleDelete={openDeleteModal}
         headers={['description', 'updatedAt', 'actions']}
         editItem={editTask}
