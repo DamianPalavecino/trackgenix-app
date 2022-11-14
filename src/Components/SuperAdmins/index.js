@@ -3,22 +3,30 @@ import { useEffect, useState } from 'react';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
 import Table from '../Shared/Table';
+import Spinner from '../Shared/Spinner';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdmins } from '../../redux/super-admins/thunks';
 
 const SuperAdmins = () => {
-  const [admins, adminsList] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
+  const { list: adminsList, isPending, error } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        adminsList(response.data);
-      });
+    dispatch(getAdmins());
   }, []);
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <h3>{error}</h3>
+      </div>
+    );
+  }
 
   const editAdmin = (id) => {
     history.push(`super-admins/form/${id}`);
@@ -28,7 +36,7 @@ const SuperAdmins = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE'
     });
-    adminsList([...admins.filter((admins) => admins._id !== id)]);
+    dispatch(getAdmins());
     toggleModal('confirm', 'success');
     history.push('/super-admins');
   };
@@ -93,12 +101,16 @@ const SuperAdmins = () => {
         variant="addButton"
         onClick={() => history.push('super-admins/form')}
       />
-      <Table
-        headers={['name', 'lastName', 'email', 'status', 'actions']}
-        data={admins}
-        editItem={editAdmin}
-        handleDelete={openDeleteModal}
-      />
+      {isPending ? (
+        <Spinner entity="Super Admins" />
+      ) : (
+        <Table
+          headers={['name', 'lastName', 'email', 'status', 'actions']}
+          data={adminsList}
+          editItem={editAdmin}
+          handleDelete={openDeleteModal}
+        />
+      )}
     </div>
   );
 };
