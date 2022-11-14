@@ -3,28 +3,27 @@ import Table from '../Shared/Table';
 import styles from './projects.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjects } from '../../redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Projects = () => {
-  const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false, employees: false });
   const [employees, saveEmployees] = useState([]);
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const projectsList = useSelector((state) => state.projects.list);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveProjects(response.data);
-      });
+    dispatch(getProjects());
   }, []);
 
   const handleDelete = async (id) => {
     await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'DELETE'
     });
-    saveProjects([...projects.filter((project) => project._id !== id)]);
+    dispatch(getProjects());
     toggleModal('confirm', 'success');
     history.push('/projects');
   };
@@ -56,7 +55,7 @@ const Projects = () => {
   const showEmployeesModal = (id) => {
     history.push(`projects/${id}/employees`);
     toggleModal('employees');
-    const data = projects.find((project) => project._id === id);
+    const data = projectsList.find((project) => project._id === id);
     saveEmployees(data.employees);
   };
 
@@ -127,7 +126,7 @@ const Projects = () => {
           'status',
           'actions'
         ]}
-        data={projects}
+        data={projectsList}
         handleDelete={openDeleteModal}
         editItem={editRow}
         showInfo={showEmployeesModal}

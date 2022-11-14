@@ -2,22 +2,30 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import Spinner from '../Shared/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { getTasks } from '../../redux/tasks/thunks';
 import styles from './tasks.module.css';
 
 const Tasks = () => {
-  const [tasks, saveTasks] = useState([]);
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
+  const { list: tasksList, error, isPending } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
 
   useEffect(async () => {
-    await fetch(`${process.env.REACT_APP_API_URL}/tasks`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveTasks(response.data);
-      });
+    dispatch(getTasks());
   }, []);
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <h3>{error}</h3>
+      </div>
+    );
+  }
 
   const editTask = (id) => {
     history.push(`tasks/form/${id}`);
@@ -47,7 +55,7 @@ const Tasks = () => {
     await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'DELETE'
     });
-    saveTasks([...tasks.filter((newListItem) => newListItem._id !== id)]);
+    dispatch(getTasks());
     toggleModal('confirm', 'success');
     history.push('/tasks');
   };
@@ -88,12 +96,16 @@ const Tasks = () => {
       ></Modal>
       <h2>Tasks</h2>
       <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
-      <Table
-        data={tasks}
-        handleDelete={openDeleteModal}
-        headers={['description', 'updatedAt', 'actions']}
-        editItem={editTask}
-      />
+      {isPending ? (
+        <Spinner entity="Tasks" />
+      ) : (
+        <Table
+          data={tasksList}
+          handleDelete={openDeleteModal}
+          headers={['description', 'updatedAt', 'actions']}
+          editItem={editTask}
+        />
+      )}
     </div>
   );
 };
