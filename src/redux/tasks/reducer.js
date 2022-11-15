@@ -58,6 +58,7 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
     case DELETE_TASKS_FULFILLED:
       return {
         ...state,
+        list: [...state.list.filter((task) => task._id !== action.payload)],
         isPending: false,
         status: 'success'
       };
