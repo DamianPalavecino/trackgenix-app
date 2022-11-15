@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../Shared/Modal/Modal';
 import Button from '../../Shared/Button';
-import { postAdmins } from '../../../redux/super-admins/thunks';
+import { postAdmins, putAdmins } from '../../../redux/super-admins/thunks';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -18,31 +18,28 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status } = useSelector((state) => state.superAdmins);
+  const { message, status, request } = useSelector((state) => state.superAdmins);
   const idAdmin = params.id;
   const [showModal, setShowModal] = useState({ error: false, success: false });
-  // const [modalMessage, setModalMessage] = useState('');
 
   useEffect(async () => {
     if (idAdmin) {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
-        const data = await res.json();
-        setInput({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password,
-          status: data.data.status
-        });
-      } catch (error) {
-        alert('Admin does not exist');
-      }
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
+      const data = await res.json();
+      setInput({
+        name: data.data.name,
+        lastName: data.data.lastName,
+        email: data.data.email,
+        password: data.data.password,
+        status: data.data.status
+      });
     }
   }, []);
 
   useEffect(() => {
-    toggleModal(status);
+    if (request === 'POST' || request === 'PUT') {
+      toggleModal(status);
+    }
   }, [status]);
 
   const onChangeInput = (e) => {
@@ -62,25 +59,7 @@ const Form = () => {
 
   const onSubmit = () => {
     if (idAdmin) {
-      //This is commented because I will replace it for dispatch(putAdmins(input));
-      // input.status = input.status === 'active';
-      // const put = {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(input)
-      // };
-      // const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
-      // fetch(url, put).then(async (res) => {
-      //   const { message, error } = await res.json();
-      //   setModalMessage(message);
-      //   if (!error) {
-      //     toggleModal('success');
-      //   } else {
-      //     toggleModal('error');
-      //   }
-      // });
+      dispatch(putAdmins(idAdmin, input));
     } else {
       input.status = false;
       dispatch(postAdmins(input));
