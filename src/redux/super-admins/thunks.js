@@ -1,4 +1,12 @@
-import { getAdminsPending, getAdminsFulfilled, getAdminsRejected } from './actions';
+import {
+  getAdminsPending,
+  getAdminsFulfilled,
+  getAdminsRejected,
+  deleteAdminsPending,
+  // deleteAdminsFulfilled,
+  deleteAdminsRejected,
+  deleteAdminsFulfilled
+} from './actions';
 
 export const getAdmins = () => {
   return async (dispatch) => {
@@ -14,6 +22,23 @@ export const getAdmins = () => {
       })
       .catch((error) => {
         dispatch(getAdminsRejected(error.toString()));
+      });
+  };
+};
+
+export const deleteAdmins = (id) => {
+  return async (dispatch) => {
+    dispatch(deleteAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'DELETE'
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          dispatch(deleteAdminsFulfilled(id));
+        }
+      })
+      .catch((error) => {
+        dispatch(deleteAdminsRejected(error.toString()));
       });
   };
 };
