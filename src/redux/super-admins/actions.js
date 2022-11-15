@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_FULFILLED,
   GET_ADMINS_REJECTED,
+  GETBYID_ADMINS_PENDING,
+  GETBYID_ADMINS_FULFILLED,
+  GETBYID_ADMINS_REJECTED,
   DELETE_ADMINS_PENDING,
   DELETE_ADMINS_FULFILLED,
   DELETE_ADMINS_REJECTED,
@@ -29,6 +32,26 @@ export const getAdminsFulfilled = (data) => {
 export const getAdminsRejected = (error) => {
   return {
     type: GET_ADMINS_REJECTED,
+    payload: error
+  };
+};
+
+export const getByIdAdminsPending = () => {
+  return {
+    type: GETBYID_ADMINS_PENDING
+  };
+};
+
+export const getByIdAdminsFulfilled = (data) => {
+  return {
+    type: GETBYID_ADMINS_FULFILLED,
+    payload: data
+  };
+};
+
+export const getByIdAdminsRejected = (error) => {
+  return {
+    type: GETBYID_ADMINS_REJECTED,
     payload: error
   };
 };
