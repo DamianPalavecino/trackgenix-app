@@ -1,4 +1,11 @@
-import { GET_ADMINS_PENDING, GET_ADMINS_FULFILLED, GET_ADMINS_REJECTED } from './constants';
+import {
+  GET_ADMINS_PENDING,
+  GET_ADMINS_FULFILLED,
+  GET_ADMINS_REJECTED,
+  DELETE_ADMINS_PENDING,
+  DELETE_ADMINS_FULFILLED,
+  DELETE_ADMINS_REJECTED
+} from './constants';
 
 const INITIAL_STATE = {
   list: [],
@@ -20,6 +27,23 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_ADMINS_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+    case DELETE_ADMINS_PENDING:
+      return {
+        ...state,
+        isPending: true
+      };
+    case DELETE_ADMINS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        list: [...state.list.filter((admins) => admins._id !== action.payload)]
+      };
+    case DELETE_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
