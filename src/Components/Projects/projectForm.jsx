@@ -4,13 +4,13 @@ import Modal from '../Shared/Modal/Modal';
 import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { postProjects } from '../../redux/projects/thunks';
+import { postProjects, putProjects } from '../../redux/projects/thunks';
 
 const ProjectForm = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status } = useSelector((state) => state.projects);
+  const { message, status, request } = useSelector((state) => state.projects);
   const id = params.id;
   const url = `${process.env.REACT_APP_API_URL}/projects`;
   const [showModal, setShowModal] = useState({ success: false, error: false });
@@ -52,7 +52,9 @@ const ProjectForm = () => {
   }, []);
 
   useEffect(() => {
-    toggleModal(status);
+    if (request === 'POST' || request === 'PUT') {
+      toggleModal(status);
+    }
   }, [status]);
 
   const redirect = () => {
@@ -66,21 +68,7 @@ const ProjectForm = () => {
   const onSubmit = async () => {
     if (id) {
       inputValue.status = inputValue.status === 'active';
-      const put = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      fetch(url + '/' + id, put).then(async (response) => {
-        const { error } = await response.json();
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      dispatch(putProjects(id, inputValue));
     } else {
       dispatch(postProjects(inputValue));
     }

@@ -4,13 +4,17 @@ import {
   GET_PROJECTS_REJECTED,
   POST_PROJECTS_PENDING,
   POST_PROJECTS_FULFILLED,
-  POST_PROJECTS_REJECTED
+  POST_PROJECTS_REJECTED,
+  PUT_PROJECTS_PENDING,
+  PUT_PROJECTS_FULFILLED,
+  PUT_PROJECTS_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
   list: [],
   isPending: false,
   message: '',
+  request: '',
   status: ''
 };
 
@@ -20,23 +24,27 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: true,
-        status: ''
+        request: 'GET',
+        status: 'pending'
       };
     case GET_PROJECTS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        list: action.payload
+        list: action.payload,
+        status: 'success'
       };
     case GET_PROJECTS_REJECTED:
       return {
         ...state,
         isPending: false,
-        message: action.payload
+        message: action.payload,
+        status: 'error'
       };
     case POST_PROJECTS_PENDING:
       return {
         ...state,
+        request: 'POST',
         isPending: true,
         status: 'pending'
       };
@@ -50,6 +58,27 @@ const reducer = (state = INITIAL_STATE, action) => {
     case POST_PROJECTS_REJECTED:
       return {
         ...state,
+        message: action.payload,
+        status: 'error'
+      };
+    case PUT_PROJECTS_PENDING:
+      return {
+        ...state,
+        request: 'PUT',
+        isPending: true,
+        status: 'pending'
+      };
+    case PUT_PROJECTS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        status: 'success'
+      };
+    case PUT_PROJECTS_REJECTED:
+      return {
+        ...state,
+        isPending: false,
         message: action.payload,
         status: 'error'
       };
