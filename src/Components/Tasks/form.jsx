@@ -3,7 +3,7 @@ import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
-import { postTasks } from '../../redux/tasks/thunks';
+import { postTasks, putTasks } from '../../redux/tasks/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
@@ -37,7 +37,7 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-    if (request === 'POST') {
+    if (request === 'POST' || request === 'PUT') {
       toggleModal(status);
     }
   }, [status]);
@@ -59,23 +59,7 @@ const Form = () => {
 
   const onSubmit = () => {
     if (taskId) {
-      // const putOptions = {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(inputValue)
-      // };
-      // const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      // fetch(url, putOptions).then(async (response) => {
-      //   const { message, error } = await response.json();
-      //   setMessage(message);
-      //   if (!error) {
-      //     toggleModal('success');
-      //   } else {
-      //     toggleModal('error');
-      //   }
-      // });
+      dispatch(putTasks(taskId, inputValue));
     } else {
       dispatch(postTasks(inputValue));
     }

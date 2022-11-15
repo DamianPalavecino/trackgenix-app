@@ -7,7 +7,10 @@ import {
   DELETE_TASKS_REJECTED,
   POST_TASKS_PENDING,
   POST_TASKS_FULFILLED,
-  POST_TASKS_REJECTED
+  POST_TASKS_REJECTED,
+  PUT_TASKS_PENDING,
+  PUT_TASKS_FULFILLED,
+  PUT_TASKS_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
@@ -77,6 +80,27 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
         message: action.payload
       };
     case POST_TASKS_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        status: 'error',
+        message: action.payload
+      };
+    case PUT_TASKS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending',
+        request: 'PUT'
+      };
+    case PUT_TASKS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        status: 'success',
+        message: action.payload
+      };
+    case PUT_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
