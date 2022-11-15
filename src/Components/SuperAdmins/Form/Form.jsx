@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../Shared/Modal/Modal';
 import Button from '../../Shared/Button';
-import { postAdmins, putAdmins } from '../../../redux/super-admins/thunks';
+import { getAdminsById, postAdmins, putAdmins } from '../../../redux/super-admins/thunks';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -18,23 +18,27 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status, request } = useSelector((state) => state.superAdmins);
+  const { message, status, request, list } = useSelector((state) => state.superAdmins);
   const idAdmin = params.id;
   const [showModal, setShowModal] = useState({ error: false, success: false });
 
   useEffect(async () => {
     if (idAdmin) {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
-      const data = await res.json();
-      setInput({
-        name: data.data.name,
-        lastName: data.data.lastName,
-        email: data.data.email,
-        password: data.data.password,
-        status: data.data.status
-      });
+      dispatch(getAdminsById(idAdmin));
     }
   }, []);
+
+  useEffect(() => {
+    if (request === 'GETBYID') {
+      setInput({
+        name: list.name,
+        lastName: list.lastName,
+        email: list.email,
+        password: list.password,
+        status: list.status
+      });
+    }
+  }, [list]);
 
   useEffect(() => {
     if (request === 'POST' || request === 'PUT') {
