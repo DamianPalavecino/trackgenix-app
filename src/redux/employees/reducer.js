@@ -1,16 +1,21 @@
 import {
   GET_EMPLOYEES_PENDING,
-  GET_EMPLOYEES_REJECTED,
   GET_EMPLOYEES_FULFILLED,
+  GET_EMPLOYEES_REJECTED,
   DELETE_EMPLOYEES_PENDING,
+  DELETE_EMPLOYEES_FULFILLED,
   DELETE_EMPLOYEES_REJECTED,
-  DELETE_EMPLOYEES_FULFILLED
+  PUT_EMPLOYEES_PENDING,
+  PUT_EMPLOYEES_FULFILLED,
+  PUT_EMPLOYEES_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: ''
+  error: '',
+  status: '',
+  request: ''
 };
 
 const employeesReducer = (state = INITIAL_STATE, action) => {
@@ -18,7 +23,9 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case GET_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true
+        isPending: true,
+        status: 'pending',
+        request: 'GET'
       };
     case GET_EMPLOYEES_FULFILLED:
       return {
@@ -35,7 +42,8 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case DELETE_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true
+        isPending: true,
+        request: 'DELETE'
       };
     case DELETE_EMPLOYEES_FULFILLED:
       return {
@@ -48,6 +56,27 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         error: action.payload
+      };
+    case PUT_EMPLOYEES_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending',
+        request: 'PUT'
+      };
+    case PUT_EMPLOYEES_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        status: 'success'
+      };
+    case PUT_EMPLOYEES_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        status: 'error'
       };
     default:
       return state;

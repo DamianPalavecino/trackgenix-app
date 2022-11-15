@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal/Modal';
 import styles from './form.module.css';
+import { editEmployee } from '../../../redux/employees/thunks';
 
 const AddEmployee = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
   const idEdit = params.id;
-  const url = `${process.env.REACT_APP_API_URL}/employees/`;
   const [showModal, setShowModal] = useState({ success: false, error: false });
-  const [message, setMessage] = useState('');
-
+  const { message, status, request } = useSelector((state) => state.employees);
   const redirect = () => {
     history.goBack();
   };
@@ -42,50 +43,36 @@ const AddEmployee = () => {
     }, []);
   }
 
-  const editEmployee = async () => {
-    const urlEdit = `${process.env.REACT_APP_API_URL}/employees/${idEdit}`;
-    userInput.status = userInput.status === 'active';
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(userInput)
-    };
-    try {
-      const response = await fetch(urlEdit, options);
-      const { message, error } = await response.json();
-      setMessage(message);
-      if (!error) {
-        toggleModal('success');
-      } else {
-        toggleModal('error');
-      }
-    } catch (error) {
-      alert('Error');
+  useEffect(() => {
+    if (request === 'POST' || request === 'PUT') {
+      toggleModal(status);
     }
+  }, [status]);
+
+  const edit = () => {
+    dispatch(editEmployee(idEdit, userInput));
   };
 
   const addEmployee = async () => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(userInput)
-    };
-    try {
-      const response = await fetch(url, options);
-      const { message, error } = await response.json();
-      setMessage(message);
-      if (!error) {
-        toggleModal('success');
-      } else {
-        toggleModal('error');
-      }
-    } catch (error) {
-      alert('Error');
-    }
+    // const options = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify(userInput)
+    // };
+    // try {
+    //   const response = await fetch(url, options);
+    //   const { message, error } = await response.json();
+    //   setMessage(message);
+    //   if (!error) {
+    //     toggleModal('success');
+    //   } else {
+    //     toggleModal('error');
+    //   }
+    // } catch (error) {
+    //   alert('Error');
+    // }
   };
 
   const onChange = (e) => {
@@ -139,7 +126,7 @@ const AddEmployee = () => {
             onChange={onChange}
             value={userInput.lastName || ''}
           ></input>
-          <label className={styles.label} htmlFor="phone">
+          <label clasmaximilianoooooosName={styles.label} htmlFor="phone">
             Phone
           </label>
           <input
@@ -185,7 +172,7 @@ const AddEmployee = () => {
             <Button
               variant={idEdit ? 'editButton' : 'addButton'}
               text={idEdit ? 'Edit' : 'Create'}
-              onClick={idEdit ? editEmployee : addEmployee}
+              onClick={idEdit ? edit : addEmployee}
             />
           </div>
         </div>

@@ -4,7 +4,10 @@ import {
   getEmployeesRejected,
   deleteEmployeesFulfilled,
   deleteEmployeesPending,
-  deleteEmployeesRejected
+  deleteEmployeesRejected,
+  putEmployeesFulfilled,
+  putEmployeesPending,
+  putEmployeesRejected
 } from './actions';
 
 export const getEmployees = () => {
@@ -41,5 +44,27 @@ export const deleteEmployee = (id) => {
         }
       })
       .catch((error) => dispatch(deleteEmployeesRejected(error.toString())));
+  };
+};
+
+export const editEmployee = (id, data) => {
+  return (dispatch) => {
+    dispatch(putEmployeesPending());
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(putEmployeesFulfilled(response.message));
+        }
+      })
+      .catch((error) => dispatch(putEmployeesRejected(error.toString())));
   };
 };
