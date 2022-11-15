@@ -2,6 +2,9 @@ import {
   getAdminsPending,
   getAdminsFulfilled,
   getAdminsRejected,
+  getByIdAdminsPending,
+  getByIdAdminsFulfilled,
+  getByIdAdminsRejected,
   deleteAdminsPending,
   deleteAdminsFulfilled,
   deleteAdminsRejected,
@@ -24,6 +27,24 @@ export const getAdmins = () => {
       })
       .catch((error) => {
         dispatch(getAdminsRejected(error.toString()));
+      });
+  };
+};
+
+export const getAdminsById = (id) => {
+  return async (dispatch) => {
+    dispatch(getByIdAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.data);
+        } else {
+          dispatch(getByIdAdminsFulfilled(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getByIdAdminsRejected(error.toString()));
       });
   };
 };
