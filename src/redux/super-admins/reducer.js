@@ -4,13 +4,17 @@ import {
   GET_ADMINS_REJECTED,
   DELETE_ADMINS_PENDING,
   DELETE_ADMINS_FULFILLED,
-  DELETE_ADMINS_REJECTED
+  DELETE_ADMINS_REJECTED,
+  POST_ADMINS_PENDING,
+  POST_ADMINS_FULFILLED,
+  POST_ADMINS_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: ''
+  error: '',
+  status: ''
 };
 
 const superAdminReducer = (state = INITIAL_STATE, action) => {
@@ -18,7 +22,8 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
     case GET_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true
+        isPending: true,
+        status: 'pending'
       };
     case GET_ADMINS_FULFILLED:
       return {
@@ -48,6 +53,25 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         error: action.payload
+      };
+    case POST_ADMINS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending'
+      };
+    case POST_ADMINS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        status: 'success'
+      };
+    case POST_ADMINS_REJECTED:
+      return {
+        ...state,
+        message: action.payload,
+        status: 'error'
       };
     default:
       return state;
