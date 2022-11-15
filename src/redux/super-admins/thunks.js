@@ -68,3 +68,27 @@ export const postAdmins = (newAdmin) => {
       });
   };
 };
+
+export const putAdmins = (id, editAdmin) => {
+  return async (dispatch) => {
+    dispatch(postAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editAdmin)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(postAdminsFulfilled(response.message));
+        }
+      })
+      .catch((error) => {
+        dispatch(postAdminsRejected(error.toString()));
+      });
+  };
+};
