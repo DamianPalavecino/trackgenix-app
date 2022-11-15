@@ -7,7 +7,13 @@ import {
   DELETE_EMPLOYEES_REJECTED,
   PUT_EMPLOYEES_PENDING,
   PUT_EMPLOYEES_FULFILLED,
-  PUT_EMPLOYEES_REJECTED
+  PUT_EMPLOYEES_REJECTED,
+  POST_EMPLOYEES_PENDING,
+  POST_EMPLOYEES_FULFILLED,
+  POST_EMPLOYEES_REJECTED,
+  GETBYID_EMPLOYEES_PENDING,
+  GETBYID_EMPLOYEES_FULFILLED,
+  GETBYID_EMPLOYEES_REJECTED
 } from './constants';
 
 export const getEmployeesPending = () => {
@@ -66,6 +72,46 @@ export const putEmployeesFulfilled = (message) => {
 export const putEmployeesRejected = (error) => {
   return {
     type: PUT_EMPLOYEES_REJECTED,
+    payload: error
+  };
+};
+
+export const postEmployeesPending = () => {
+  return {
+    type: POST_EMPLOYEES_PENDING
+  };
+};
+
+export const postEmployeesFulfilled = (message) => {
+  return {
+    type: POST_EMPLOYEES_FULFILLED,
+    payload: message
+  };
+};
+
+export const postEmployeesRejected = (error) => {
+  return {
+    type: POST_EMPLOYEES_REJECTED,
+    payload: error
+  };
+};
+
+export const getByIdEmployeesPending = () => {
+  return {
+    type: GETBYID_EMPLOYEES_PENDING
+  };
+};
+
+export const getByIdEmployeesFulfilled = (data) => {
+  return {
+    type: GETBYID_EMPLOYEES_FULFILLED,
+    payload: data
+  };
+};
+
+export const getByIdEmployeesRejected = (error) => {
+  return {
+    type: GETBYID_EMPLOYEES_REJECTED,
     payload: error
   };
 };

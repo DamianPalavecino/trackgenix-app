@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../Shared/Button';
 import Modal from '../../Shared/Modal/Modal';
 import styles from './form.module.css';
-import { editEmployee } from '../../../redux/employees/thunks';
+import { editEmployee, postEmployee, getByIdEmployees } from '../../../redux/employees/thunks';
 
 const AddEmployee = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const AddEmployee = () => {
   const history = useHistory();
   const idEdit = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
-  const { message, status, request } = useSelector((state) => state.employees);
+  const { message, status, request, list } = useSelector((state) => state.employees);
   const redirect = () => {
     history.goBack();
   };
@@ -26,22 +26,24 @@ const AddEmployee = () => {
     status: false
   });
 
-  if (idEdit) {
-    useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}/employees/${idEdit}`)
-        .then((response) => response.json())
-        .then((response) => {
-          setUserInput({
-            name: response.data.name,
-            lastName: response.data.lastName,
-            email: response.data.email,
-            phone: response.data.phone,
-            password: response.data.password,
-            status: response.data.status
-          });
-        });
-    }, []);
-  }
+  useEffect(async () => {
+    if (idEdit) {
+      dispatch(getByIdEmployees(idEdit));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (request === 'GETBYID') {
+      setUserInput({
+        name: list.name,
+        lastName: list.lastName,
+        email: list.email,
+        phone: list.phone,
+        password: list.password,
+        status: list.status
+      });
+    }
+  }, [list]);
 
   useEffect(() => {
     if (request === 'POST' || request === 'PUT') {
@@ -50,29 +52,12 @@ const AddEmployee = () => {
   }, [status]);
 
   const edit = () => {
+    userInput.status = userInput.status === 'active';
     dispatch(editEmployee(idEdit, userInput));
   };
 
-  const addEmployee = async () => {
-    // const options = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-type': 'application/json'
-    //   },
-    //   body: JSON.stringify(userInput)
-    // };
-    // try {
-    //   const response = await fetch(url, options);
-    //   const { message, error } = await response.json();
-    //   setMessage(message);
-    //   if (!error) {
-    //     toggleModal('success');
-    //   } else {
-    //     toggleModal('error');
-    //   }
-    // } catch (error) {
-    //   alert('Error');
-    // }
+  const addEmployee = () => {
+    dispatch(postEmployee(userInput));
   };
 
   const onChange = (e) => {
@@ -126,7 +111,7 @@ const AddEmployee = () => {
             onChange={onChange}
             value={userInput.lastName || ''}
           ></input>
-          <label clasmaximilianoooooosName={styles.label} htmlFor="phone">
+          <label className={styles.label} htmlFor="phone">
             Phone
           </label>
           <input

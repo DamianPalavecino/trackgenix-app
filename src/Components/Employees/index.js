@@ -81,21 +81,17 @@ const Employees = () => {
         variant={'successModal'}
       />
       <h2>Employees</h2>
+      <Button
+        text="Add employee +"
+        variant="addButton"
+        onClick={() => history.push('employees/form')}
+      ></Button>
       {isPending ? (
         <Spinner entity="Employees" />
       ) : (
         <Table
           data={list}
-          headers={[
-            'name',
-            'lastName',
-            'phone',
-            'email',
-            'password',
-            'status',
-            'projects',
-            'actions'
-          ]}
+          headers={['name', 'lastName', 'phone', 'email', 'password', 'status', 'actions']}
           handleDelete={openDeleteModal}
           editItem={editEmployee}
         />
