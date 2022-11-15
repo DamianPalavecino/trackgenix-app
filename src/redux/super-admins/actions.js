@@ -7,7 +7,10 @@ import {
   DELETE_ADMINS_REJECTED,
   POST_ADMINS_PENDING,
   POST_ADMINS_FULFILLED,
-  POST_ADMINS_REJECTED
+  POST_ADMINS_REJECTED,
+  PUT_ADMINS_PENDING,
+  PUT_ADMINS_FULFILLED,
+  PUT_ADMINS_REJECTED
 } from './constants';
 
 export const getAdminsPending = () => {
@@ -64,6 +67,26 @@ export const postAdminsFulfilled = (message) => {
 };
 
 export const postAdminsRejected = (error) => {
+  return {
+    type: PUT_ADMINS_REJECTED,
+    payload: error
+  };
+};
+
+export const putAdminsPending = () => {
+  return {
+    type: PUT_ADMINS_PENDING
+  };
+};
+
+export const putAdminsFulfilled = (message) => {
+  return {
+    type: PUT_ADMINS_FULFILLED,
+    payload: message
+  };
+};
+
+export const putAdminsRejected = (error) => {
   return {
     type: POST_ADMINS_REJECTED,
     payload: error
