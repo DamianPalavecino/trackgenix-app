@@ -2,6 +2,9 @@ import {
   GET_ADMINS_PENDING,
   GET_ADMINS_FULFILLED,
   GET_ADMINS_REJECTED,
+  GETBYID_ADMINS_PENDING,
+  GETBYID_ADMINS_FULFILLED,
+  GETBYID_ADMINS_REJECTED,
   DELETE_ADMINS_PENDING,
   DELETE_ADMINS_FULFILLED,
   DELETE_ADMINS_REJECTED,
@@ -37,6 +40,25 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_ADMINS_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload
+      };
+    case GETBYID_ADMINS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending',
+        request: 'GETBYID'
+      };
+    case GETBYID_ADMINS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        list: action.payload
+      };
+    case GETBYID_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
