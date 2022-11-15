@@ -1,9 +1,17 @@
-import { GET_PROJECTS_PENDING, GET_PROJECTS_FULFILLED, GET_PROJECTS_REJECTED } from './constants';
+import {
+  GET_PROJECTS_PENDING,
+  GET_PROJECTS_FULFILLED,
+  GET_PROJECTS_REJECTED,
+  POST_PROJECTS_PENDING,
+  POST_PROJECTS_FULFILLED,
+  POST_PROJECTS_REJECTED
+} from './constants';
 
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: ''
+  message: '',
+  status: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -11,7 +19,8 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_PROJECTS_PENDING:
       return {
         ...state,
-        isPending: true
+        isPending: true,
+        status: ''
       };
     case GET_PROJECTS_FULFILLED:
       return {
@@ -23,8 +32,26 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        list: []
+        message: action.payload
+      };
+    case POST_PROJECTS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending'
+      };
+    case POST_PROJECTS_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        status: 'success'
+      };
+    case POST_PROJECTS_REJECTED:
+      return {
+        ...state,
+        message: action.payload,
+        status: 'error'
       };
     default:
       return state;

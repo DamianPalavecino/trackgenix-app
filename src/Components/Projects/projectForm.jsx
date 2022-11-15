@@ -3,14 +3,17 @@ import styles from './projectForm.module.css';
 import Modal from '../Shared/Modal/Modal';
 import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { postProjects } from '../../redux/projects/thunks';
 
 const ProjectForm = () => {
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const { message, status } = useSelector((state) => state.projects);
   const id = params.id;
   const url = `${process.env.REACT_APP_API_URL}/projects`;
   const [showModal, setShowModal] = useState({ success: false, error: false });
-  const [message, setMessage] = useState('');
   const [inputValue, setInputValue] = useState({
     name: '',
     startDate: '',
@@ -48,6 +51,10 @@ const ProjectForm = () => {
     }
   }, []);
 
+  useEffect(() => {
+    toggleModal(status);
+  }, [status]);
+
   const redirect = () => {
     history.goBack();
   };
@@ -56,7 +63,7 @@ const ProjectForm = () => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (id) {
       inputValue.status = inputValue.status === 'active';
       const put = {
@@ -67,8 +74,7 @@ const ProjectForm = () => {
         body: JSON.stringify(inputValue)
       };
       fetch(url + '/' + id, put).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
+        const { error } = await response.json();
         if (!error) {
           toggleModal('success');
         } else {
@@ -76,22 +82,7 @@ const ProjectForm = () => {
         }
       });
     } else {
-      const post = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      fetch(`${process.env.REACT_APP_API_URL}/projects`, post).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      dispatch(postProjects(inputValue));
     }
   };
 
