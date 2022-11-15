@@ -10,7 +10,10 @@ import {
   POST_TASKS_REJECTED,
   PUT_TASKS_PENDING,
   PUT_TASKS_FULFILLED,
-  PUT_TASKS_REJECTED
+  PUT_TASKS_REJECTED,
+  GETBYID_TASKS_PENDING,
+  GETBYID_TASKS_FULFILLED,
+  GETBYID_TASKS_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
@@ -106,6 +109,27 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         status: 'error',
         message: action.payload
+      };
+    case GETBYID_TASKS_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending',
+        request: 'GETBYID'
+      };
+    case GETBYID_TASKS_FULFILLED:
+      return {
+        ...state,
+        list: action.payload,
+        isPending: false,
+        status: 'success'
+      };
+    case GETBYID_TASKS_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        error: action.payload,
+        status: 'error'
       };
     default:
       return state;

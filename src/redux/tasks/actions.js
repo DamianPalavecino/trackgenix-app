@@ -10,7 +10,10 @@ import {
   POST_TASKS_REJECTED,
   PUT_TASKS_PENDING,
   PUT_TASKS_FULFILLED,
-  PUT_TASKS_REJECTED
+  PUT_TASKS_REJECTED,
+  GETBYID_TASKS_PENDING,
+  GETBYID_TASKS_FULFILLED,
+  GETBYID_TASKS_REJECTED
 } from './constants';
 
 export const getTasksPending = () => {
@@ -89,6 +92,26 @@ export const putTasksFulfilled = (message) => {
 export const putTasksRejected = (error) => {
   return {
     type: PUT_TASKS_REJECTED,
+    payload: error
+  };
+};
+
+export const getByIdTasksPending = () => {
+  return {
+    type: GETBYID_TASKS_PENDING
+  };
+};
+
+export const getByIdTasksFulfilled = (data) => {
+  return {
+    type: GETBYID_TASKS_FULFILLED,
+    payload: data
+  };
+};
+
+export const getByIdTasksRejected = (error) => {
+  return {
+    type: GETBYID_TASKS_REJECTED,
     payload: error
   };
 };

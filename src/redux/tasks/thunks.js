@@ -10,7 +10,10 @@ import {
   postTasksRejected,
   putTasksPending,
   putTasksFulfilled,
-  putTasksRejected
+  putTasksRejected,
+  getByIdTasksPending,
+  getByIdTasksFulfilled,
+  getByIdTasksRejected
 } from './actions';
 
 export const getTasks = () => {
@@ -92,6 +95,24 @@ export const putTasks = (id, editedTask) => {
       })
       .catch((error) => {
         dispatch(putTasksRejected(error.toString()));
+      });
+  };
+};
+
+export const getTasksById = (id) => {
+  return async (dispatch) => {
+    dispatch(getByIdTasksPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(getByIdTasksFulfilled(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getByIdTasksRejected(error.toString()));
       });
   };
 };

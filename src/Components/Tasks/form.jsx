@@ -3,7 +3,7 @@ import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
-import { postTasks, putTasks } from '../../redux/tasks/thunks';
+import { postTasks, putTasks, getTasksById } from '../../redux/tasks/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
@@ -16,7 +16,7 @@ const Form = () => {
     error: false
   });
 
-  const { request, status, message } = useSelector((state) => state.tasks);
+  const { request, status, message, list: task } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
@@ -24,17 +24,17 @@ const Form = () => {
 
   useEffect(async () => {
     if (taskId) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
-        const data = await response.json();
-        setInputValue({
-          description: data.data.description
-        });
-      } catch (err) {
-        alert('There is no task with id provided');
-      }
+      dispatch(getTasksById(taskId));
     }
   }, []);
+
+  useEffect(() => {
+    if (request === 'GETBYID') {
+      setInputValue({
+        description: task.description
+      });
+    }
+  }, [task]);
 
   useEffect(() => {
     if (request === 'POST' || request === 'PUT') {
