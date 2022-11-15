@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../Shared/Modal/Modal';
 import Button from '../../Shared/Button';
+import { postAdmins } from '../../../redux/super-admins/thunks';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -15,9 +17,11 @@ const Form = () => {
 
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const { message, status } = useSelector((state) => state.superAdmins);
   const idAdmin = params.id;
   const [showModal, setShowModal] = useState({ error: false, success: false });
-  const [modalMessage, setModalMessage] = useState('');
+  // const [modalMessage, setModalMessage] = useState('');
 
   useEffect(async () => {
     if (idAdmin) {
@@ -37,6 +41,10 @@ const Form = () => {
     }
   }, []);
 
+  useEffect(() => {
+    toggleModal(status);
+  }, [status]);
+
   const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -54,43 +62,28 @@ const Form = () => {
 
   const onSubmit = () => {
     if (idAdmin) {
-      input.status = input.status === 'active';
-      const put = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(input)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
-      fetch(url, put).then(async (res) => {
-        const { message, error } = await res.json();
-        setModalMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      //This is commented because I will replace it for dispatch(putAdmins(input));
+      // input.status = input.status === 'active';
+      // const put = {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(input)
+      // };
+      // const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
+      // fetch(url, put).then(async (res) => {
+      //   const { message, error } = await res.json();
+      //   setModalMessage(message);
+      //   if (!error) {
+      //     toggleModal('success');
+      //   } else {
+      //     toggleModal('error');
+      //   }
+      // });
     } else {
       input.status = false;
-      const post = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(input)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins`;
-      fetch(url, post).then(async (res) => {
-        const { message, error } = await res.json();
-        setModalMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      dispatch(postAdmins(input));
     }
   };
 
@@ -99,7 +92,7 @@ const Form = () => {
       <Modal
         showModal={showModal.error}
         closeModal={() => toggleModal('error')}
-        text={modalMessage}
+        text={message}
         variant="errorModal"
       />
       <Modal
@@ -108,7 +101,7 @@ const Form = () => {
           toggleModal('success');
           redirect();
         }}
-        text={modalMessage}
+        text={message}
         variant="successModal"
       />
       <h2>{idAdmin ? 'Edit' : 'Create'} Admin</h2>
