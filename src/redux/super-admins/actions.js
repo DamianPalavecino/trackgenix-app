@@ -62,10 +62,10 @@ export const deleteAdminsPending = () => {
   };
 };
 
-export const deleteAdminsFulfilled = (data) => {
+export const deleteAdminsFulfilled = (id) => {
   return {
     type: DELETE_ADMINS_FULFILLED,
-    payload: data
+    payload: id
   };
 };
 
