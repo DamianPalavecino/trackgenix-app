@@ -3,9 +3,11 @@ import {
   getAdminsFulfilled,
   getAdminsRejected,
   deleteAdminsPending,
-  // deleteAdminsFulfilled,
+  deleteAdminsFulfilled,
   deleteAdminsRejected,
-  deleteAdminsFulfilled
+  postAdminsPending,
+  postAdminsFulfilled,
+  postAdminsRejected
 } from './actions';
 
 export const getAdmins = () => {
@@ -39,6 +41,30 @@ export const deleteAdmins = (id) => {
       })
       .catch((error) => {
         dispatch(deleteAdminsRejected(error.toString()));
+      });
+  };
+};
+
+export const postAdmins = (newAdmin) => {
+  return async (dispatch) => {
+    dispatch(postAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newAdmin)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(postAdminsFulfilled(response.message));
+        }
+      })
+      .catch((error) => {
+        dispatch(postAdminsRejected(error.toString()));
       });
   };
 };
