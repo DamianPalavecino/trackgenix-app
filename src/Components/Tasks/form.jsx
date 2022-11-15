@@ -3,6 +3,8 @@ import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import { postTasks } from '../../redux/tasks/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
@@ -14,8 +16,8 @@ const Form = () => {
     error: false
   });
 
-  const [message, setMessage] = useState('');
-
+  const { request, status, message } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
   const taskId = params.id;
@@ -34,6 +36,12 @@ const Form = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (request === 'POST') {
+      toggleModal(status);
+    }
+  }, [status]);
+
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
@@ -51,41 +59,25 @@ const Form = () => {
 
   const onSubmit = () => {
     if (taskId) {
-      const putOptions = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      fetch(url, putOptions).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      // const putOptions = {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(inputValue)
+      // };
+      // const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
+      // fetch(url, putOptions).then(async (response) => {
+      //   const { message, error } = await response.json();
+      //   setMessage(message);
+      //   if (!error) {
+      //     toggleModal('success');
+      //   } else {
+      //     toggleModal('error');
+      //   }
+      // });
     } else {
-      const postOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/tasks`;
-      fetch(url, postOptions).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      dispatch(postTasks(inputValue));
     }
   };
   return (

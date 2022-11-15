@@ -4,7 +4,10 @@ import {
   getTasksRejected,
   deleteTasksPending,
   deleteTasksFulfilled,
-  deleteTasksRejected
+  deleteTasksRejected,
+  postTasksPending,
+  postTasksFulfilled,
+  postTasksRejected
 } from './actions';
 
 export const getTasks = () => {
@@ -38,6 +41,30 @@ export const deleteTasks = (id) => {
       })
       .catch((error) => {
         dispatch(deleteTasksRejected(error.toString()));
+      });
+  };
+};
+
+export const postTasks = (newTask) => {
+  return async (dispatch) => {
+    dispatch(postTasksPending());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newTask)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(postTasksFulfilled(response.message));
+        }
+      })
+      .catch((error) => {
+        dispatch(postTasksRejected(error.toString()));
       });
   };
 };
