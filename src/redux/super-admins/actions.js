@@ -4,7 +4,10 @@ import {
   GET_ADMINS_REJECTED,
   DELETE_ADMINS_PENDING,
   DELETE_ADMINS_FULFILLED,
-  DELETE_ADMINS_REJECTED
+  DELETE_ADMINS_REJECTED,
+  POST_ADMINS_PENDING,
+  POST_ADMINS_FULFILLED,
+  POST_ADMINS_REJECTED
 } from './constants';
 
 export const getAdminsPending = () => {
@@ -43,6 +46,26 @@ export const deleteAdminsFulfilled = (data) => {
 export const deleteAdminsRejected = (error) => {
   return {
     type: DELETE_ADMINS_REJECTED,
+    payload: error
+  };
+};
+
+export const postAdminsPending = () => {
+  return {
+    type: POST_ADMINS_PENDING
+  };
+};
+
+export const postAdminsFulfilled = (message) => {
+  return {
+    type: POST_ADMINS_FULFILLED,
+    payload: message
+  };
+};
+
+export const postAdminsRejected = (error) => {
+  return {
+    type: POST_ADMINS_REJECTED,
     payload: error
   };
 };
