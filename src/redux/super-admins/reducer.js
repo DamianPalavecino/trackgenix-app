@@ -37,13 +37,15 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        list: action.payload
+        list: action.payload,
+        status: 'success'
       };
     case GET_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        error: action.payload,
+        status: 'error'
       };
     case GETBYID_ADMINS_PENDING:
       return {
@@ -56,31 +58,36 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        list: action.payload
+        list: action.payload,
+        status: 'success'
       };
     case GETBYID_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        error: action.payload,
+        status: 'error'
       };
     case DELETE_ADMINS_PENDING:
       return {
         ...state,
         isPending: true,
+        status: 'pending',
         request: 'DELETE'
       };
     case DELETE_ADMINS_FULFILLED:
       return {
         ...state,
         list: [...state.list.filter((admins) => admins._id !== action.payload)],
-        isPending: false
+        isPending: false,
+        status: 'success'
       };
     case DELETE_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        error: action.payload,
+        status: 'error'
       };
     case POST_ADMINS_PENDING:
       return {
