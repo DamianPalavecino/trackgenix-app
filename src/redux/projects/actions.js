@@ -10,7 +10,10 @@ import {
   PUT_PROJECTS_REJECTED,
   GETBYID_PROJECT_PENDING,
   GETBYID_PROJECT_FULFILLED,
-  GETBYID_PROJECT_REJECTED
+  GETBYID_PROJECT_REJECTED,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_FULFILLED,
+  DELETE_PROJECT_REJECTED
 } from './constants';
 
 export const getProjectsPending = () => {
@@ -89,6 +92,26 @@ export const getByIdProjectFulfilled = (data) => {
 export const getByIdProjectRejected = (error) => {
   return {
     type: GETBYID_PROJECT_REJECTED,
+    payload: error
+  };
+};
+
+export const deleteProjectPending = () => {
+  return {
+    type: DELETE_PROJECT_PENDING
+  };
+};
+
+export const deleteProjectFulfilled = (id) => {
+  return {
+    type: DELETE_PROJECT_FULFILLED,
+    payload: id
+  };
+};
+
+export const deleteProjectRejected = (error) => {
+  return {
+    type: DELETE_PROJECT_REJECTED,
     payload: error
   };
 };

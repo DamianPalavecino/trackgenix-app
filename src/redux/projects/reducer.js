@@ -10,7 +10,10 @@ import {
   PUT_PROJECTS_REJECTED,
   GETBYID_PROJECT_REJECTED,
   GETBYID_PROJECT_FULFILLED,
-  GETBYID_PROJECT_PENDING
+  GETBYID_PROJECT_PENDING,
+  DELETE_PROJECT_PENDING,
+  DELETE_PROJECT_FULFILLED,
+  DELETE_PROJECT_REJECTED
 } from './constants';
 
 const INITIAL_STATE = {
@@ -105,6 +108,24 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         status: 'error',
+        message: action.payload
+      };
+    case DELETE_PROJECT_PENDING:
+      return {
+        ...state,
+        isPending: true,
+        status: 'pending'
+      };
+    case DELETE_PROJECT_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        list: [...state.list.filter((project) => project._id !== action.payload)]
+      };
+    case DELETE_PROJECT_REJECTED:
+      return {
+        ...state,
+        isPending: false,
         message: action.payload
       };
     default:

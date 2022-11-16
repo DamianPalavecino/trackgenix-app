@@ -5,7 +5,7 @@ import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
 import Spinner from '../Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProjects } from '../../redux/projects/thunks';
+import { getProjects, deleteProject } from '../../redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Projects = () => {
@@ -20,11 +20,8 @@ const Projects = () => {
     dispatch(getProjects());
   }, []);
 
-  const handleDelete = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE'
-    });
-    dispatch(getProjects());
+  const handleDelete = (id) => {
+    dispatch(deleteProject(id));
     toggleModal('confirm', 'success');
     history.push('/projects');
   };
