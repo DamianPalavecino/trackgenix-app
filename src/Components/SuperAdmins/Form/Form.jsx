@@ -18,7 +18,7 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status, request, list } = useSelector((state) => state.superAdmins);
+  const { message, status, request, list: admins } = useSelector((state) => state.superAdmins);
   const idAdmin = params.id;
   const [showModal, setShowModal] = useState({ error: false, success: false });
 
@@ -31,14 +31,14 @@ const Form = () => {
   useEffect(() => {
     if (request === 'GETBYID') {
       setInput({
-        name: list.name,
-        lastName: list.lastName,
-        email: list.email,
-        password: list.password,
-        status: list.status
+        name: admins.name,
+        lastName: admins.lastName,
+        email: admins.email,
+        password: admins.password,
+        status: admins.status
       });
     }
-  }, [list]);
+  }, [admins]);
 
   useEffect(() => {
     if (request === 'POST' || request === 'PUT') {
