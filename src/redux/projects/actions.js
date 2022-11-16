@@ -7,7 +7,10 @@ import {
   POST_PROJECTS_REJECTED,
   PUT_PROJECTS_PENDING,
   PUT_PROJECTS_FULFILLED,
-  PUT_PROJECTS_REJECTED
+  PUT_PROJECTS_REJECTED,
+  GETBYID_PROJECT_PENDING,
+  GETBYID_PROJECT_FULFILLED,
+  GETBYID_PROJECT_REJECTED
 } from './constants';
 
 export const getProjectsPending = () => {
@@ -66,6 +69,26 @@ export const putProjectsFulfilled = (message) => {
 export const putProjectsRejected = (error) => {
   return {
     type: PUT_PROJECTS_REJECTED,
+    payload: error
+  };
+};
+
+export const getByIdProjectPending = () => {
+  return {
+    type: GETBYID_PROJECT_PENDING
+  };
+};
+
+export const getByIdProjectFulfilled = (data) => {
+  return {
+    type: GETBYID_PROJECT_FULFILLED,
+    payload: data
+  };
+};
+
+export const getByIdProjectRejected = (error) => {
+  return {
+    type: GETBYID_PROJECT_REJECTED,
     payload: error
   };
 };

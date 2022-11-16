@@ -7,7 +7,10 @@ import {
   POST_PROJECTS_REJECTED,
   PUT_PROJECTS_PENDING,
   PUT_PROJECTS_FULFILLED,
-  PUT_PROJECTS_REJECTED
+  PUT_PROJECTS_REJECTED,
+  GETBYID_PROJECT_REJECTED,
+  GETBYID_PROJECT_FULFILLED,
+  GETBYID_PROJECT_PENDING
 } from './constants';
 
 const INITIAL_STATE = {
@@ -39,6 +42,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         message: action.payload,
+        list: [],
         status: 'error'
       };
     case POST_PROJECTS_PENDING:
@@ -81,6 +85,27 @@ const reducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         message: action.payload,
         status: 'error'
+      };
+    case GETBYID_PROJECT_PENDING:
+      return {
+        ...state,
+        request: 'GET_BY_ID',
+        isPending: true,
+        status: 'pending'
+      };
+    case GETBYID_PROJECT_FULFILLED:
+      return {
+        ...state,
+        isPending: false,
+        list: action.payload,
+        status: 'success'
+      };
+    case GETBYID_PROJECT_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        status: 'error',
+        message: action.payload
       };
     default:
       return state;

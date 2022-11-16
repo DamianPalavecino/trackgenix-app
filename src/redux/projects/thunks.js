@@ -7,7 +7,10 @@ import {
   postProjectsRejected,
   putProjectsPending,
   putProjectsFulfilled,
-  putProjectsRejected
+  putProjectsRejected,
+  getByIdProjectPending,
+  getByIdProjectFulfilled,
+  getByIdProjectRejected
 } from './actions';
 
 export const getProjects = () => {
@@ -71,5 +74,23 @@ export const putProjects = (id, editedProject) => {
     } catch (error) {
       dispatch(putProjectsRejected(error.toString()));
     }
+  };
+};
+
+export const getProjectById = (id) => {
+  return (dispatch) => {
+    dispatch(getByIdProjectPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          return dispatch(getByIdProjectFulfilled(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(getByIdProjectRejected(error.toString()));
+      });
   };
 };

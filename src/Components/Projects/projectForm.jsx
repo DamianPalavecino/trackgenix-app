@@ -4,15 +4,14 @@ import Modal from '../Shared/Modal/Modal';
 import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { postProjects, putProjects } from '../../redux/projects/thunks';
+import { postProjects, putProjects, getProjectById } from '../../redux/projects/thunks';
 
 const ProjectForm = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status, request } = useSelector((state) => state.projects);
+  const { message, status, request, list: projectData } = useSelector((state) => state.projects);
   const id = params.id;
-  const url = `${process.env.REACT_APP_API_URL}/projects`;
   const [showModal, setShowModal] = useState({ success: false, error: false });
   const [inputValue, setInputValue] = useState({
     name: '',
@@ -34,22 +33,24 @@ const ProjectForm = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (id) {
-      fetch(url + '/' + id)
-        .then((res) => res.json())
-        .then((data) =>
-          setInputValue({
-            name: data.data.name,
-            startDate: fixDate(data.data.startDate),
-            endDate: fixDate(data.data.endDate),
-            description: data.data.description,
-            clientName: data.data.clientName,
-            status: data.data.status
-          })
-        );
+      dispatch(getProjectById(id));
     }
   }, []);
+
+  useEffect(() => {
+    if (request === 'GET_BY_ID') {
+      setInputValue({
+        name: projectData.name,
+        startDate: fixDate(projectData.startDate),
+        endDate: fixDate(projectData.endDate),
+        description: projectData.description,
+        clientName: projectData.clientName,
+        status: projectData.status
+      });
+    }
+  }, [projectData]);
 
   useEffect(() => {
     if (request === 'POST' || request === 'PUT') {

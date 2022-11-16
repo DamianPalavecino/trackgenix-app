@@ -3,6 +3,7 @@ import Table from '../Shared/Table';
 import styles from './projects.module.css';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import Spinner from '../Shared/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from '../../redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
@@ -13,7 +14,7 @@ const Projects = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const projectsList = useSelector((state) => state.projects.list);
+  const { list: projectsList, isPending } = useSelector((state) => state.projects);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -115,22 +116,26 @@ const Projects = () => {
         variant="addButton"
         onClick={() => history.push('/projects/form')}
       />
-      <Table
-        headers={[
-          'name',
-          'startDate',
-          'endDate',
-          'description',
-          'clientName',
-          'employees',
-          'status',
-          'actions'
-        ]}
-        data={projectsList}
-        handleDelete={openDeleteModal}
-        editItem={editRow}
-        showInfo={showEmployeesModal}
-      />
+      {isPending ? (
+        <Spinner entity="Projects" />
+      ) : (
+        <Table
+          headers={[
+            'name',
+            'startDate',
+            'endDate',
+            'description',
+            'clientName',
+            'employees',
+            'status',
+            'actions'
+          ]}
+          data={projectsList}
+          handleDelete={openDeleteModal}
+          editItem={editRow}
+          showInfo={showEmployeesModal}
+        />
+      )}
     </div>
   );
 };
