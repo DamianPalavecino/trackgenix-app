@@ -19,9 +19,7 @@ import {
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: '',
-  status: '',
-  request: ''
+  message: ''
 };
 
 const superAdminReducer = (state = INITIAL_STATE, action) => {
@@ -29,105 +27,87 @@ const superAdminReducer = (state = INITIAL_STATE, action) => {
     case GET_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GET'
+        isPending: true
       };
     case GET_ADMINS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        list: action.payload,
-        status: 'success'
+        list: action.payload
       };
     case GET_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case GETBYID_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GETBYID'
+        isPending: true
       };
     case GETBYID_ADMINS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        list: action.payload,
-        status: 'success'
+        list: action.payload
       };
     case GETBYID_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case DELETE_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'DELETE'
+        isPending: true
       };
     case DELETE_ADMINS_FULFILLED:
       return {
         ...state,
         list: [...state.list.filter((admins) => admins._id !== action.payload)],
-        isPending: false,
-        status: 'success'
+        isPending: false
       };
     case DELETE_ADMINS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case POST_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'POST'
+        isPending: true
       };
     case POST_ADMINS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case POST_ADMINS_REJECTED:
       return {
         ...state,
-        message: action.payload,
-        status: 'error'
+        isPending: false,
+        message: action.payload
       };
     case PUT_ADMINS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'PUT'
+        isPending: true
       };
     case PUT_ADMINS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case PUT_ADMINS_REJECTED:
       return {
         ...state,
-        message: action.payload,
-        status: 'error'
+        isPending: false,
+        message: action.payload
       };
     default:
       return state;

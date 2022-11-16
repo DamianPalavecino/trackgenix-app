@@ -10,7 +10,10 @@ import {
   deleteAdminsRejected,
   postAdminsPending,
   postAdminsFulfilled,
-  postAdminsRejected
+  postAdminsRejected,
+  putAdminsPending,
+  putAdminsFulfilled,
+  putAdminsRejected
 } from './actions';
 
 export const getAdmins = () => {
@@ -68,48 +71,46 @@ export const deleteAdmins = (id) => {
 
 export const postAdmins = (newAdmin) => {
   return async (dispatch) => {
-    dispatch(postAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newAdmin)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(postAdminsFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(postAdminsRejected(error.toString()));
+    try {
+      dispatch(postAdminsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newAdmin)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(postAdminsFulfilled(data.message));
+      } else {
+        return dispatch(postAdminsRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(postAdminsRejected(error.toString()));
+    }
   };
 };
 
-export const putAdmins = (id, editAdmin) => {
+export const putAdmins = (id, editedAdmin) => {
   return async (dispatch) => {
-    dispatch(postAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(editAdmin)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(postAdminsFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(postAdminsRejected(error.toString()));
+    try {
+      dispatch(putAdminsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedAdmin)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(putAdminsFulfilled(data.message));
+      } else {
+        return dispatch(putAdminsRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(putAdminsRejected(error.toString()));
+    }
   };
 };

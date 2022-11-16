@@ -91,7 +91,7 @@ export const postAdminsFulfilled = (message) => {
 
 export const postAdminsRejected = (error) => {
   return {
-    type: PUT_ADMINS_REJECTED,
+    type: POST_ADMINS_REJECTED,
     payload: error
   };
 };
@@ -111,7 +111,7 @@ export const putAdminsFulfilled = (message) => {
 
 export const putAdminsRejected = (error) => {
   return {
-    type: POST_ADMINS_REJECTED,
+    type: PUT_ADMINS_REJECTED,
     payload: error
   };
 };
