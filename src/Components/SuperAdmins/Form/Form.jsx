@@ -63,6 +63,7 @@ const Form = () => {
 
   const onSubmit = () => {
     if (idAdmin) {
+      input.status = input.status === 'active';
       dispatch(putAdmins(idAdmin, input));
     } else {
       input.status = false;
