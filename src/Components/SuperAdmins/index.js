@@ -7,7 +7,7 @@ import Spinner from '../Shared/Spinner';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAdmins } from '../../redux/super-admins/thunks';
+import { deleteAdmins, getAdmins } from '../../redux/super-admins/thunks';
 
 const SuperAdmins = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
@@ -32,11 +32,8 @@ const SuperAdmins = () => {
     history.push(`super-admins/form/${id}`);
   };
 
-  const handleDelete = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'DELETE'
-    });
-    dispatch(getAdmins());
+  const handleDelete = (id) => {
+    dispatch(deleteAdmins(id));
     toggleModal('confirm', 'success');
     history.push('/super-admins');
   };

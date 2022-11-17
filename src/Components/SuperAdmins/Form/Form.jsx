@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
 import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../Shared/Modal/Modal';
 import Button from '../../Shared/Button';
+import Spinner from '../../Shared/Spinner';
+import { getAdminsById, postAdmins, putAdmins } from '../../../redux/super-admins/thunks';
 
 const Form = () => {
   const [input, setInput] = useState({
@@ -10,32 +13,33 @@ const Form = () => {
     lastName: '',
     email: '',
     password: '',
-    status: ''
+    status: false
   });
 
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const { message, list: admins, isPending } = useSelector((state) => state.superAdmins);
   const idAdmin = params.id;
   const [showModal, setShowModal] = useState({ error: false, success: false });
-  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(async () => {
     if (idAdmin) {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${idAdmin}`);
-        const data = await res.json();
-        setInput({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password,
-          status: data.data.status
-        });
-      } catch (error) {
-        alert('Admin does not exist');
-      }
+      dispatch(getAdminsById(idAdmin));
     }
   }, []);
+
+  useEffect(() => {
+    if (!Array.isArray(admins)) {
+      setInput({
+        name: admins.name,
+        lastName: admins.lastName,
+        email: admins.email,
+        password: admins.password,
+        status: admins.status
+      });
+    }
+  }, [admins]);
 
   const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -52,45 +56,22 @@ const Form = () => {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (idAdmin) {
       input.status = input.status === 'active';
-      const put = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(input)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins/${idAdmin}`;
-      fetch(url, put).then(async (res) => {
-        const { message, error } = await res.json();
-        setModalMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      const response = await dispatch(putAdmins(idAdmin, input));
+      if (response.type === 'PUT_ADMINS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'PUT_ADMINS_REJECTED') {
+        toggleModal('error');
+      }
     } else {
-      input.status = false;
-      const post = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(input)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/admins`;
-      fetch(url, post).then(async (res) => {
-        const { message, error } = await res.json();
-        setModalMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      const response = await dispatch(postAdmins(input));
+      if (response.type === 'POST_ADMINS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'POST_ADMINS_REJECTED') {
+        toggleModal('error');
+      }
     }
   };
 
@@ -99,7 +80,7 @@ const Form = () => {
       <Modal
         showModal={showModal.error}
         closeModal={() => toggleModal('error')}
-        text={modalMessage}
+        text={message}
         variant="errorModal"
       />
       <Modal
@@ -108,63 +89,67 @@ const Form = () => {
           toggleModal('success');
           redirect();
         }}
-        text={modalMessage}
+        text={message}
         variant="successModal"
       />
       <h2>{idAdmin ? 'Edit' : 'Create'} Admin</h2>
-      <form className={styles.form}>
-        <div className={styles.div}>
-          <label className={styles.label}>First Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="name"
-            value={input.name}
-            onChange={onChangeInput}
-          />
-          <label className={styles.label}>Last Name</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="lastName"
-            value={input.lastName}
-            onChange={onChangeInput}
-          />
-          <label className={styles.label}>Email</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="email"
-            value={input.email}
-            onChange={onChangeInput}
-          />
-          <label className={styles.label}>Password</label>
-          <input
-            className={styles.input}
-            type="password"
-            name="password"
-            value={input.password}
-            onChange={onChangeInput}
-          />
-          {idAdmin ? (
-            <>
-              <label className={styles.label}>Status</label>
-              <select name="status" onChange={onChangeInput} className={styles.select}>
-                <option value="inactive">Inactive</option>
-                <option value="active">Active</option>
-              </select>
-            </>
-          ) : null}
-          <div>
-            <Button text="Back" onClick={redirect} />
-            <Button
-              variant={idAdmin ? 'editButton' : 'addButton'}
-              text={idAdmin ? 'Edit' : 'Create'}
-              onClick={onSubmit}
+      {isPending ? (
+        <Spinner />
+      ) : (
+        <form className={styles.form}>
+          <div className={styles.div}>
+            <label className={styles.label}>First Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="name"
+              value={input.name}
+              onChange={onChangeInput}
             />
+            <label className={styles.label}>Last Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="lastName"
+              value={input.lastName}
+              onChange={onChangeInput}
+            />
+            <label className={styles.label}>Email</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="email"
+              value={input.email}
+              onChange={onChangeInput}
+            />
+            <label className={styles.label}>Password</label>
+            <input
+              className={styles.input}
+              type="password"
+              name="password"
+              value={input.password}
+              onChange={onChangeInput}
+            />
+            {idAdmin ? (
+              <>
+                <label className={styles.label}>Status</label>
+                <select name="status" onChange={onChangeInput} className={styles.select}>
+                  <option value="inactive">Inactive</option>
+                  <option value="active">Active</option>
+                </select>
+              </>
+            ) : null}
+            <div>
+              <Button text="Back" onClick={redirect} />
+              <Button
+                variant={idAdmin ? 'editButton' : 'addButton'}
+                text={idAdmin ? 'Edit' : 'Create'}
+                onClick={onSubmit}
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      )}
     </section>
   );
 };
