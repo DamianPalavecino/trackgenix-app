@@ -83,11 +83,13 @@ const Employees = () => {
         variant={'successModal'}
       />
       <h2>Employees</h2>
-      <Button
-        text="Add employee +"
-        variant="addButton"
-        onClick={() => history.push('employees/form')}
-      ></Button>
+      <div className={styles.addButton}>
+        <Button
+          text="Add employee +"
+          variant="addButton"
+          onClick={() => history.push('employees/form')}
+        ></Button>
+      </div>
       {isPending ? (
         <Spinner entity="Employees" />
       ) : (
