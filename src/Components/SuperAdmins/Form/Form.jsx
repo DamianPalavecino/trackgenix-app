@@ -13,7 +13,7 @@ const Form = () => {
     lastName: '',
     email: '',
     password: '',
-    status: ''
+    status: false
   });
 
   const history = useHistory();
