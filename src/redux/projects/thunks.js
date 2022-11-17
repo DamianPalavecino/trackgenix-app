@@ -35,50 +35,48 @@ export const getProjects = () => {
 };
 
 export const postProjects = (newProject) => {
-  return (dispatch) => {
-    dispatch(postProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newProject)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(postProjectsFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(postProjectsRejected(error.toString()));
+  return async (dispatch) => {
+    try {
+      dispatch(postProjectsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProject)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(postProjectsFulfilled(data.message));
+      } else {
+        return dispatch(postProjectsRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(postProjectsRejected(error.toString()));
+    }
   };
 };
 
 export const putProjects = (id, editedProject) => {
-  return (dispatch) => {
-    dispatch(putProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(editedProject)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(putProjectsFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(putProjectsRejected(error.toString()));
+  return async (dispatch) => {
+    try {
+      dispatch(putProjectsPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedProject)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(putProjectsFulfilled(data.message));
+      } else {
+        return dispatch(putProjectsRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(putProjectsRejected(error.toString()));
+    }
   };
 };
 

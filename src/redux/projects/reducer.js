@@ -19,9 +19,7 @@ import {
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  message: '',
-  request: '',
-  status: ''
+  message: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -29,92 +27,80 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_PROJECTS_PENDING:
       return {
         ...state,
-        isPending: true,
-        request: 'GET',
-        status: 'pending'
+        isPending: true
       };
     case GET_PROJECTS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        list: action.payload,
-        status: 'success'
+        list: action.payload
       };
     case GET_PROJECTS_REJECTED:
       return {
         ...state,
         isPending: false,
         message: action.payload,
-        list: [],
-        status: 'error'
+        list: []
       };
     case POST_PROJECTS_PENDING:
       return {
         ...state,
-        request: 'POST',
-        isPending: true,
-        status: 'pending'
+        isPending: true
       };
     case POST_PROJECTS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case POST_PROJECTS_REJECTED:
       return {
         ...state,
-        message: action.payload,
-        status: 'error'
+        isPending: false,
+        message: action.payload
       };
     case PUT_PROJECTS_PENDING:
       return {
         ...state,
-        request: 'PUT',
-        isPending: true,
-        status: 'pending'
+        isPending: true
       };
     case PUT_PROJECTS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case PUT_PROJECTS_REJECTED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case GETBYID_PROJECT_PENDING:
       return {
         ...state,
-        request: 'GET_BY_ID',
-        isPending: true,
-        status: 'pending'
+        isPending: true
       };
     case GETBYID_PROJECT_FULFILLED:
       return {
         ...state,
         isPending: false,
-        list: action.payload,
-        status: 'success'
+        list: {
+          ...action.payload,
+          startDate: action.payload.startDate.slice(0, 10),
+          endDate: action.payload.endDate.slice(0, 10)
+        }
       };
     case GETBYID_PROJECT_REJECTED:
       return {
         ...state,
         isPending: false,
-        status: 'error',
         message: action.payload
       };
     case DELETE_PROJECT_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending'
+        isPending: true
       };
     case DELETE_PROJECT_FULFILLED:
       return {

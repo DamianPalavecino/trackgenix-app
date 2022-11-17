@@ -5,12 +5,13 @@ import Button from '../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProjects, putProjects, getProjectById } from '../../redux/projects/thunks';
+import Spinner from '../Shared/Spinner';
 
 const ProjectForm = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, status, request, list: projectData } = useSelector((state) => state.projects);
+  const { message, list: projectData, isPending } = useSelector((state) => state.projects);
   const id = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
   const [inputValue, setInputValue] = useState({
@@ -21,10 +22,6 @@ const ProjectForm = () => {
     clientName: '',
     status: false
   });
-
-  const fixDate = (date) => {
-    return date.slice(0, 10);
-  };
 
   const toggleModal = (modal) => {
     setShowModal({
@@ -40,23 +37,17 @@ const ProjectForm = () => {
   }, []);
 
   useEffect(() => {
-    if (request === 'GET_BY_ID') {
+    if (!Array.isArray(projectData)) {
       setInputValue({
         name: projectData.name,
-        startDate: fixDate(projectData.startDate),
-        endDate: fixDate(projectData.endDate),
+        startDate: projectData.startDate,
+        endDate: projectData.endDate,
         description: projectData.description,
         clientName: projectData.clientName,
-        status: projectData.status
+        status: false
       });
     }
   }, [projectData]);
-
-  useEffect(() => {
-    if (request === 'POST' || request === 'PUT') {
-      toggleModal(status);
-    }
-  }, [status]);
 
   const redirect = () => {
     history.goBack();
@@ -69,9 +60,19 @@ const ProjectForm = () => {
   const onSubmit = async () => {
     if (id) {
       inputValue.status = inputValue.status === 'active';
-      dispatch(putProjects(id, inputValue));
+      const response = await dispatch(putProjects(id, inputValue));
+      if (response.type === 'PUT_PROJECTS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'PUT_PROJECTS_REJECTED') {
+        toggleModal('error');
+      }
     } else {
-      dispatch(postProjects(inputValue));
+      const response = await dispatch(postProjects(inputValue));
+      if (response.type === 'POST_PROJECTS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'POST_PROJECTS_REJECTED') {
+        toggleModal('error');
+      }
     }
   };
 
@@ -93,64 +94,68 @@ const ProjectForm = () => {
         closeModal={() => toggleModal('error')}
         text={message}
       ></Modal>
-      <form className={styles.form}>
-        <label>Project Name</label>
-        <input
-          name="name"
-          value={inputValue.name}
-          onChange={onChangeInput}
-          placeholder="Project Name"
-        ></input>
-        <label>Description</label>
-        <textarea
-          name="description"
-          value={inputValue.description}
-          onChange={onChangeInput}
-          placeholder="Description"
-        ></textarea>
-        <label>Start Date</label>
-        <input
-          name="startDate"
-          type="date"
-          value={inputValue.startDate}
-          onChange={onChangeInput}
-        ></input>
-        <label>End Date</label>
-        <input
-          name="endDate"
-          type="date"
-          value={inputValue.endDate}
-          onChange={onChangeInput}
-        ></input>
-        <label>Client</label>
-        <input
-          name="clientName"
-          value={inputValue.clientName}
-          onChange={onChangeInput}
-          placeholder="Client Name"
-        ></input>
-        {id ? (
+      {isPending ? (
+        <Spinner entity="Project" />
+      ) : (
+        <form className={styles.form}>
+          <label>Project Name</label>
+          <input
+            name="name"
+            value={inputValue.name}
+            onChange={onChangeInput}
+            placeholder="Project Name"
+          ></input>
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={inputValue.description}
+            onChange={onChangeInput}
+            placeholder="Description"
+          ></textarea>
+          <label>Start Date</label>
+          <input
+            name="startDate"
+            type="date"
+            value={inputValue.startDate}
+            onChange={onChangeInput}
+          ></input>
+          <label>End Date</label>
+          <input
+            name="endDate"
+            type="date"
+            value={inputValue.endDate}
+            onChange={onChangeInput}
+          ></input>
+          <label>Client</label>
+          <input
+            name="clientName"
+            value={inputValue.clientName}
+            onChange={onChangeInput}
+            placeholder="Client Name"
+          ></input>
+          {id ? (
+            <div>
+              <label>Status</label>
+              <select
+                name="status"
+                onChange={onChangeInput}
+                value={inputValue.status ? 'active' : 'inactive'}
+              >
+                <option value="inactive">Inactive</option>
+                <option value="active">Active</option>
+              </select>
+            </div>
+          ) : null}
           <div>
-            <label>Status</label>
-            <select
-              name="status"
-              onChange={onChangeInput}
-              value={inputValue.status ? 'active' : 'inactive'}
-            >
-              <option value="inactive">Inactive</option>
-              <option value="active">Active</option>
-            </select>
+            <Button variant={'cancelButton'} text="Back" onClick={redirect} />
+            <Button
+              variant={id ? 'editButton' : 'addButton'}
+              text={id ? 'Edit' : 'Create'}
+              onClick={onSubmit}
+            />
           </div>
-        ) : null}
-        <div>
-          <Button variant={'cancelButton'} text="Back" onClick={redirect} />
-          <Button
-            variant={id ? 'editButton' : 'addButton'}
-            text={id ? 'Edit' : 'Create'}
-            onClick={onSubmit}
-          />
-        </div>
-      </form>
+        </form>
+      )}
     </div>
   );
 };
