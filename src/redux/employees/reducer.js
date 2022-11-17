@@ -19,9 +19,7 @@ import {
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: '',
-  status: '',
-  request: ''
+  message: ''
 };
 
 const employeesReducer = (state = INITIAL_STATE, action) => {
@@ -29,9 +27,7 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case GET_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GET'
+        isPending: true
       };
     case GET_EMPLOYEES_FULFILLED:
       return {
@@ -43,14 +39,12 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        message: action.payload
       };
     case GETBYID_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GETBYID'
+        isPending: true
       };
     case GETBYID_EMPLOYEES_FULFILLED:
       return {
@@ -67,8 +61,7 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
     case DELETE_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true,
-        request: 'DELETE'
+        isPending: true
       };
     case DELETE_EMPLOYEES_FULFILLED:
       return {
@@ -80,49 +73,41 @@ const employeesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        message: action.payload
       };
     case PUT_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'PUT'
+        isPending: true
       };
     case PUT_EMPLOYEES_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case PUT_EMPLOYEES_REJECTED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case POST_EMPLOYEES_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'POST'
+        isPending: true
       };
     case POST_EMPLOYEES_FULFILLED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'success'
+        message: action.payload
       };
     case POST_EMPLOYEES_REJECTED:
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        status: 'error'
+        message: action.payload
       };
     default:
       return state;

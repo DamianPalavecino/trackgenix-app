@@ -65,19 +65,21 @@ const Employees = () => {
         title="Are you sure?"
         text="You are going to delete this employee"
       >
-        <Button text="Yes" onClick={() => onDelete(params.id)} />
-        <Button
-          text="No"
-          onClick={() => {
-            toggleModal('confirm');
-            history.goBack();
-          }}
-        />
+        <span>
+          <Button text="Yes" onClick={() => onDelete(params.id)} variant="deleteButton" />
+          <Button
+            text="No"
+            onClick={() => {
+              toggleModal('confirm');
+              history.goBack();
+            }}
+          />
+        </span>
       </Modal>
       <Modal
         showModal={showModal.success}
         closeModal={() => toggleModal('success')}
-        text="Admin deleted successfully"
+        text="Employee deleted successfully"
         variant={'successModal'}
       />
       <h2>Employees</h2>
