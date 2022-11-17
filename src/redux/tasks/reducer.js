@@ -19,9 +19,6 @@ import {
 const INITIAL_STATE = {
   list: [],
   isPending: false,
-  error: '',
-  status: '',
-  request: '',
   message: ''
 };
 
@@ -30,107 +27,87 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
     case GET_TASKS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GET'
+        isPending: true
       };
     case GET_TASKS_FULFILLED:
       return {
         ...state,
         list: action.payload,
-        isPending: false,
-        status: 'success'
+        isPending: false
       };
     case GET_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case DELETE_TASKS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'DELETE'
+        isPending: true
       };
     case DELETE_TASKS_FULFILLED:
       return {
         ...state,
         list: [...state.list.filter((task) => task._id !== action.payload)],
-        isPending: false,
-        status: 'success'
+        isPending: false
       };
     case DELETE_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     case POST_TASKS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'POST'
+        isPending: true
       };
     case POST_TASKS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        status: 'success',
         message: action.payload
       };
     case POST_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        status: 'error',
         message: action.payload
       };
     case PUT_TASKS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'PUT'
+        isPending: true
       };
     case PUT_TASKS_FULFILLED:
       return {
         ...state,
         isPending: false,
-        status: 'success',
         message: action.payload
       };
     case PUT_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        status: 'error',
         message: action.payload
       };
     case GETBYID_TASKS_PENDING:
       return {
         ...state,
-        isPending: true,
-        status: 'pending',
-        request: 'GETBYID'
+        isPending: true
       };
     case GETBYID_TASKS_FULFILLED:
       return {
         ...state,
         list: action.payload,
-        isPending: false,
-        status: 'success'
+        isPending: false
       };
     case GETBYID_TASKS_REJECTED:
       return {
         ...state,
         isPending: false,
-        error: action.payload,
-        status: 'error'
+        message: action.payload
       };
     default:
       return state;

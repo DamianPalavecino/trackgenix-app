@@ -3,6 +3,7 @@ import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import Spinner from '../Shared/Spinner';
 import { postTasks, putTasks, getTasksById } from '../../redux/tasks/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,7 +17,7 @@ const Form = () => {
     error: false
   });
 
-  const { request, status, message, list: task } = useSelector((state) => state.tasks);
+  const { message, list: task, isPending } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
@@ -29,18 +30,12 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-    if (request === 'GETBYID') {
+    if (!Array.isArray(task)) {
       setInputValue({
         description: task.description
       });
     }
   }, [task]);
-
-  useEffect(() => {
-    if (request === 'POST' || request === 'PUT') {
-      toggleModal(status);
-    }
-  }, [status]);
 
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -57,11 +52,21 @@ const Form = () => {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (taskId) {
-      dispatch(putTasks(taskId, inputValue));
+      const response = await dispatch(putTasks(taskId, inputValue));
+      if (response.type === 'PUT_TASKS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'PUT_TASKS_REJECTED') {
+        toggleModal('error');
+      }
     } else {
-      dispatch(postTasks(inputValue));
+      const response = await dispatch(postTasks(inputValue));
+      if (response.type === 'POST_TASKS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'POST_TASKS_REJECTED') {
+        toggleModal('error');
+      }
     }
   };
   return (
@@ -82,30 +87,34 @@ const Form = () => {
         variant={'errorModal'}
       />
       <h3>Tasks</h3>
-      <form className={styles.form}>
-        <div>
+      {isPending ? (
+        <Spinner />
+      ) : (
+        <form className={styles.form}>
           <div>
-            <label>Description</label>
+            <div>
+              <label>Description</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="description"
+                value={inputValue.description}
+                onChange={onChangeInput}
+                placeholder="Task name"
+              />
+            </div>
           </div>
           <div>
-            <input
-              type="text"
-              name="description"
-              value={inputValue.description}
-              onChange={onChangeInput}
-              placeholder="Task name"
+            <Button onClick={redirect} variant={'cancelButton'} text="Back" />
+            <Button
+              variant={taskId ? 'editButton' : 'addButton'}
+              text={taskId ? 'Edit' : 'Create'}
+              onClick={onSubmit}
             />
           </div>
-        </div>
-        <div>
-          <Button onClick={redirect} variant={'cancelButton'} text="Back" />
-          <Button
-            variant={taskId ? 'editButton' : 'addButton'}
-            text={taskId ? 'Edit' : 'Create'}
-            onClick={onSubmit}
-          />
-        </div>
-      </form>
+        </form>
+      )}
     </div>
   );
 };

@@ -53,49 +53,47 @@ export const deleteTasks = (id) => {
 
 export const postTasks = (newTask) => {
   return async (dispatch) => {
-    dispatch(postTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newTask)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(postTasksFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(postTasksRejected(error.toString()));
+    try {
+      dispatch(postTasksPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTask)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(postTasksFulfilled(data.message));
+      } else {
+        return dispatch(postTasksRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(postTasksRejected(error.toString()));
+    }
   };
 };
 
 export const putTasks = (id, editedTask) => {
   return async (dispatch) => {
-    dispatch(putTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(editedTask)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(putTasksFulfilled(response.message));
-        }
-      })
-      .catch((error) => {
-        dispatch(putTasksRejected(error.toString()));
+    try {
+      dispatch(putTasksPending());
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedTask)
       });
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(putTasksFulfilled(data.message));
+      } else {
+        return dispatch(putTasksRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(putTasksRejected(error.toString()));
+    }
   };
 };
 
