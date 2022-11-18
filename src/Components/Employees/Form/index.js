@@ -48,7 +48,7 @@ const AddEmployee = () => {
   };
 
   const redirect = () => {
-    history.push('/employees');
+    history.goBack();
   };
 
   const toggleModal = (modal) => {
