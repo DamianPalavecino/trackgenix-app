@@ -5,7 +5,7 @@ import Modal from '../Shared/Modal/Modal';
 import Spinner from '../Shared/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getTasks } from '../../redux/tasks/thunks';
+import { deleteTasks, getTasks } from '../../redux/tasks/thunks';
 import styles from './tasks.module.css';
 
 const Tasks = () => {
@@ -52,10 +52,7 @@ const Tasks = () => {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    });
-    dispatch(getTasks());
+    dispatch(deleteTasks(id));
     toggleModal('confirm', 'success');
     history.push('/tasks');
   };

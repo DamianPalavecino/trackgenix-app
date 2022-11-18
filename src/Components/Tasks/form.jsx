@@ -3,6 +3,9 @@ import styles from './tasks.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import Button from '../Shared/Button';
 import Modal from '../Shared/Modal/Modal';
+import Spinner from '../Shared/Spinner';
+import { postTasks, putTasks, getTasksById } from '../../redux/tasks/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
@@ -14,25 +17,25 @@ const Form = () => {
     error: false
   });
 
-  const [message, setMessage] = useState('');
-
+  const { message, list: task, isPending } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
   const taskId = params.id;
 
   useEffect(async () => {
     if (taskId) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${taskId}`);
-        const data = await response.json();
-        setInputValue({
-          description: data.data.description
-        });
-      } catch (err) {
-        alert('There is no task with id provided');
-      }
+      dispatch(getTasksById(taskId));
     }
   }, []);
+
+  useEffect(() => {
+    if (!Array.isArray(task)) {
+      setInputValue({
+        description: task.description
+      });
+    }
+  }, [task]);
 
   const onChangeInput = (e) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
@@ -49,43 +52,21 @@ const Form = () => {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (taskId) {
-      const putOptions = {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/tasks/${taskId}`;
-      fetch(url, putOptions).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      const response = await dispatch(putTasks(taskId, inputValue));
+      if (response.type === 'PUT_TASKS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'PUT_TASKS_REJECTED') {
+        toggleModal('error');
+      }
     } else {
-      const postOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputValue)
-      };
-      const url = `${process.env.REACT_APP_API_URL}/tasks`;
-      fetch(url, postOptions).then(async (response) => {
-        const { message, error } = await response.json();
-        setMessage(message);
-        if (!error) {
-          toggleModal('success');
-        } else {
-          toggleModal('error');
-        }
-      });
+      const response = await dispatch(postTasks(inputValue));
+      if (response.type === 'POST_TASKS_FULFILLED') {
+        toggleModal('success');
+      } else if (response.type === 'POST_TASKS_REJECTED') {
+        toggleModal('error');
+      }
     }
   };
   return (
@@ -106,30 +87,34 @@ const Form = () => {
         variant={'errorModal'}
       />
       <h3>Tasks</h3>
-      <form className={styles.form}>
-        <div>
+      {isPending ? (
+        <Spinner />
+      ) : (
+        <form className={styles.form}>
           <div>
-            <label>Description</label>
+            <div>
+              <label>Description</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="description"
+                value={inputValue.description}
+                onChange={onChangeInput}
+                placeholder="Task name"
+              />
+            </div>
           </div>
           <div>
-            <input
-              type="text"
-              name="description"
-              value={inputValue.description}
-              onChange={onChangeInput}
-              placeholder="Task name"
+            <Button onClick={redirect} variant={'cancelButton'} text="Back" />
+            <Button
+              variant={taskId ? 'editButton' : 'addButton'}
+              text={taskId ? 'Edit' : 'Create'}
+              onClick={onSubmit}
             />
           </div>
-        </div>
-        <div>
-          <Button onClick={redirect} variant={'cancelButton'} text="Back" />
-          <Button
-            variant={taskId ? 'editButton' : 'addButton'}
-            text={taskId ? 'Edit' : 'Create'}
-            onClick={onSubmit}
-          />
-        </div>
-      </form>
+        </form>
+      )}
     </div>
   );
 };
