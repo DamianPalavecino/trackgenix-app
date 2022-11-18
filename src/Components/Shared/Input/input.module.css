@@ -1,0 +1,33 @@
+.divInput {
+    margin-bottom: 7px;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0px 0px 10px;
+    font-weight: bold;
+    color: #373867;
+}
+
+.input {
+    display: flex;
+    margin: 5px 0px 0px 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: solid 1px #373867;
+    height: 35px;
+    width: 400px;
+}
+
+.input:focus {
+    border: solid 1px #373867;
+    outline: 0 none;
+    box-shadow: 1px 1px 1px #373867 inset, 3px 3px 3px #373867;
+}
+
+.errorMessage {
+    margin: 0px 0px 0px 10px;
+    font-weight: 600;
+    color: #ff0000;
+}
