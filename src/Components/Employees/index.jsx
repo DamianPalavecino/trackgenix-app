@@ -61,7 +61,10 @@ const Employees = () => {
     <section className={styles.container}>
       <Modal
         showModal={showModal.confirm}
-        closeModal={() => toggleModal('confirm')}
+        closeModal={() => {
+          toggleModal('confirm');
+          history.goBack();
+        }}
         title="Are you sure?"
         text="You are going to delete this employee"
       >
@@ -78,7 +81,9 @@ const Employees = () => {
       </Modal>
       <Modal
         showModal={showModal.success}
-        closeModal={() => toggleModal('success')}
+        closeModal={() => {
+          toggleModal('success');
+        }}
         text="Employee deleted successfully"
         variant={'successModal'}
       />
