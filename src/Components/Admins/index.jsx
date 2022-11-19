@@ -3,13 +3,11 @@ import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import styles from './admins.module.css';
 import Button from '../Shared/Button';
-import { getEmployees } from '../../redux/employees/thunks';
-import { getProjects } from '../../redux/projects/thunks';
+import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
+import { getProjects, deleteProject } from '../../redux/projects/thunks';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../Shared/Spinner';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteEmployee } from '../../redux/employees/thunks';
-import { deleteProject } from '../../redux/projects/thunks';
 import Modal from '../Shared/Modal/Modal';
 
 const Admins = () => {
@@ -50,9 +48,7 @@ const Admins = () => {
   };
 
   const editEntity = (id) => {
-    entity === 'employees'
-      ? history.push(`employees/form/${id}`)
-      : history.push(`projects/form/${id}`);
+    history.push(`${entity}/form/${id}`);
   };
 
   const openDeleteModal = (id) => {
