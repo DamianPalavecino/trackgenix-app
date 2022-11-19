@@ -31,7 +31,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
             <td key={index}>
               <Button
                 onClick={() => {
-                  showInfo(data[header]);
+                  showInfo(data._id);
                 }}
                 text={header}
               />
