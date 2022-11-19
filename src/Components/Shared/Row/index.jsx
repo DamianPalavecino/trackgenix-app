@@ -23,6 +23,8 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
             </td>
           );
         }
+        if (data[header] && header === 'project') return <td>{data[header].name}</td>;
+        if (data[header] && header === 'task') return <td>{data[header].description}</td>;
         if (header.includes('updatedAt') || header.includes('Date') || header.includes('date'))
           return <td key={index}>{data[header] && fixDate(data[header])}</td>;
         if (header === 'status') return <td key={index}>{data[header] ? 'Active' : 'Inactive'}</td>;
