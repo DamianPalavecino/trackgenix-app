@@ -11,7 +11,7 @@
   }
 
   .modal, .errorModal, .successModal  {
-    width: 300px;
+    max-width: 400px;
     position: relative;
     border-radius: 7px;
     display: flex;
