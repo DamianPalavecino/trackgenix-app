@@ -58,6 +58,7 @@ const Layout = () => {
               <Route exact path={'/time-sheets'} component={TimeSheets} />
               <Route exact path={'/time-sheets/delete/:id'} component={TimeSheets} />
               <Route exact path={'/time-sheets/form'} component={TimeSheetsForm} />
+              <Route exact path={'/time-sheets/form/:id'} component={TimeSheetsForm} />
               <Redirect to="/" />
             </Switch>
           </div>

@@ -8,12 +8,16 @@ import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
 import { postTimesheets, putTimesheets, getTimesheetsById } from '../../../redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import Input from '../../Shared/Input';
+import Select from '../../Shared/Select';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
     description: '',
     date: '',
-    hours: 0
+    hours: 0,
+    project: '',
+    task: ''
   });
 
   const [showModal, setShowModal] = useState({
@@ -40,7 +44,11 @@ const Form = () => {
   useEffect(() => {
     if (!Array.isArray(timesheet)) {
       setInputValue({
-        description: timesheet.description
+        description: timesheet.description,
+        date: fixDate(timesheet.date),
+        hours: timesheet.hours,
+        project: timesheet.project?._id || '',
+        task: timesheet.task?._id || ''
       });
     }
   }, [timesheet]);
@@ -51,6 +59,10 @@ const Form = () => {
 
   const redirect = () => {
     history.goBack();
+  };
+
+  const fixDate = (date) => {
+    return date.slice(0, 10);
   };
 
   const toggleModal = (modal) => {
@@ -99,58 +111,48 @@ const Form = () => {
         <Spinner />
       ) : (
         <form className={styles.form}>
-          <div>
-            <div>
-              <label>Description</label>
-            </div>
-            <div>
-              <input
-                type="text"
-                name="description"
-                value={inputValue.description}
-                onChange={onChangeInput}
-                placeholder="Description"
-              />
-            </div>
-          </div>
-          <div>
-            <div>
-              <label>Hours</label>
-            </div>
-            <div>
-              <input
-                type="number"
-                name="hours"
-                value={inputValue.hours}
-                onChange={onChangeInput}
-                placeholder="Hours"
-              />
-            </div>
-          </div>
-          <div>
-            <div>
-              <label>Project</label>
-            </div>
-            <div>
-              <select>
-                {projects?.map((project) => {
-                  return <option key={project._id}>{project.name}</option>;
-                })}
-              </select>
-            </div>
-          </div>
-          <div>
-            <div>
-              <label>Task</label>
-            </div>
-            <div>
-              <select>
-                {tasks?.map((task) => {
-                  return <option key={task._id}>{task.description}</option>;
-                })}
-              </select>
-            </div>
-          </div>
+          <Input
+            label="Description"
+            name="description"
+            placeholder="Description"
+            onChange={onChangeInput}
+            type="text"
+            value={inputValue.description}
+          />
+          <Input
+            label="Hours"
+            name="hours"
+            placeholder="Hours"
+            onChange={onChangeInput}
+            type="number"
+            value={inputValue.hours}
+          />
+          <Input
+            label="Date"
+            name="date"
+            placeholder="Date"
+            onChange={onChangeInput}
+            type="date"
+            value={inputValue.date}
+          />
+          <Select
+            label="Project"
+            onChange={onChangeInput}
+            optionsData={projects}
+            item="name"
+            optionValue="Project"
+            selectName="project"
+            selectValue={inputValue.project}
+          />
+          <Select
+            label="Task"
+            onChange={onChangeInput}
+            optionsData={tasks}
+            item="description"
+            optionValue="Task"
+            selectName="task"
+            selectValue={inputValue.task}
+          />
           <div>
             <Button onClick={redirect} variant={'cancelButton'} text="Back" />
             <Button
