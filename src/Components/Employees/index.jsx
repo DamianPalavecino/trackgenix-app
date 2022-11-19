@@ -63,7 +63,6 @@ const Employees = () => {
     toggleModal('info');
     const data = list.find((employee) => employee._id === id);
     saveProjects(data.projects);
-    console.log(projects);
   };
 
   return (
