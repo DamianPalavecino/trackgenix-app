@@ -9,7 +9,9 @@ const Select = ({
   optionsData,
   onChange,
   item,
-  children
+  children,
+  register,
+  registerName
 }) => {
   const handleChange = (e) => {
     onChange(e);
@@ -23,6 +25,7 @@ const Select = ({
         name={selectName || ''}
         value={selectValue || ''}
         onChange={(e) => handleChange(e)}
+        {...register(registerName)}
       >
         <option selected disabled value="">
           Select {optionValue}
