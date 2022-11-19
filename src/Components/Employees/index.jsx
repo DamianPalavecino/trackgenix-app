@@ -14,6 +14,7 @@ const Employees = () => {
   const params = useParams();
   const { list, isPending, error } = useSelector((state) => state.employees);
   const [showModal, setShowModal] = useState({ info: false, delete: false, success: false });
+  const [projects, saveProjects] = useState([]);
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -57,6 +58,14 @@ const Employees = () => {
     history.push(`employees/form/${id}`);
   };
 
+  const openProjectsModal = (id) => {
+    history.push(`employees/${id}/projects`);
+    toggleModal('info');
+    const data = list.find((employee) => employee._id === id);
+    saveProjects(data.projects);
+    console.log(projects);
+  };
+
   return (
     <section className={styles.container}>
       <Modal
@@ -87,6 +96,23 @@ const Employees = () => {
         text="Employee deleted successfully"
         variant={'successModal'}
       />
+      <Modal
+        showModal={showModal.info}
+        closeModal={() => {
+          toggleModal('info');
+          history.goBack();
+        }}
+        title="Projects List"
+      >
+        {projects.length > 0 ? (
+          <Table
+            headers={['name', 'description', 'startDate', 'endDate', 'clientName']}
+            data={projects}
+          />
+        ) : (
+          <p>This employee has no projects assigned yet</p>
+        )}
+      </Modal>
       <h2>Employees</h2>
       <div className={styles.addButton}>
         <Button
@@ -100,9 +126,19 @@ const Employees = () => {
       ) : (
         <Table
           data={list}
-          headers={['name', 'lastName', 'phone', 'email', 'password', 'status', 'actions']}
+          headers={[
+            'name',
+            'lastName',
+            'phone',
+            'email',
+            'password',
+            'status',
+            'projects',
+            'actions'
+          ]}
           handleDelete={openDeleteModal}
           editItem={editEmployee}
+          showInfo={openProjectsModal}
         />
       )}
     </section>
