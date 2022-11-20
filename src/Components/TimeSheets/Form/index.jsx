@@ -8,8 +8,6 @@ import { getProjects } from '../../../redux/projects/thunks';
 import { getTasks } from '../../../redux/tasks/thunks';
 import { postTimesheets, putTimesheets, getTimesheetsById } from '../../../redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Input from '../../Shared/Input';
-import Select from '../../Shared/Select';
 
 const Form = () => {
   const [inputValue, setInputValue] = useState({
@@ -111,48 +109,68 @@ const Form = () => {
         <Spinner />
       ) : (
         <form className={styles.form}>
-          <Input
-            label="Description"
-            name="description"
-            placeholder="Description"
-            onChange={onChangeInput}
-            type="text"
-            value={inputValue.description}
-          />
-          <Input
-            label="Hours"
-            name="hours"
-            placeholder="Hours"
-            onChange={onChangeInput}
-            type="number"
-            value={inputValue.hours}
-          />
-          <Input
-            label="Date"
-            name="date"
-            placeholder="Date"
-            onChange={onChangeInput}
-            type="date"
-            value={inputValue.date}
-          />
-          <Select
-            label="Project"
-            onChange={onChangeInput}
-            optionsData={projects}
-            item="name"
-            optionValue="Project"
-            selectName="project"
-            selectValue={inputValue.project}
-          />
-          <Select
-            label="Task"
-            onChange={onChangeInput}
-            optionsData={tasks}
-            item="description"
-            optionValue="Task"
-            selectName="task"
-            selectValue={inputValue.task}
-          />
+          <div>
+            <label>Description</label>
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={inputValue.description}
+              onChange={onChangeInput}
+            />
+          </div>
+          <div>
+            <label>Hours</label>
+            <input
+              type="number"
+              name="hours"
+              placeholder="Hours"
+              value={inputValue.hours}
+              onChange={onChangeInput}
+            />
+          </div>
+          <div>
+            <label>Date</label>
+            <input
+              type="date"
+              name="date"
+              placeholder="Date"
+              value={inputValue.date}
+              onChange={onChangeInput}
+            />
+          </div>
+          <div>
+            <label>Project</label>
+            <select onChange={onChangeInput} name="project" value={inputValue.project}>
+              <option selected disabled value="">
+                Select Project
+              </option>
+              {projects &&
+                projects.map((project) => {
+                  return (
+                    <option value={project._id} key={project._id}>
+                      {project.name}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
+          <div>
+            <label>Task</label>
+            <select onChange={onChangeInput} name="task" value={inputValue.task}>
+              <option selected disabled value="">
+                Select Task
+              </option>
+              {tasks &&
+                tasks.map((task) => {
+                  return (
+                    <option value={task._id} key={task._id}>
+                      {task.description}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
           <div>
             <Button onClick={redirect} variant={'cancelButton'} text="Back" />
             <Button
