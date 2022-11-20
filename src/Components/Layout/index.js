@@ -9,6 +9,7 @@ import Employees from '../Employees/index';
 import Projects from '../Projects';
 import ProjectForm from '../Projects/projectForm';
 import TimeSheets from '../TimeSheets';
+import TimeSheetsForm from '../TimeSheets/Form';
 import Tasks from '../Tasks/index';
 import EmployeesForm from '../Employees/Form';
 import AdminsForm from '../Admins/form';
@@ -55,6 +56,9 @@ const Layout = () => {
               <Route exact path={'/tasks/form'} component={TasksForm} />
               <Route path={'/tasks/form/:id'} component={TasksForm} />
               <Route exact path={'/time-sheets'} component={TimeSheets} />
+              <Route exact path={'/time-sheets/delete/:id'} component={TimeSheets} />
+              <Route exact path={'/time-sheets/form'} component={TimeSheetsForm} />
+              <Route exact path={'/time-sheets/form/:id'} component={TimeSheetsForm} />
               <Redirect to="/" />
             </Switch>
           </div>
