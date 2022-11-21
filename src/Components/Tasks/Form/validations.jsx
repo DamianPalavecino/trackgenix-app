@@ -8,10 +8,10 @@ export const taskSchema = Joi.object({
     .max(100)
     .pattern(/^(?=.[a-zA-Z].)([\w\s\W]+)$/)
     .messages({
-      'string.empty': `"Description" can't be empty`,
-      'string.min': `"Description" must have minimum {3} characters`,
-      'string.max': `"Description" must have maximum {100} characters`,
-      'any.required': `"Description is required`,
-      'string.pattern.base': `"Description" can't have only numbers or special characters`
+      'string.empty': '"Description" cannot be empty',
+      'string.min': '"Description" must have minimum {3} characters',
+      'string.max': 'Description" must have maximum {100} characters',
+      'any.required': '"Description" is required',
+      'string.pattern.base': '"Description" cannot have only numbers or special characters'
     })
 });

@@ -14,7 +14,7 @@ const Form = () => {
     register,
     formState: { errors },
     reset
-  } = useForm({ mode: 'onBlur', resolver: joiResolver(taskSchema) });
+  } = useForm({ mode: 'onChange', resolver: joiResolver(taskSchema) });
 
   const [showModal, setShowModal] = useState({
     success: false,
