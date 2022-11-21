@@ -1,21 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styles from './form.module.css';
-import Modal from '../../Shared/Modal/Modal';
-import Button from '../../Shared/Button';
-import Spinner from '../../Shared/Spinner';
-import { getProjects } from '../../../redux/projects/thunks';
-import { getTasks } from '../../../redux/tasks/thunks';
-import { postTimesheets, putTimesheets, getTimesheetsById } from '../../../redux/timesheets/thunks';
+import { Modal, Button, Spinner, Input, Select } from 'Components/Shared';
+import { getProjects } from 'redux/projects/thunks';
+import { getTasks } from 'redux/tasks/thunks';
+import { postTimesheets, putTimesheets, getTimesheetsById } from 'redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { timeSheetSchema } from './validations';
 
 const Form = () => {
-  const [inputValue, setInputValue] = useState({
-    description: '',
-    date: '',
-    hours: 0,
-    project: '',
-    task: ''
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(timeSheetSchema)
   });
 
   const [showModal, setShowModal] = useState({
@@ -40,27 +43,17 @@ const Form = () => {
   }, []);
 
   useEffect(() => {
-    if (!Array.isArray(timesheet)) {
-      setInputValue({
-        description: timesheet.description,
-        date: fixDate(timesheet.date),
-        hours: timesheet.hours,
-        project: timesheet.project?._id || '',
-        task: timesheet.task?._id || ''
-      });
-    }
+    reset({
+      description: timesheet?.description,
+      date: timesheet?.date,
+      hours: timesheet?.hours,
+      project: timesheet.project?._id,
+      task: timesheet.task?._id
+    });
   }, [timesheet]);
-
-  const onChangeInput = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  };
 
   const redirect = () => {
     history.goBack();
-  };
-
-  const fixDate = (date) => {
-    return date.slice(0, 10);
   };
 
   const toggleModal = (modal) => {
@@ -70,16 +63,16 @@ const Form = () => {
     });
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     if (id) {
-      const response = await dispatch(putTimesheets(id, inputValue));
+      const response = await dispatch(putTimesheets(id, data));
       if (response.type === 'PUT_TIMESHEETS_FULFILLED') {
         toggleModal('success');
       } else if (response.type === 'PUT_TIMESHEETS_REJECTED') {
         toggleModal('error');
       }
     } else {
-      const response = await dispatch(postTimesheets(inputValue));
+      const response = await dispatch(postTimesheets(data));
       if (response.type === 'POST_TIMESHEETS_FULFILLED') {
         toggleModal('success');
       } else if (response.type === 'POST_TIMESHEETS_REJECTED') {
@@ -108,75 +101,55 @@ const Form = () => {
       {isPending ? (
         <Spinner />
       ) : (
-        <form className={styles.form}>
-          <div>
-            <label>Description</label>
-            <input
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={inputValue.description}
-              onChange={onChangeInput}
-            />
-          </div>
-          <div>
-            <label>Hours</label>
-            <input
-              type="number"
-              name="hours"
-              placeholder="Hours"
-              value={inputValue.hours}
-              onChange={onChangeInput}
-            />
-          </div>
-          <div>
-            <label>Date</label>
-            <input
-              type="date"
-              name="date"
-              placeholder="Date"
-              value={inputValue.date}
-              onChange={onChangeInput}
-            />
-          </div>
-          <div>
-            <label>Project</label>
-            <select onChange={onChangeInput} name="project" value={inputValue.project}>
-              <option selected disabled value="">
-                Select Project
-              </option>
-              {projects &&
-                projects.map((project) => {
-                  return (
-                    <option value={project._id} key={project._id}>
-                      {project.name}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-          <div>
-            <label>Task</label>
-            <select onChange={onChangeInput} name="task" value={inputValue.task}>
-              <option selected disabled value="">
-                Select Task
-              </option>
-              {tasks &&
-                tasks.map((task) => {
-                  return (
-                    <option value={task._id} key={task._id}>
-                      {task.description}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            label="Description"
+            type="text"
+            name="description"
+            placeholder="Description"
+            register={register}
+            error={errors.description?.message}
+          />
+          <Input
+            type="number"
+            name="hours"
+            placeholder="Hours"
+            register={register}
+            error={errors.hours?.message}
+          />
+          <Input
+            type="date"
+            name="date"
+            placeholder="Date"
+            register={register}
+            error={errors.date?.message}
+          />
+          <Select
+            label="Project"
+            name="project"
+            registerName="project"
+            optionValue="Project"
+            optionsData={projects}
+            item="name"
+            register={register}
+            error={errors.project?.message}
+          />
+          <Select
+            label="Task"
+            name="task"
+            registerName="task"
+            optionValue="Task"
+            optionsData={tasks}
+            item="description"
+            register={register}
+            error={errors.task?.message}
+          />
           <div>
             <Button onClick={redirect} variant={'cancelButton'} text="Back" />
             <Button
               variant={id ? 'editButton' : 'addButton'}
               text={id ? 'Edit' : 'Create'}
-              onClick={onSubmit}
+              type="submit"
             />
           </div>
         </form>
