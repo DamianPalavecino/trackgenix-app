@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './employees.module.css';
-import Table from '../Shared/Table';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
-import Spinner from '../Shared/Spinner';
-import Modal from '../Shared/Modal/Modal';
-import Button from '../Shared/Button';
+import { Button, Modal, Spinner, Table } from 'Components/Shared';
 
 const Employees = () => {
   const dispatch = useDispatch();
