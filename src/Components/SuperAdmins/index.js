@@ -1,13 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/Modal';
-import Table from '../Shared/Table';
-import Spinner from '../Shared/Spinner';
+import { Button, Modal, Table, Spinner } from 'Components/Shared';
 import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteAdmins, getAdmins } from '../../redux/super-admins/thunks';
+import { deleteAdmins, getAdmins } from 'redux/super-admins/thunks';
 
 const SuperAdmins = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
