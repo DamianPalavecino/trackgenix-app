@@ -6,6 +6,7 @@ import styles from 'Components/Layout/layout.module.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Spinner } from 'Components/Shared';
+import EmployeeSidebar from 'Components/Employees/Sidebar';
 
 const Admins = lazy(() => import('./admin'));
 const SuperAdmins = lazy(() => import('./super-admin'));
@@ -21,10 +22,11 @@ const Layout = () => {
         <div className={styles.container}>
           <div className={styles.head}>
             <Header />
+            <Sidebar />
           </div>
           <div className={styles.main}>
             <div className={styles.side}>
-              <Sidebar />
+              <EmployeeSidebar />
             </div>
             <div className={styles.content}>
               <Switch>

@@ -1,11 +1,8 @@
 .container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   background-color: #373867;
   flex: 1;
-  height: 100%;
-  padding: 5% 0%;
 }
 
 .icon {
@@ -16,9 +13,7 @@
 
 .routes {
   display: flex;
-  flex-direction: column;
   list-style-type: none;
-  padding: 1%;
 }
 
 .routes h2{
@@ -28,8 +23,7 @@
 
 .routes > li {
   display: flex;
-  align-items: center;
-  padding: 10%;
+  margin: 10px;
 }
 
 .routes > li > a {

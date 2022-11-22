@@ -35,6 +35,13 @@
   align-self: center;
 }
 
+.headerEntity {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  width: 250px;
+}
+
 @media screen and (min-width: 1024px) {
   .appName{
     display: flex;
