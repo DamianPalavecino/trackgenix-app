@@ -1,7 +1,7 @@
 import styles from './select.module.css';
 
 const Select = ({
-  selectName,
+  name,
   selectValue,
   label,
   optionValue,
@@ -10,8 +10,7 @@ const Select = ({
   onChange,
   item,
   children,
-  register,
-  registerName
+  register
 }) => {
   const handleChange = (e) => {
     onChange(e);
@@ -19,13 +18,13 @@ const Select = ({
 
   return (
     <div className={styles.divSelect}>
-      <label>{label}</label>
+      <label className={styles.label}>{label}</label>
       <select
         className={styles.select}
-        name={selectName || ''}
+        name={name}
         value={selectValue || ''}
         onChange={(e) => handleChange(e)}
-        {...register(registerName)}
+        {...register(name)}
       >
         <option selected disabled value="">
           Select {optionValue}
