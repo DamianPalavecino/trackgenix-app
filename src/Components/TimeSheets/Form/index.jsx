@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import styles from './form.module.css';
+import styles from '../time-sheets.module.css';
 import { Modal, Button, Spinner, Input, Select } from 'Components/Shared';
 import { getProjects } from 'redux/projects/thunks';
 import { getTasks } from 'redux/tasks/thunks';
