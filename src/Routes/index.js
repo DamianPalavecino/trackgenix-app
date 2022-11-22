@@ -17,7 +17,13 @@ const Projects = lazy(() => import('./project'));
 
 const Layout = () => {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense
+      fallback={
+        <div className={styles.loading}>
+          <Spinner />
+        </div>
+      }
+    >
       <Router>
         <div className={styles.container}>
           <div className={styles.head}>
@@ -36,7 +42,7 @@ const Layout = () => {
                 <Route path="/projects" component={Projects} />
                 <Route path="/employees" component={Employees} />
                 <Route path="/tasks" component={Tasks} />
-                <Route path={'/time-sheets'} component={TimeSheets} />
+                <Route path="/time-sheets" component={TimeSheets} />
                 <Redirect to="/" />
               </Switch>
             </div>
