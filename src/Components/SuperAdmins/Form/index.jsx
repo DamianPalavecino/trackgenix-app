@@ -126,13 +126,7 @@ const Form = () => {
             error={errors.password?.message}
           />
           {idAdmin && (
-            <Select
-              label="Status"
-              selectName="status"
-              register={register}
-              optionValue="Status"
-              registerName="status"
-            >
+            <Select label="Status" name="status" register={register} optionValue="Status">
               <option value={true}>Active</option>
               <option value={false}>Inactive</option>
             </Select>
