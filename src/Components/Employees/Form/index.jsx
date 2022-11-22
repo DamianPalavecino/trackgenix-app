@@ -131,13 +131,18 @@ const Form = () => {
               error={errors.password?.message}
             />
             {idEdit && (
-              <Select register={register} label="Status" registerName="status" selectName="status">
+              <Select register={register} label="Status" name="status">
                 <option value={true}>Active</option>
                 <option value={false}>Inactive</option>
               </Select>
             )}
             <div>
-              <Button variant={'cancelButton'} text="Back" onClick={redirect} />
+              <Button
+                variant={'cancelButton'}
+                text="Back"
+                onClick={redirect}
+                optionValue="status"
+              />
               <Button
                 variant={idEdit ? 'editButton' : 'addButton'}
                 text={idEdit ? 'Edit' : 'Create'}
