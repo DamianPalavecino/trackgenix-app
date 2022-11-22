@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import Table from '../Shared/Table';
 import styles from './projects.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/Modal';
-import Spinner from '../Shared/Spinner';
+import { Table, Spinner, Button, Modal } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProjects, deleteProject } from '../../redux/projects/thunks';
+import { getProjects, deleteProject } from 'redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Projects = () => {
