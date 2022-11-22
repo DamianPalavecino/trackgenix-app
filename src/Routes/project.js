@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Projects from 'Components/Projects';
-import ProjectForm from 'Components/Projects/projectForm';
+import ProjectForm from 'Components/Projects/Form';
 
 const Project = () => {
   return (
