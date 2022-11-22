@@ -111,13 +111,15 @@ const Form = () => {
             error={errors.description?.message}
           />
           <Input
-            type="number"
+            label="Hours"
+            type="text"
             name="hours"
             placeholder="Hours"
             register={register}
             error={errors.hours?.message}
           />
           <Input
+            label="Date"
             type="date"
             name="date"
             placeholder="Date"
