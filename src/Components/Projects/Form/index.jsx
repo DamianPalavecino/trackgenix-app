@@ -10,10 +10,9 @@ import { projectSchema } from './validations';
 
 const ProjectForm = () => {
   const history = useHistory();
-  const params = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { message, isPending, list: projectData } = useSelector((state) => state.projects);
-  const id = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
   const {
     handleSubmit,
@@ -21,7 +20,7 @@ const ProjectForm = () => {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: joiResolver(projectSchema)
   });
 
