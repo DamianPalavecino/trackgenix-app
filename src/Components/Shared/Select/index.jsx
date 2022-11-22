@@ -22,7 +22,7 @@ const Select = ({
       <select
         className={styles.select}
         name={name}
-        value={selectValue || ''}
+        value={selectValue}
         onChange={(e) => handleChange(e)}
         {...register(name)}
       >
