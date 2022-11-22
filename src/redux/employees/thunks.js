@@ -49,23 +49,19 @@ export const getByIdEmployees = (id) => {
 };
 
 export const deleteEmployee = (id) => {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch(deleteEmployeesPending());
     fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      method: 'DELETE'
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
+        if (response.status === 204) {
           dispatch(deleteEmployeesFulfilled(id));
         }
       })
-      .catch((error) => dispatch(deleteEmployeesRejected(error.toString())));
+      .catch((error) => {
+        dispatch(deleteEmployeesRejected(error.toString()));
+      });
   };
 };
 
