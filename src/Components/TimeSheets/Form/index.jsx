@@ -127,7 +127,6 @@ const Form = () => {
           <Select
             label="Project"
             name="project"
-            registerName="project"
             optionValue="Project"
             optionsData={projects}
             item="name"
@@ -137,7 +136,6 @@ const Form = () => {
           <Select
             label="Task"
             name="task"
-            registerName="task"
             optionValue="Task"
             optionsData={tasks}
             item="description"
