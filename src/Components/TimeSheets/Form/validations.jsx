@@ -14,7 +14,7 @@ export const timeSheetSchema = Joi.object({
       'any.required': '"Description" is required',
       'string.pattern.base': '"Description" cannot have only numbers or special characters'
     }),
-  hours: Joi.number().min(1).required(),
+  hours: Joi.number().integer().min(1).positive().required(),
   date: Joi.date().max('now').required(),
   task: Joi.string().required(),
   project: Joi.string().required()
