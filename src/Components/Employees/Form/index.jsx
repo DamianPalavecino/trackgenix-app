@@ -22,7 +22,7 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { message, list: employees, isPending } = useSelector((state) => state.employees);
+  const { list: employees, isPending } = useSelector((state) => state.employees);
   const idEdit = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
 
@@ -82,12 +82,12 @@ const Form = () => {
           toggleModal('success');
           redirect();
         }}
-        text={message}
+        text={idEdit ? 'Employee edited successfuly' : 'Employee created succesfuly'}
       ></Modal>
       <Modal
         showModal={showModal.error}
         closeModal={() => toggleModal('error')}
-        text={message}
+        text="Employee deleted successfuly"
         variant="errorModal"
       ></Modal>
       {isPending ? (
