@@ -7,8 +7,10 @@ export const projectSchema = Joi.object({
     'string.max': '"Project Name" must have a maximum 50 characters',
     'any.required': '"Project Name" is required'
   }),
-  startDate: Joi.date().max('now').required(),
-  endDate: Joi.date().max('now').required(),
+  startDate: Joi.date().required(),
+  endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
+    'date.greater': '"End Date" cannot be greater than "Start Date"'
+  }),
   clientName: Joi.string().min(3).max(50).required().messages({
     'string.empty': '"Client Name" cannot be empty',
     'string.min': '"Client Name" must have minimum 3 characters',
