@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Admins from 'Components/Admins';
 import AdminsForm from 'Components/Admins/form';
-import ProjectForm from 'Components/Projects/projectForm';
+import ProjectForm from 'Components/Projects/Form';
 import EmployeesForm from 'Components/Employees/Form';
 
 const Admin = () => {
