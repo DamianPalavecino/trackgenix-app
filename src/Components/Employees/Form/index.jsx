@@ -22,7 +22,7 @@ const Form = () => {
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { list: employees, isPending } = useSelector((state) => state.employees);
+  const { message, list: employees, isPending } = useSelector((state) => state.employees);
   const idEdit = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
 
@@ -87,7 +87,7 @@ const Form = () => {
       <Modal
         showModal={showModal.error}
         closeModal={() => toggleModal('error')}
-        text="Employee deleted successfuly"
+        text={message}
         variant="errorModal"
       ></Modal>
       {isPending ? (
