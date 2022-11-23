@@ -31,7 +31,7 @@ const Sidebar = () => (
         </Link>
       </li>
       <li>
-        <Link to="time-sheets">
+        <Link to="/time-sheets">
           <h2>Timesheets</h2>
         </Link>
       </li>

@@ -28,20 +28,15 @@ const AddTimesheet = () => {
   const { message, isPending } = useSelector((state) => state.timeSheets);
   const tasks = useSelector((state) => state.tasks.list);
   const employee = useSelector((state) => state.employees.list);
-  const [projects, saveProjects] = useState([]);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();
   const id = params.id;
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getByIdEmployees(id));
     dispatch(getTasks());
   }, []);
-
-  useEffect(() => {
-    saveProjects(employee?.projects?.map((project) => project));
-  }, [employee]);
 
   const redirect = () => {
     history.goBack();
@@ -70,7 +65,7 @@ const AddTimesheet = () => {
           toggleModal('success');
           redirect();
         }}
-        text={message}
+        text="Timesheet created successfully"
         variant={'successModal'}
       />
       <Modal
@@ -112,7 +107,7 @@ const AddTimesheet = () => {
             label="Project"
             name="project"
             optionValue="Project"
-            optionsData={projects}
+            optionsData={employee?.projects}
             item="name"
             register={register}
             error={errors.project?.message}
