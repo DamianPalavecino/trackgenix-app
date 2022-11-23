@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/Modal';
-import Spinner from '../Shared/Spinner';
+import { Table, Button, Modal, Spinner } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteTasks, getTasks } from '../../redux/tasks/thunks';
+import { deleteTasks, getTasks } from 'redux/tasks/thunks';
 import styles from './tasks.module.css';
 
 const Tasks = () => {

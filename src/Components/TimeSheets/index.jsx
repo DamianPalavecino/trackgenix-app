@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import Table from '../Shared/Table';
 import styles from './time-sheets.module.css';
-import Button from '../Shared/Button';
-import Modal from '../Shared/Modal/Modal';
-import Spinner from '../Shared/Spinner';
+import { Button, Modal, Spinner } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTimesheets, deleteTimesheets } from '../../redux/timesheets/thunks';
+import { getTimesheets, deleteTimesheets } from 'redux/timesheets/thunks';
 import { useHistory, useParams } from 'react-router-dom';
 
 const TimeSheets = () => {

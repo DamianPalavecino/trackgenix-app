@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Tasks from 'Components/Tasks';
-import TasksForm from 'Components/Tasks/form';
+import TasksForm from 'Components/Tasks/Form';
 
 const Task = () => {
   return (
