@@ -5,9 +5,9 @@ export const schema = Joi.object({
     .min(3)
     .max(50)
     .required()
-    .pattern(/^[a-z]+$/)
+    .pattern(/^[a-z ]+$/)
     .messages({
-      'string.pattern.base': '"Name" can only contain letters and no spaces',
+      'string.pattern.base': '"Name" can only contain letters and spaces',
       'string.min': '"Name" must contain at least 3 characters',
       'string.max': '"Name" must have less than 50 characters',
       'string.empty': '"Name" is required'
@@ -15,10 +15,10 @@ export const schema = Joi.object({
   lastName: Joi.string()
     .min(3)
     .max(50)
-    .pattern(/^[a-z]+$/)
+    .pattern(/^[a-z ]+$/)
     .required()
     .messages({
-      'string.pattern.base': '"Last name" can only contain letters and no spaces',
+      'string.pattern.base': '"Last name" can only contain letters and spaces',
       'string.min': '"Last name" must contain at least 3 characters',
       'string.max': '"Last name" must have less than 50 characters',
       'string.empty': '"Last name" is required'
