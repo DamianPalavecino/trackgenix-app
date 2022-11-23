@@ -26,7 +26,7 @@ const Form = () => {
   const idEdit = params.id;
   const [showModal, setShowModal] = useState({ success: false, error: false });
 
-  useEffect(async () => {
+  useEffect(() => {
     if (idEdit) {
       dispatch(getByIdEmployees(idEdit));
     }
