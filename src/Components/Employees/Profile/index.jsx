@@ -5,7 +5,8 @@ import styles from './profile.module.css';
 import { Spinner, Modal, Button, Input } from 'Components/Shared';
 import { getByIdEmployees, putEmployee } from 'redux/employees/thunks';
 import { useForm } from 'react-hook-form';
-// import { joiResolver } from '@hookform/resolvers/joi';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from './validations';
 
 const Profile = () => {
   const {
@@ -14,7 +15,8 @@ const Profile = () => {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onChange'
+    mode: 'onChange',
+    resolver: joiResolver(schema)
   });
 
   const history = useHistory();
@@ -69,7 +71,7 @@ const Profile = () => {
           toggleModal('success');
           redirect();
         }}
-        text={message}
+        text="Profile edited successfully"
       ></Modal>
       <Modal
         showModal={showModal.error}
