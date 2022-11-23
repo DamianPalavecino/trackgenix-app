@@ -100,7 +100,7 @@ const timeSheetReducer = (state = INITIAL_STATE, action) => {
     case GETBYID_TIMESHEETS_FULFILLED:
       return {
         ...state,
-        list: action.payload,
+        list: { ...action.payload, date: action.payload.date.slice(0, 10) },
         isPending: false
       };
     case GETBYID_TIMESHEETS_REJECTED:
