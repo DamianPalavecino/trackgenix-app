@@ -19,11 +19,12 @@
 }
 
 @media screen and (max-width: 768px) {
-  .main {
+
+  li > img {
     display: none;
   }
 
-  li > img {
+  .side {
     display: none;
   }
 }
