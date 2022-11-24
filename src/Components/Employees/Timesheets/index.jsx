@@ -21,12 +21,12 @@ const Timesheets = () => {
   }, []);
 
   useEffect(() => {
-    saveProjects(employee?.projects.map((project) => project._id));
+    saveProjects(employee?.projects?.map((project) => project._id));
   }, [employee]);
 
   useEffect(() => {
     saveTimesheets(
-      timesheetsList.filter((timesheet) => projects.includes(timesheet?.project?._id))
+      timesheetsList?.filter((timesheet) => projects.includes(timesheet?.project?._id))
     );
   }, [timesheetsList]);
 
