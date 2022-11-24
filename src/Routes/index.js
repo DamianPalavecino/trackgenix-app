@@ -6,6 +6,7 @@ import styles from 'Components/Layout/layout.module.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Spinner } from 'Components/Shared';
+import EmployeeSidebar from 'Components/Employees/Sidebar';
 
 const Admins = lazy(() => import('./admin'));
 const SuperAdmins = lazy(() => import('./super-admin'));
@@ -16,15 +17,22 @@ const Projects = lazy(() => import('./project'));
 
 const Layout = () => {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense
+      fallback={
+        <div className={styles.loading}>
+          <Spinner />
+        </div>
+      }
+    >
       <Router>
         <div className={styles.container}>
           <div className={styles.head}>
             <Header />
+            <Sidebar />
           </div>
           <div className={styles.main}>
             <div className={styles.side}>
-              <Sidebar />
+              <EmployeeSidebar />
             </div>
             <div className={styles.content}>
               <Switch>
@@ -34,7 +42,7 @@ const Layout = () => {
                 <Route path="/projects" component={Projects} />
                 <Route path="/employees" component={Employees} />
                 <Route path="/tasks" component={Tasks} />
-                <Route path={'/time-sheets'} component={TimeSheets} />
+                <Route path="/time-sheets" component={TimeSheets} />
                 <Redirect to="/" />
               </Switch>
             </div>

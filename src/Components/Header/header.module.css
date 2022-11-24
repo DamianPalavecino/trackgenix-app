@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  height: 100%;
+  height: 100px;
 }
 
 .logo {
@@ -33,6 +33,13 @@
 .hambMenu {
   display: flex;
   align-self: center;
+}
+
+.headerEntity {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  width: 250px;
 }
 
 @media screen and (min-width: 1024px) {
