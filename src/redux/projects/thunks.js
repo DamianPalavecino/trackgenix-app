@@ -13,7 +13,10 @@ import {
   getByIdProjectRejected,
   deleteProjectPending,
   deleteProjectFulfilled,
-  deleteProjectRejected
+  deleteProjectRejected,
+  assignEmployeePending,
+  assignEmployeeFulfilled,
+  assignEmployeeRejected
 } from './actions';
 
 export const getProjects = () => {
@@ -111,6 +114,29 @@ export const deleteProject = (id) => {
       })
       .catch((error) => {
         dispatch(deleteProjectRejected(error.toString()));
+      });
+  };
+};
+
+export const assignEmployee = (projectId, employee) => {
+  return (dispatch) => {
+    dispatch(assignEmployeePending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}/assignEmployee`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(employee)
+    })
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(assignEmployeeFulfilled(response.message));
+        }
+      })
+      .catch((error) => {
+        dispatch(assignEmployeeRejected(error.toString()));
       });
   };
 };

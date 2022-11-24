@@ -13,7 +13,10 @@ import {
   GETBYID_PROJECT_REJECTED,
   DELETE_PROJECT_PENDING,
   DELETE_PROJECT_FULFILLED,
-  DELETE_PROJECT_REJECTED
+  DELETE_PROJECT_REJECTED,
+  ASSIGN_EMPLOYEE_PENDING,
+  ASSIGN_EMPLOYEE_FULFILLED,
+  ASSIGN_EMPLOYEE_REJECTED
 } from './constants';
 
 export const getProjectsPending = () => {
@@ -112,6 +115,26 @@ export const deleteProjectFulfilled = (id) => {
 export const deleteProjectRejected = (error) => {
   return {
     type: DELETE_PROJECT_REJECTED,
+    payload: error
+  };
+};
+
+export const assignEmployeePending = () => {
+  return {
+    type: ASSIGN_EMPLOYEE_PENDING
+  };
+};
+
+export const assignEmployeeFulfilled = (message) => {
+  return {
+    type: ASSIGN_EMPLOYEE_FULFILLED,
+    payload: message
+  };
+};
+
+export const assignEmployeeRejected = (error) => {
+  return {
+    type: ASSIGN_EMPLOYEE_REJECTED,
     payload: error
   };
 };
