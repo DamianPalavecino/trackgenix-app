@@ -51,7 +51,15 @@ const Projects = () => {
     history.push(`projects/${id}/employees`);
     toggleModal('employees');
     const data = projectsList.find((project) => project._id === id);
-    saveEmployees(data.employees);
+    saveEmployees(
+      data.employees.map((employee) => {
+        return {
+          ...employee.employeeId,
+          rate: employee.rate,
+          role: employee.role
+        };
+      })
+    );
   };
 
   return (
@@ -99,7 +107,7 @@ const Projects = () => {
         title="Employees List"
       >
         {employees.length > 0 ? (
-          <Table headers={['rate', 'role']} data={employees} />
+          <Table headers={['name', 'lastName', 'email', 'rate', 'role']} data={employees} />
         ) : (
           <p>There are no employees in this project</p>
         )}
