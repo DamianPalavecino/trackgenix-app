@@ -95,8 +95,8 @@ const Admins = () => {
         </span>
       </Modal>
       <div className={styles.selectEntity}>
-        <Button text="Employees" onClick={() => handleEntity('employees')} variant="saveButton" />
-        <Button text="Projects" onClick={() => handleEntity('projects')} variant="saveButton" />
+        <Button text="Employees" onClick={() => handleEntity('employees')} variant="addButton" />
+        <Button text="Projects" onClick={() => handleEntity('projects')} variant="addButton" />
       </div>
       <h1 className={styles.title}>{entity}</h1>
       <div className={styles.selectEntity}>

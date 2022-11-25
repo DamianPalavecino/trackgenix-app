@@ -5,8 +5,29 @@
     border-radius: 5px;
     border-collapse: collapse;
     border: solid 2px #3738671a;
+    width: 800px;
+    height: 500px;
+    margin: 10px;
+}
+
+.divTable {
+    overflow: auto;
+    width: 800px;
+    height: 500px;
+    margin: 20px;
+    padding: 0px;
 }
 
 .noData {
     color: #ff0000;
+}
+
+@media screen and (max-width: 1024px) {
+    .table {
+        width: 500px;
+    }
+
+    .divTable {
+        width: 500px;
+    }
 }
