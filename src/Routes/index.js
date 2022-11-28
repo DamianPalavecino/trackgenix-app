@@ -36,7 +36,7 @@ const Routes = () => {
             <PrivateRoute path="/employees" role="EMPLOYEE" component={Employees} />
             <PrivateRoute path="/tasks" role="ADMIN" component={Tasks} />
             <PrivateRoute path="/time-sheets" role="EMPLOYEE" component={TimeSheets} />
-            <PrivateRoute path="/auth" component={TimeSheets} />
+            <Route path="/auth" component={AuthRoutes} />
             <Redirect to="/auth" component={AuthRoutes} />
           </Switch>
         </Router>
