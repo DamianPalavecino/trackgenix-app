@@ -1,47 +1,19 @@
-import styles from './sidebar.module.css';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './sidebar.module.css';
 
-const Sidebar = () => (
-  <section className={styles.container}>
-    <ul className={styles.routes}>
-      <li>
-        <Link to="/">
-          <img className={styles.icon} src={`${process.env.PUBLIC_URL}/assets/images/home.svg`} />
-          <h2>Home</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/admins">
-          <h2>Admins</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/super-admins">
-          <h2>Super Admins</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/employees">
-          <h2>Employees</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/projects">
-          <h2>Projects</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/time-sheets">
-          <h2>Timesheets</h2>
-        </Link>
-      </li>
-      <li>
-        <Link to="/tasks">
-          <h2>Tasks</h2>
-        </Link>
-      </li>
-    </ul>
-  </section>
-);
+const Sidebar = (props) => {
+  return (
+    <aside className={styles.side}>
+      <ul className={styles.ul}>
+        {props.routes.routes.map((route) => (
+          <li className={styles.li} key={route.name}>
+            <Link to={route.path}>{route.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+};
 
 export default Sidebar;
