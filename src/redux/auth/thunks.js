@@ -6,7 +6,6 @@ import { auth } from 'Components/Helpers/firebase';
 export const login = (inputData) => {
   return async (dispatch) => {
     dispatch(loginPending());
-    console.log('esto es una prueba');
     try {
       const userCredencials = await signInWithEmailAndPassword(
         auth,
