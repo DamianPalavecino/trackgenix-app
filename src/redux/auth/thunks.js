@@ -1,7 +1,7 @@
 import { loginRejected, loginPending, logoutRejected, logoutPending } from './actions';
 
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../../Helpers/firebase';
+import { auth } from 'Components/Helpers/firebase';
 
 export const login = (inputData) => {
   return async (dispatch) => {
