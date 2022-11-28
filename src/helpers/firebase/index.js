@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import store from 'redux/store';
-import { setLoggedIn, setLoggedOut } from 'redux/auth/actions';
+import { loginFulfilled, logoutFulfilled, loginRejected } from 'redux/auth/actions';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -17,28 +17,26 @@ const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 
 export const tokenListener = () => {
-  // Every time the token changes, it is saved on sessionStorage
   onIdTokenChanged(auth, async (user) => {
     if (user) {
       try {
         const {
           token,
           claims: { role, email }
-        } = await user.getidTokenResult();
-        console.log('onIdTokenChanged tokenResult:', { token, role, email: email });
+        } = await user.getIdTokenResult();
         if (token)
           store.dispatch(
-            setLoggedIn({
+            loginFulfilled({
               role,
               email
             })
           );
         sessionStorage.setitem('token', token);
       } catch (error) {
-        console.log('Error', error);
+        store.dispatch(loginRejected());
       }
     } else {
-      store.dispatch(setLoggedOut());
+      store.dispatch(logoutFulfilled());
     }
   });
 };
