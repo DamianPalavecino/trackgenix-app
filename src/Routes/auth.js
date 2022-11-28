@@ -2,8 +2,6 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import Login from 'Components/Auth/Login';
 import SignUp from 'Components/Auth/SignUp';
 
-// const authRoutes = [{ name: 'Log In', path: '/auth/login' }];
-
 const AuthRoutes = () => {
   const { url } = useRouteMatch();
   return (
