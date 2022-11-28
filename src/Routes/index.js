@@ -1,12 +1,10 @@
-import Header from 'Components/Header/index';
-import Sidebar from 'Components/Sidebar/index';
-import Footer from 'Components/Footer/index';
 import Home from 'Components/Home/index';
 import styles from 'Components/Layout/layout.module.css';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
 import { Spinner } from 'Components/Shared';
-import EmployeeSidebar from 'Components/Employees/Sidebar';
+import { tokenListener } from 'helpers/firebase';
+import PrivateRoute from './privateRoute';
 
 const Admins = lazy(() => import('./admin'));
 const SuperAdmins = lazy(() => import('./super-admin'));
@@ -14,46 +12,37 @@ const Employees = lazy(() => import('./employee'));
 const TimeSheets = lazy(() => import('./timesheet'));
 const Tasks = lazy(() => import('./task'));
 const Projects = lazy(() => import('./project'));
+const AuthRoutes = lazy(() => import('./auth'));
 
-const Layout = () => {
+const Routes = () => {
+  useEffect(() => {
+    tokenListener();
+  }, []);
   return (
-    <Suspense
-      fallback={
-        <div className={styles.loading}>
-          <Spinner />
-        </div>
-      }
-    >
-      <Router>
-        <div className={styles.container}>
-          <div className={styles.head}>
-            <Header />
-            <Sidebar />
+    <BrowserRouter>
+      <Suspense
+        fallback={
+          <div className={styles.loading}>
+            <Spinner />
           </div>
-          <div className={styles.main}>
-            <div className={styles.side}>
-              <EmployeeSidebar />
-            </div>
-            <div className={styles.content}>
-              <Switch>
-                <Route exact path={'/'} component={Home} />
-                <Route path="/admins" component={Admins} />
-                <Route path="/super-admins" component={SuperAdmins} />
-                <Route path="/projects" component={Projects} />
-                <Route path="/employees" component={Employees} />
-                <Route path="/tasks" component={Tasks} />
-                <Route path="/time-sheets" component={TimeSheets} />
-                <Redirect to="/" />
-              </Switch>
-            </div>
-          </div>
-          <div className={styles.foot}>
-            <Footer />
-          </div>
-        </div>
-      </Router>
-    </Suspense>
+        }
+      >
+        <Router>
+          <Switch>
+            <Route exact path={'/'} component={Home} />
+            <PrivateRoute path="/admins" role="ADMIN" component={Admins} />
+            <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmins} />
+            <PrivateRoute path="/projects" role="ADMIN" component={Projects} />
+            <PrivateRoute path="/employees" role="EMPLOYEE" component={Employees} />
+            <PrivateRoute path="/tasks" role="ADMIN" component={Tasks} />
+            <PrivateRoute path="/time-sheets" role="EMPLOYEE" component={TimeSheets} />
+            <PrivateRoute path="/auth" component={TimeSheets} />
+            <Redirect to="/auth" component={AuthRoutes} />
+          </Switch>
+        </Router>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 
-export default Layout;
+export default Routes;
