@@ -1,78 +1,28 @@
-.container {
-  display: flex;
-  justify-content: flex-end;
+.side {
+  display:flex;
+  flex-direction: column;
+  width : 15%;
   background-color: #373867;
-  flex: 1;
 }
 
-.icon {
-  display: none;
-  height: 20px;
-  width: auto;
-}
-
-.routes {
-  display: flex;
-  list-style-type: none;
-  margin-right: 70px;
-}
-
-.routes h2{
-  font-size: 12px;
-  line-height: 2px;
-}
-
-.routes > li {
-  display: flex;
-  margin: 10px;
-}
-
-.routes > li > a {
-  padding: 5px;
-  font-weight: 500;
+.li a {
+  font-weight: 700;
+  font-size: 18px;
   text-decoration: none;
-  text-transform: capitalize;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-li img {
-  margin: 0px 10px;
-}
-
-@media screen and (min-width: 768px) {
-  .routes > li > a {
-    padding: 0;
-  }
-
-  .routes h2 {
-    font-size: 14px;
-    line-height: 2px;
-  }
-
-  li > img {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .icon {
-    display: flex;
-  }
-
-  .routes > li > a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .routes h2 {
-    font-size: 16px;
-    line-height: 16px;
-  }
+.ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 70%;
+  list-style-type: none;
 }
 
 @media screen and (max-width: 768px) {
-  .container {
+
+  .side {
     display: none;
   }
 }
