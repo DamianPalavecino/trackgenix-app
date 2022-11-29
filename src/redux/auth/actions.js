@@ -8,7 +8,10 @@ import {
   LOGOUT_PENDING,
   LOGOUT_FULFILLED,
   LOGOUT_REJECTED,
-  SET_AUTHENTICATION
+  SET_AUTHENTICATION,
+  GET_USER_PROFILE_REJECTED,
+  GET_USER_PROFILE_PENDING,
+  GET_USER_PROFILE_FULFILLED
 } from './constants';
 
 export const loginPending = () => {
@@ -17,10 +20,10 @@ export const loginPending = () => {
   };
 };
 
-export const loginFulfilled = (data) => {
+export const loginFulfilled = (role) => {
   return {
     type: LOGIN_FULFILLED,
-    payload: data
+    payload: role
   };
 };
 
@@ -75,5 +78,25 @@ export const setAuthentication = (role) => {
   return {
     type: SET_AUTHENTICATION,
     payload: role
+  };
+};
+
+export const getUserProfileRejected = (error) => {
+  return {
+    type: GET_USER_PROFILE_REJECTED,
+    payload: error
+  };
+};
+
+export const getUserProfilePending = () => {
+  return {
+    type: GET_USER_PROFILE_PENDING
+  };
+};
+
+export const getUserProfileFulfilled = (data) => {
+  return {
+    type: GET_USER_PROFILE_FULFILLED,
+    payload: data
   };
 };

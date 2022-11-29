@@ -8,7 +8,10 @@ import {
   LOGOUT_PENDING,
   LOGOUT_FULFILLED,
   LOGOUT_REJECTED,
-  SET_AUTHENTICATION
+  SET_AUTHENTICATION,
+  GET_USER_PROFILE_REJECTED,
+  GET_USER_PROFILE_PENDING,
+  GET_USER_PROFILE_FULFILLED
 } from './constants';
 
 const INITIAL_STATE = {
@@ -24,6 +27,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOGIN_PENDING:
     case LOGOUT_PENDING:
     case SIGN_UP_PENDING:
+    case GET_USER_PROFILE_PENDING:
       return {
         ...state,
         isPending: true
@@ -31,6 +35,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOGIN_REJECTED:
     case LOGOUT_REJECTED:
     case SIGN_UP_REJECTED:
+    case GET_USER_PROFILE_REJECTED:
       return {
         ...state,
         isPending: false,
@@ -41,7 +46,14 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: false,
         authenticated: true,
-        role: action.payload.role
+        role: action.payload
+      };
+    }
+    case GET_USER_PROFILE_FULFILLED: {
+      return {
+        ...state,
+        isPending: false,
+        data: action.payload
       };
     }
     case LOGOUT_FULFILLED: {
