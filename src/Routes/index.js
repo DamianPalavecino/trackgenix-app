@@ -1,4 +1,5 @@
 import Home from 'Components/Home/index';
+import HomeEmployee from 'Components/Employees/Home';
 import styles from 'Components/Layout/layout.module.css';
 import { BrowserRouter as Router, Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
@@ -30,11 +31,12 @@ const Routes = () => {
         <Router>
           <Switch>
             <Route exact path={'/'} component={Home} />
-            <PrivateRoute path="/admins" role="ADMIN" component={Admins} />
+            <PrivateRoute path="/admins" role="SUPER_ADMIN" component={Admins} />
             <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmins} />
-            <PrivateRoute path="/projects" role="ADMIN" component={Projects} />
-            <PrivateRoute path="/employees" role="EMPLOYEE" component={Employees} />
-            <PrivateRoute path="/tasks" role="ADMIN" component={Tasks} />
+            <PrivateRoute path="/projects" role="EMPLOYEE" component={Projects} />
+            <PrivateRoute path="/employees" role="ADMIN" component={Employees} />
+            <PrivateRoute path="/employee" role="EMPLOYEE" component={HomeEmployee} />
+            <PrivateRoute path="/tasks" role="EMPLOYEE" component={Tasks} />
             <PrivateRoute path="/time-sheets" role="EMPLOYEE" component={TimeSheets} />
             <Route path="/auth" component={AuthRoutes} />
             <Redirect to="/auth" component={AuthRoutes} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Admins from 'Components/Admins';
+import SuperAdmins from 'Components/SuperAdmins';
 import AdminsForm from 'Components/Admins/form';
 import ProjectForm from 'Components/Projects/Form';
 import EmployeesForm from 'Components/Employees/Form';
@@ -11,40 +11,20 @@ const routes = [
     path: '/'
   },
   {
-    name: 'Admins',
+    name: 'Logout',
     path: '/admins'
-  },
-  {
-    name: 'Timesheets',
-    path: '/time-sheets'
-  },
-  {
-    name: 'Tasks',
-    path: '/tasks'
-  },
-  {
-    name: 'Employees',
-    path: '/employees'
-  },
-  {
-    name: 'Projects',
-    path: '/projects'
-  },
-  {
-    name: 'Super admins',
-    path: '/super-admins'
   }
 ];
 const Admin = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={'/admins'} component={Admins} />
+        <Route exact path={'/admins'} component={SuperAdmins} />
         <Route exact path={'/admins/form'} component={AdminsForm} />
-        <Route path={'/admins/delete/employees/:id'} component={Admins} />
-        <Route path={'/admins/delete/projects/:id'} component={Admins} />
-        <Route path={'/projects/form/:id'} component={ProjectForm} />
-        <Route path={'/employees/form/:id'} component={EmployeesForm} />
+        <Route exact path={'/admins/delete/employees/:id'} component={SuperAdmins} />
+        <Route exact path={'/admins/delete/projects/:id'} component={SuperAdmins} />
+        <Route exact path={'/projects/form/:id'} component={ProjectForm} />
+        <Route exact path={'/employees/form/:id'} component={EmployeesForm} />
       </Switch>
     </Layout>
   );

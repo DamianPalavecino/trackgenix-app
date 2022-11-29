@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
         if (auth.isPending) {
           return <></>;
         }
-        if (auth.role === rest.role) {
+        if (auth.role.role === rest.role) {
           return <RouteComponent {...routeProps} />;
         }
         return <Redirect to={'/auth/login'} />;
