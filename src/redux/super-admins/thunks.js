@@ -16,10 +16,12 @@ import {
   putAdminsRejected
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getAdmins = () => {
   return async (dispatch) => {
     dispatch(getAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -56,7 +58,8 @@ export const deleteAdmins = (id) => {
   return async (dispatch) => {
     dispatch(deleteAdminsPending());
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {
@@ -76,7 +79,8 @@ export const postAdmins = (newAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(newAdmin)
       });
@@ -99,7 +103,8 @@ export const putAdmins = (id, editedAdmin) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(editedAdmin)
       });
