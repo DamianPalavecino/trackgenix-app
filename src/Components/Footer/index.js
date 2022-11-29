@@ -10,7 +10,7 @@ const Footer = () => {
           rel="noreferrer"
         >
           <img
-            src={`${process.env.PUBLIC_URL}/assets/images/linkedin.svg`}
+            src={`${process.env.PUBLIC_URL}/assets/images/linkedIn.svg`}
             className={styles.icon}
           />
         </a>
