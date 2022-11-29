@@ -11,27 +11,3 @@
     justify-content: center;
     padding: 20px;
 }
-
-.div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 500px;
-}
-
-.input {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.select {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-}
-
-.label {
-    font-weight: 600;
-    color: #373867;
-}
