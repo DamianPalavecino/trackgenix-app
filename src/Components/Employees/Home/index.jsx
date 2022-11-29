@@ -22,7 +22,7 @@ const HomeEmployees = () => {
       ) : (
         <Table
           headers={['name', 'startDate', 'endDate', 'description', 'clientName']}
-          data={employee.projects}
+          data={employee?.projects}
         />
       )}
     </div>

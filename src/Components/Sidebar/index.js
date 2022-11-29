@@ -8,7 +8,9 @@ const Sidebar = (props) => {
       <ul className={styles.ul}>
         {props.routes.routes.map((route) => (
           <li className={styles.li} key={route.name}>
-            <Link to={route.path}>{route.name}</Link>
+            <Link to={route.path} onClick={props.onClick}>
+              {route.name}
+            </Link>
           </li>
         ))}
       </ul>
