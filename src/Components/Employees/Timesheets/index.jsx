@@ -26,7 +26,7 @@ const Timesheets = () => {
 
   useEffect(() => {
     saveTimesheets(
-      timesheetsList?.filter((timesheet) => projects.includes(timesheet?.project?._id))
+      timesheetsList?.filter((timesheet) => projects?.includes(timesheet?.project?._id))
     );
   }, [timesheetsList]);
 
@@ -36,7 +36,7 @@ const Timesheets = () => {
       <Button
         text="Add Timesheet +"
         variant="addButton"
-        onClick={() => history.push(`/employees/timesheets/${id}/create`)}
+        onClick={() => history.push(`/employee/timesheets/${id}/create`)}
       />
       {isPending ? (
         <Spinner entity="Timesheets" />
