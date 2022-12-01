@@ -1,6 +1,5 @@
-import Layout from 'Components/Layout';
 import { Input, Button } from 'Components/Shared';
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 import { schema } from './validations';
@@ -21,13 +20,13 @@ const Login = () => {
     resolver: joiResolver(schema)
   });
 
-  const { data: userData } = useSelector((store) => store.auth);
+  // const { data: userData } = useSelector((store) => store.auth);
 
-  useEffect(() => {
-    if (userData?._id) {
-      history.push(`/employee/profile/${userData?._id}`);
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData?._id) {
+  //     history.push(`/employee/profile/${userData?._id}`);
+  //   }
+  // }, [userData]);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -36,12 +35,13 @@ const Login = () => {
     if (Object.values(errors).length === 0) {
       dispatch(login(data)).then((data) => {
         if (data.type === LOGIN_FULFILLED) {
+          dispatch(getUserProfile());
           if (data.payload.role === 'SUPER_ADMIN') {
-            history.push('/admins');
+            history.push('/super-admins');
           } else if (data.payload.role === 'ADMIN') {
-            history.push('/employees');
+            history.push('/admin/employees');
           } else {
-            dispatch(getUserProfile());
+            history.push('/employee/home');
           }
         }
       });
@@ -49,33 +49,21 @@ const Login = () => {
   };
 
   return (
-    <Layout
-      routes={[
-        { name: 'SignUp', path: '/auth/signup' },
-        { name: 'Home', path: '/' }
-      ]}
-    >
-      <div className={styles.container}>
-        <h2>Login</h2>
-        {error && <div className={styles.errorContainer}>{error}</div>}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            register={register}
-            name="email"
-            placeholder="Email"
-            error={errors.email?.message}
-          />
-          <Input
-            register={register}
-            type="password"
-            name="password"
-            placeholder="Password"
-            error={errors.password?.message}
-          />
-          <Button variant="addButton" type="submit" text="Sign In" />
-        </form>
-      </div>
-    </Layout>
+    <div className={styles.container}>
+      <h2>Login</h2>
+      {error && <div className={styles.errorContainer}>{error}</div>}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input register={register} name="email" placeholder="Email" error={errors.email?.message} />
+        <Input
+          register={register}
+          type="password"
+          name="password"
+          placeholder="Password"
+          error={errors.password?.message}
+        />
+        <Button variant="addButton" type="submit" text="Sign In" />
+      </form>
+    </div>
   );
 };
 
