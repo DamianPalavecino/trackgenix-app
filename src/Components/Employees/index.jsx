@@ -48,7 +48,7 @@ const Employees = () => {
   const onDelete = (id) => {
     dispatch(deleteEmployee(id));
     toggleModal('confirm', 'success');
-    history.push('/employees');
+    history.goBack();
   };
 
   const editEmployee = (id) => {

@@ -9,7 +9,7 @@ function Home() {
     <Layout routes={[]}>
       <section className={styles.container}>
         <h2>Home</h2>
-        <Button text="Login pa" variant="addButton" onClick={() => history.push(`/auth/login`)} />
+        <Button text="Login" variant="addButton" onClick={() => history.push(`/auth/login`)} />
       </section>
     </Layout>
   );
