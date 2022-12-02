@@ -1,16 +1,15 @@
-import { Input, Button } from 'Components/Shared';
-import { React } from 'react';
+import { Input, Button, Modal } from 'Components/Shared';
+import { React, useState } from 'react';
 import styles from './login.module.css';
 import { useForm } from 'react-hook-form';
 import { schema } from './validations';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login, getUserProfile } from 'redux/auth/thunks';
-import { LOGIN_FULFILLED } from 'redux/auth/constants';
+import { LOGIN_FULFILLED, LOGIN_REJECTED } from 'redux/auth/constants';
 import { useHistory } from 'react-router-dom';
 
 const Login = () => {
-  const { error } = useSelector((state) => state.auth);
   const {
     handleSubmit,
     register,
@@ -19,14 +18,17 @@ const Login = () => {
     mode: 'onChange',
     resolver: joiResolver(schema)
   });
+  const [showModal, setShowModal] = useState({
+    success: false,
+    error: false
+  });
 
-  // const { data: userData } = useSelector((store) => store.auth);
-
-  // useEffect(() => {
-  //   if (userData?._id) {
-  //     history.push(`/employee/profile/${userData?._id}`);
-  //   }
-  // }, [userData]);
+  const toggleModal = (modal) => {
+    setShowModal({
+      ...showModal,
+      [modal]: !showModal[modal]
+    });
+  };
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,6 +45,8 @@ const Login = () => {
           } else {
             history.push('/employee/home');
           }
+        } else if (data.type === LOGIN_REJECTED) {
+          toggleModal('error');
         }
       });
     }
@@ -50,8 +54,13 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <Modal
+        showModal={showModal.error}
+        closeModal={() => toggleModal('error')}
+        text={'Wrong email or password'}
+        variant={'errorModal'}
+      />
       <h2>Login</h2>
-      {error && <div className={styles.errorContainer}>{error}</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input register={register} name="email" placeholder="Email" error={errors.email?.message} />
         <Input
