@@ -38,7 +38,6 @@ const Form = () => {
       lastName: employees?.lastName,
       phone: employees?.phone,
       email: employees?.email,
-      password: employees?.password,
       status: employees?.status
     });
   }, [employees]);
@@ -122,13 +121,6 @@ const Form = () => {
               register={register}
               label="Email"
               error={errors.email?.message}
-            />
-            <Input
-              name="password"
-              type="password"
-              register={register}
-              label="Password"
-              error={errors.password?.message}
             />
             {idEdit && (
               <Select register={register} label="Status" name="status">
