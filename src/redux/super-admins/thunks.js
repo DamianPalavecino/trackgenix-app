@@ -66,7 +66,6 @@ export const deleteAdmins = (id) => {
       }
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 204) {
           dispatch(deleteAdminsFulfilled(id));
         }

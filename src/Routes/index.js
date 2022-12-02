@@ -8,11 +8,7 @@ import PrivateRoute from './privateRoute';
 
 const SuperAdmins = lazy(() => import('./super-admin'));
 const Admins = lazy(() => import('./admin'));
-// const Employees = lazy(() => import('./employees'));
 const LoggedEmployee = lazy(() => import('./employee'));
-// const TimeSheets = lazy(() => import('./timesheet'));
-// const Tasks = lazy(() => import('./task'));
-// const Projects = lazy(() => import('./project'));
 const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
@@ -32,7 +28,6 @@ const Routes = () => {
           <Switch>
             <Route exact path={'/'} component={Home} />
             <PrivateRoute path="/super-admins" role={['SUPER_ADMIN']} component={SuperAdmins} />
-            {/* <PrivateRoute path="/projects" role={['ADMIN', 'SUPER_ADMIN']} component={Projects} /> */}
             <PrivateRoute path="/admin" role={['ADMIN', 'SUPER_ADMIN']} component={Admins} />
             <PrivateRoute
               path="/employee"
