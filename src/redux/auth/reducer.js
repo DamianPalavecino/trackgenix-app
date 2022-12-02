@@ -62,7 +62,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         isPending: false,
         authenticated: false,
         role: null,
-        data: {}
+        data: {},
+        error: ''
       };
     }
     case SIGN_UP_FULFILLED: {

@@ -41,7 +41,7 @@ export const deleteTimesheets = (id) => {
     dispatch(deleteTimesheetsPending());
     fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
       method: 'DELETE',
-      token
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {

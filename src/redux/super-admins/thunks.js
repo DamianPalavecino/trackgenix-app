@@ -60,9 +60,13 @@ export const deleteAdmins = (id) => {
     const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'DELETE',
-      headers: { token }
+      headers: {
+        'Content-Type': 'application/json',
+        token
+      }
     })
       .then((response) => {
+        console.log(response);
         if (response.status === 204) {
           dispatch(deleteAdminsFulfilled(id));
         }

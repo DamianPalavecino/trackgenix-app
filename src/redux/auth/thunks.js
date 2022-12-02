@@ -25,7 +25,7 @@ export const login = (inputData) => {
       sessionStorage.setItem('token', token);
       return dispatch(loginFulfilled(role));
     } catch (error) {
-      return dispatch(loginRejected(error));
+      return dispatch(loginRejected(error.message));
     }
   };
 };
