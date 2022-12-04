@@ -1,7 +1,8 @@
 import { Switch, Route } from 'react-router-dom';
-import EmployeesHome from 'Components/Employees/Home';
+import EmployeeProjects from 'Components/Employees/Projects';
 import EmployeeTimeSheets from 'Components/Employees/Timesheets';
 import EmployeeProfile from 'Components/Employees/Profile';
+import EmployeeHome from 'Components/Employees/Home';
 import AddTimesheet from 'Components/Employees/Timesheets/AddTimesheet';
 import Layout from 'Components/Layout';
 import { useSelector } from 'react-redux';
@@ -12,7 +13,7 @@ const LoggedEmployee = () => {
   });
   const routes = [
     {
-      name: 'Home',
+      name: 'Projects',
       path: `/employee/home/${data?._id}`
     },
     {
@@ -27,7 +28,8 @@ const LoggedEmployee = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={'/employee/home'} component={EmployeesHome} />
+        <Route exact path={'/employee/home'} component={EmployeeHome} />
+        <Route exact path={'/employee/home/:id'} component={EmployeeProjects} />
         <Route exact path={'/employee/timesheets/:id'} component={EmployeeTimeSheets} />
         <Route exact path={'/employee/timesheets/:id/create'} component={AddTimesheet} />
         <Route exact path={'/employee/profile/:id'} component={EmployeeProfile} />
