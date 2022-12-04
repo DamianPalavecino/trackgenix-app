@@ -31,7 +31,7 @@ export const tokenListener = () => {
               email
             })
           );
-        sessionStorage.setitem('token', token);
+        sessionStorage.setItem('token', token);
       } catch (error) {
         store.dispatch(loginRejected());
       }
