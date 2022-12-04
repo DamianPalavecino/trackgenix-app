@@ -1,8 +1,8 @@
+import styles from './projects.module.css';
+import { Table, Spinner } from 'Components/Shared';
 import { useSelector } from 'react-redux';
-import { Spinner } from 'Components/Shared';
-import styles from './home.module.css';
 
-const EmployeeHome = () => {
+const EmployeeProjects = () => {
   const { data: employee } = useSelector((state) => state.auth);
   const { isPending } = useSelector((state) => state.employees);
 
@@ -12,12 +12,13 @@ const EmployeeHome = () => {
       {isPending ? (
         <Spinner />
       ) : (
-        <div>
-          <h2>{`Welcome ${employee.name}`}</h2>
-        </div>
+        <Table
+          headers={['name', 'startDate', 'endDate', 'description', 'clientName']}
+          data={employee?.projects}
+        />
       )}
     </div>
   );
 };
 
-export default EmployeeHome;
+export default EmployeeProjects;
