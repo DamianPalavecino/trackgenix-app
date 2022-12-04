@@ -39,7 +39,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        error: action.payload
+        error: action.payload,
+        authenticated: false
       };
     case LOGIN_FULFILLED: {
       return {

@@ -5,6 +5,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Spinner } from 'Components/Shared';
 import { tokenListener } from 'helpers/firebase';
 import PrivateRoute from './privateRoute';
+import { useSelector } from 'react-redux';
 
 const SuperAdmins = lazy(() => import('./super-admin'));
 const Admins = lazy(() => import('./admin'));
@@ -12,6 +13,7 @@ const LoggedEmployee = lazy(() => import('./employee'));
 const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
+  const { authenticated } = useSelector((state) => state.auth);
   useEffect(() => {
     tokenListener();
   }, []);
@@ -26,7 +28,7 @@ const Routes = () => {
       >
         <Router>
           <Switch>
-            <Route exact path={'/'} component={Home} />
+            <Route exact path="/" component={Home} />
             <PrivateRoute path="/super-admins" role={['SUPER_ADMIN']} component={SuperAdmins} />
             <PrivateRoute path="/admin" role={['ADMIN', 'SUPER_ADMIN']} component={Admins} />
             <PrivateRoute
@@ -34,18 +36,8 @@ const Routes = () => {
               role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
               component={LoggedEmployee}
             />
-            {/* <PrivateRoute
-              path="/tasks"
-              role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-              component={Tasks}
-            />
-            <PrivateRoute
-              path="/time-sheets"
-              role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-              component={TimeSheets}
-            /> */}
-            <Route path="/auth" component={AuthRoutes} />
-            <Redirect to="/auth" component={AuthRoutes} />
+            {!authenticated && <Route path="/auth" component={AuthRoutes} />}
+            <Redirect to="/" component={Home} />
           </Switch>
         </Router>
       </Suspense>
