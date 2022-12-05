@@ -119,24 +119,27 @@ export const deleteProject = (id) => {
 };
 
 export const assignEmployee = (projectId, employee) => {
-  return (dispatch) => {
-    dispatch(assignEmployeePending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${projectId}/assignEmployee`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(employee)
-    })
-      .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else {
-          dispatch(assignEmployeeFulfilled(response.message));
+  return async (dispatch) => {
+    try {
+      dispatch(assignEmployeePending());
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/projects/${projectId}/assignEmployee`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(employee)
         }
-      })
-      .catch((error) => {
-        dispatch(assignEmployeeRejected(error.toString()));
-      });
+      );
+      const data = await response.json();
+      if (response.ok) {
+        return dispatch(assignEmployeeFulfilled(data.message));
+      } else {
+        return dispatch(assignEmployeeRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(assignEmployeeRejected(error.toString()));
+    }
   };
 };

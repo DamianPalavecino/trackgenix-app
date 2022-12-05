@@ -37,38 +37,27 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isPending: true
       };
-    case GET_PROJECTS_REJECTED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload,
-        list: []
-      };
     case GET_PROJECTS_FULFILLED:
       return {
         ...state,
         isPending: false,
         list: action.payload
       };
-    case POST_PROJECTS_FULFILLED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
-      };
     case POST_PROJECTS_REJECTED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
-      };
-    case PUT_PROJECTS_FULFILLED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
-      };
+    case DELETE_PROJECT_REJECTED:
     case PUT_PROJECTS_REJECTED:
+    case GET_PROJECTS_REJECTED:
+    case GETBYID_PROJECT_REJECTED:
+    case ASSIGN_EMPLOYEE_REJECTED:
+      return {
+        ...state,
+        isPending: false,
+        message: action.payload,
+        list: []
+      };
+    case POST_PROJECTS_FULFILLED:
+    case PUT_PROJECTS_FULFILLED:
+    case ASSIGN_EMPLOYEE_FULFILLED:
       return {
         ...state,
         isPending: false,
@@ -84,36 +73,11 @@ const reducer = (state = INITIAL_STATE, action) => {
           endDate: action.payload.endDate.slice(0, 10)
         }
       };
-    case GETBYID_PROJECT_REJECTED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
-      };
     case DELETE_PROJECT_FULFILLED:
       return {
         ...state,
         isPending: false,
         list: [...state.list.filter((project) => project._id !== action.payload)]
-      };
-    case DELETE_PROJECT_REJECTED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
-      };
-    case ASSIGN_EMPLOYEE_FULFILLED:
-      return {
-        ...state,
-        isPending: false
-        // list: [...state.list.employees.filter((project) => project._id !== action.payload)]
-        // TODO: Resolve this
-      };
-    case ASSIGN_EMPLOYEE_REJECTED:
-      return {
-        ...state,
-        isPending: false,
-        message: action.payload
       };
     default:
       return state;
