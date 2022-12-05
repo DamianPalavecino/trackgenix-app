@@ -1,20 +1,32 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
-import { Table, Spinner, Button, Modal } from 'Components/Shared';
+import { Table, Spinner, Button, Modal, Select, Input } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { getProjects, deleteProject, assignEmployee } from 'redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { getEmployees } from 'redux/employees/thunks';
 
 const Projects = () => {
-  const [showModal, setShowModal] = useState({ confirm: false, success: false, employees: false });
+  const [showModal, setShowModal] = useState({
+    confirm: false,
+    success: false,
+    employees: false,
+    assign: false
+  });
   const [employees, saveEmployees] = useState([]);
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { list: projectsList, isPending } = useSelector((state) => state.projects);
+  const { list: projectsList, isPending, message } = useSelector((state) => state.projects);
+  const { list: employeeList } = useSelector((state) => state.employees);
+  const { register, handleSubmit } = useForm({
+    mode: 'onChange'
+  });
 
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getEmployees());
   }, []);
 
   const handleDelete = (id) => {
@@ -62,6 +74,20 @@ const Projects = () => {
     );
   };
 
+  const showAssignEmployeeModal = (id) => {
+    history.push(`/projects/${id}/assign`);
+    toggleModal('assign');
+  };
+
+  const onSubmit = async (employee) => {
+    const response = await dispatch(assignEmployee(params.id, employee));
+    if (response.type === 'ASSIGN_EMPLOYEE_FULFILLED') {
+      toggleModal('assign', 'success');
+    } else if (response.type === 'ASSIGN_EMPLOYEE_REJECTED') {
+      toggleModal('assign', 'error');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Modal
@@ -94,8 +120,11 @@ const Projects = () => {
       </Modal>
       <Modal
         showModal={showModal.success}
-        closeModal={() => toggleModal('success')}
-        text="Project deleted successfully"
+        closeModal={() => {
+          toggleModal('success');
+          history.goBack();
+        }}
+        text={message}
         variant={'successModal'}
       />
       <Modal
@@ -111,6 +140,42 @@ const Projects = () => {
         ) : (
           <p>There are no employees in this project</p>
         )}
+      </Modal>
+      <Modal
+        showModal={showModal.assign}
+        closeModal={() => {
+          toggleModal('assign');
+          history.goBack();
+        }}
+        title="Assign Employee to Project"
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Select
+            label="Employee"
+            name="employeeId"
+            optionsData={employeeList}
+            item="lastName"
+            optionValue="Employee"
+            register={register}
+          />
+          <Select label="Role" name="role" register={register} optionValue="Role">
+            <option value="DEV">Developer</option>
+            <option value="QA">Quality Assurance</option>
+            <option value="TL">Tech Lead</option>
+          </Select>
+          <Input label="Rate" type="number" placeholder="Rate" register={register} name="rate" />
+          <div>
+            <Button
+              variant={'cancelButton'}
+              text="Back"
+              onClick={() => {
+                toggleModal('assign');
+                history.goBack();
+              }}
+            />
+            <Button type="submit" variant="addButton" text="Assign" />
+          </div>
+        </form>
       </Modal>
       <h2>Projects</h2>
       <Button
@@ -136,6 +201,7 @@ const Projects = () => {
           handleDelete={openDeleteModal}
           editItem={editRow}
           showInfo={showEmployeesModal}
+          assignEmployee={showAssignEmployeeModal}
         />
       )}
     </div>

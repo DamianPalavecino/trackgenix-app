@@ -8,6 +8,7 @@ const Project = () => {
     <Switch>
       <Route exact path={'/projects'} component={Projects} />
       <Route exact path={'/projects/:id/employees'} component={Projects} />
+      <Route exact path={'/projects/:id/assign'} component={Projects} />
       <Route exact path={'/projects/delete/:id'} component={Projects} />
       <Route exact path={'/projects/form'} component={ProjectForm} />
       <Route exact path={'/projects/form/:id'} component={ProjectForm} />
