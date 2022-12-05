@@ -1,7 +1,7 @@
 import Row from '../Row';
 import styles from './table.module.css';
 
-const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
+const Table = ({ headers, data, handleDelete, editItem, showInfo, assignEmployee }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -22,6 +22,7 @@ const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
                 handleDelete={handleDelete}
                 editItem={editItem}
                 showInfo={showInfo}
+                assignEmployee={assignEmployee}
               />
             );
           })
