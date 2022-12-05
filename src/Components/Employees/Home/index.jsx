@@ -8,7 +8,6 @@ const EmployeeHome = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Current Projects</h2>
       {isPending ? (
         <Spinner />
       ) : (
