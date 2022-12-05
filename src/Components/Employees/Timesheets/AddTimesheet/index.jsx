@@ -26,8 +26,8 @@ const AddTimesheet = () => {
   });
 
   const { message, isPending } = useSelector((state) => state.timeSheets);
-  const tasks = useSelector((state) => state.tasks.list);
-  const employee = useSelector((state) => state.employees.list);
+  const { list: tasks } = useSelector((state) => state.tasks);
+  const { list: employee } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
   const params = useParams();
   const history = useHistory();

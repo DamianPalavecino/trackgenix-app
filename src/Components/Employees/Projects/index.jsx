@@ -1,10 +1,18 @@
 import styles from './projects.module.css';
+import { useEffect } from 'react';
 import { Table, Spinner } from 'Components/Shared';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getByIdEmployees } from 'redux/employees/thunks';
 
 const EmployeeProjects = () => {
-  const { data: employee } = useSelector((state) => state.auth);
-  const { isPending } = useSelector((state) => state.employees);
+  const { list: employee, isPending } = useSelector((state) => state.employees);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(getByIdEmployees(id));
+  }, []);
 
   return (
     <div className={styles.container}>
