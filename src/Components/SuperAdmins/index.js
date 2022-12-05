@@ -89,14 +89,14 @@ const SuperAdmins = () => {
         text="Admin deleted successfully"
         variant={'successModal'}
       />
-      <h2>Super Admins</h2>
+      <h2>Admins</h2>
       <Button
         text="Add Admins +"
         variant="addButton"
         onClick={() => history.push('super-admins/form')}
       />
       {isPending ? (
-        <Spinner entity="Super Admins" />
+        <Spinner entity="Admins" />
       ) : (
         <Table
           headers={['name', 'lastName', 'email', 'status', 'actions']}

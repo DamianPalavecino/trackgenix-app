@@ -19,7 +19,8 @@ import {
 export const getTasks = () => {
   return async (dispatch) => {
     dispatch(getTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -37,8 +38,10 @@ export const getTasks = () => {
 export const deleteTasks = (id) => {
   return async (dispatch) => {
     dispatch(deleteTasksPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {
@@ -55,10 +58,12 @@ export const postTasks = (newTask) => {
   return async (dispatch) => {
     try {
       dispatch(postTasksPending());
+      const token = sessionStorage.getItem('token');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(newTask)
       });
@@ -78,10 +83,12 @@ export const putTasks = (id, editedTask) => {
   return async (dispatch) => {
     try {
       dispatch(putTasksPending());
+      const token = sessionStorage.getItem('token');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(editedTask)
       });
@@ -100,7 +107,8 @@ export const putTasks = (id, editedTask) => {
 export const getTasksById = (id) => {
   return async (dispatch) => {
     dispatch(getByIdTasksPending());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {

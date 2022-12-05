@@ -19,7 +19,8 @@ import {
 export const getEmployees = () => {
   return async (dispatch) => {
     dispatch(getEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -35,7 +36,8 @@ export const getEmployees = () => {
 export const getByIdEmployees = (id) => {
   return async (dispatch) => {
     dispatch(getByIdEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -51,8 +53,10 @@ export const getByIdEmployees = (id) => {
 export const deleteEmployee = (id) => {
   return (dispatch) => {
     dispatch(deleteEmployeesPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {
@@ -69,10 +73,12 @@ export const putEmployee = (id, editedEmployee) => {
   return async (dispatch) => {
     try {
       dispatch(putEmployeesPending());
+      const token = sessionStorage.getItem('token');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(editedEmployee)
       });
@@ -92,10 +98,12 @@ export const postEmployee = (newEmployee) => {
   return async (dispatch) => {
     try {
       dispatch(postEmployeesPending());
+      const token = sessionStorage.getItem('token');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/employees`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(newEmployee)
       });

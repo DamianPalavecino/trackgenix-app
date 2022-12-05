@@ -5,16 +5,15 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Spinner } from 'Components/Shared';
 import { tokenListener } from 'helpers/firebase';
 import PrivateRoute from './privateRoute';
+import { useSelector } from 'react-redux';
 
-const Admins = lazy(() => import('./admin'));
 const SuperAdmins = lazy(() => import('./super-admin'));
-const Employees = lazy(() => import('./employee'));
-const TimeSheets = lazy(() => import('./timesheet'));
-const Tasks = lazy(() => import('./task'));
-const Projects = lazy(() => import('./project'));
+const Admins = lazy(() => import('./admin'));
+const LoggedEmployee = lazy(() => import('./employee'));
 const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
+  const { authenticated } = useSelector((state) => state.auth);
   useEffect(() => {
     tokenListener();
   }, []);
@@ -29,15 +28,16 @@ const Routes = () => {
       >
         <Router>
           <Switch>
-            <Route exact path={'/'} component={Home} />
-            <PrivateRoute path="/admins" role="ADMIN" component={Admins} />
-            <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmins} />
-            <PrivateRoute path="/projects" role="ADMIN" component={Projects} />
-            <PrivateRoute path="/employees" role="EMPLOYEE" component={Employees} />
-            <PrivateRoute path="/tasks" role="ADMIN" component={Tasks} />
-            <PrivateRoute path="/time-sheets" role="EMPLOYEE" component={TimeSheets} />
-            <Route path="/auth" component={AuthRoutes} />
-            <Redirect to="/auth" component={AuthRoutes} />
+            <Route exact path="/" component={Home} />
+            <PrivateRoute path="/super-admins" role={['SUPER_ADMIN']} component={SuperAdmins} />
+            <PrivateRoute path="/admin" role={['ADMIN', 'SUPER_ADMIN']} component={Admins} />
+            <PrivateRoute
+              path="/employee"
+              role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
+              component={LoggedEmployee}
+            />
+            {!authenticated && <Route path="/auth" component={AuthRoutes} />}
+            <Redirect to="/" component={Home} />
           </Switch>
         </Router>
       </Suspense>

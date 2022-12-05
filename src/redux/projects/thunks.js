@@ -18,8 +18,9 @@ import {
 
 export const getProjects = () => {
   return (dispatch) => {
+    const token = sessionStorage.getItem('token');
     dispatch(getProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
+    fetch(`${process.env.REACT_APP_API_URL}/projects`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -37,11 +38,13 @@ export const getProjects = () => {
 export const postProjects = (newProject) => {
   return async (dispatch) => {
     try {
+      const token = sessionStorage.getItem('token');
       dispatch(postProjectsPending());
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(newProject)
       });
@@ -61,10 +64,12 @@ export const putProjects = (id, editedProject) => {
   return async (dispatch) => {
     try {
       dispatch(putProjectsPending());
+      const token = sessionStorage.getItem('token');
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(editedProject)
       });
@@ -83,7 +88,8 @@ export const putProjects = (id, editedProject) => {
 export const getProjectById = (id) => {
   return (dispatch) => {
     dispatch(getByIdProjectPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -101,8 +107,10 @@ export const getProjectById = (id) => {
 export const deleteProject = (id) => {
   return (dispatch) => {
     dispatch(deleteProjectPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {

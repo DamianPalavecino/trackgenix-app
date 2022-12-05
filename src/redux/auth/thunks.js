@@ -1,7 +1,16 @@
-import { loginRejected, loginPending, logoutRejected, logoutPending } from './actions';
+import {
+  loginRejected,
+  loginPending,
+  logoutRejected,
+  logoutPending,
+  loginFulfilled,
+  getUserProfilePending,
+  getUserProfileFulfilled,
+  getUserProfileRejected
+} from './actions';
 
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from 'Components/Helpers/firebase';
+import { auth } from 'helpers/firebase';
 
 export const login = (inputData) => {
   return async (dispatch) => {
@@ -12,14 +21,11 @@ export const login = (inputData) => {
         inputData.email,
         inputData.password
       );
-      const {
-        token,
-        claims: { role }
-      } = await userCredencials.user.getIdTokenResult();
+      const { token, claims: role } = await userCredencials.user.getIdTokenResult();
       sessionStorage.setItem('token', token);
-      return role;
+      return dispatch(loginFulfilled(role));
     } catch (error) {
-      return dispatch(loginRejected());
+      return dispatch(loginRejected(error.message));
     }
   };
 };
@@ -34,5 +40,22 @@ export const logout = () => {
       .catch((error) => {
         return dispatch(logoutRejected(error.toString()));
       });
+  };
+};
+
+export const getUserProfile = () => {
+  const token = sessionStorage.getItem('token');
+  return async (dispatch) => {
+    dispatch(getUserProfilePending());
+    fetch(`${process.env.REACT_APP_API_URL}/auth/getUserProfile`, { headers: { token } })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(getUserProfileFulfilled(response.data));
+        }
+      })
+      .catch((error) => dispatch(getUserProfileRejected(error.message)));
   };
 };

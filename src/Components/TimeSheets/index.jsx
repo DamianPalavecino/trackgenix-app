@@ -20,7 +20,7 @@ const TimeSheets = () => {
   const handleDelete = (id) => {
     dispatch(deleteTimesheets(id));
     toggleModal('confirm', 'success');
-    history.push('/time-sheets');
+    history.goBack();
   };
 
   const toggleModal = (modal, secondModal) => {
@@ -39,12 +39,12 @@ const TimeSheets = () => {
   };
 
   const openDeleteModal = (id) => {
-    history.push(`time-sheets/delete/${id}`);
+    history.push(`timesheets/delete/${id}`);
     toggleModal('confirm');
   };
 
   const editRow = (id) => {
-    history.push(`time-sheets/form/${id}`);
+    history.push(`timesheets/form/${id}`);
   };
 
   return (
@@ -87,7 +87,7 @@ const TimeSheets = () => {
       <Button
         text="Add Timesheet +"
         variant="addButton"
-        onClick={() => history.push('/time-sheets/form')}
+        onClick={() => history.push('timesheets/form')}
       />
       {isPending ? (
         <Spinner entity="Timesheets" />

@@ -5,7 +5,7 @@ export const superAdminSchema = Joi.object({
     .min(3)
     .max(50)
     .required()
-    .pattern(/^[a-z]+$/)
+    .pattern(/^[a-zA-Z\s]*$/)
     .messages({
       'string.empty': '"Name" cannot be empty',
       'string.min': '"Name" must have minimum {3} characters',
@@ -17,7 +17,7 @@ export const superAdminSchema = Joi.object({
     .min(3)
     .max(50)
     .required()
-    .pattern(/^[a-z]+$/)
+    .pattern(/^[a-zA-Z\s]*$/)
     .messages({
       'string.empty': '"Last Name" cannot be empty',
       'string.min': '"Last Name" must have minimum {3} characters',
