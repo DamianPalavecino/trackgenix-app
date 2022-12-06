@@ -51,7 +51,7 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     dispatch(deleteTasks(id));
     toggleModal('confirm', 'success');
-    history.push('/tasks');
+    history.goBack();
   };
 
   return (

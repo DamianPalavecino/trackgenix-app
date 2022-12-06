@@ -1,19 +1,41 @@
-import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Employees from 'Components/Employees';
-import EmployeesForm from 'Components/Employees/Form';
+import EmployeeProjects from 'Components/Employees/Projects';
+import EmployeeTimeSheets from 'Components/Employees/Timesheets';
+import EmployeeProfile from 'Components/Employees/Profile';
+import EmployeeHome from 'Components/Employees/Home';
+import AddTimesheet from 'Components/Employees/Timesheets/AddTimesheet';
+import Layout from 'Components/Layout';
+import { useSelector } from 'react-redux';
 
-const Employee = () => {
+const LoggedEmployee = () => {
+  const { data } = useSelector((store) => {
+    return store.auth;
+  });
+  const routes = [
+    {
+      name: 'Projects',
+      path: `/employee/home/${data?._id}`
+    },
+    {
+      name: 'Timesheets',
+      path: `/employee/timesheets/${data?._id}`
+    },
+    {
+      name: 'Edit Profile',
+      path: `/employee/profile/${data?._id}`
+    }
+  ];
   return (
-    <Switch>
-      <Route exact path={'/employees'} component={Employees} />
-      <Route exact path={'/employees/form/:id'} component={EmployeesForm} />
-      <Route exact path={'/employees/:id/projects'} component={Employees} />
-      <Route exact path={'/employees/delete/:id'} component={Employees} />
-      <Route exact path={'/employees/form'} component={EmployeesForm} />
-      <Route exact path={'/employees/form/:id'} component={EmployeesForm} />
-    </Switch>
+    <Layout routes={routes}>
+      <Switch>
+        <Route exact path={'/employee/home'} component={EmployeeHome} />
+        <Route exact path={'/employee/home/:id'} component={EmployeeProjects} />
+        <Route exact path={'/employee/timesheets/:id'} component={EmployeeTimeSheets} />
+        <Route exact path={'/employee/timesheets/:id/create'} component={AddTimesheet} />
+        <Route exact path={'/employee/profile/:id'} component={EmployeeProfile} />
+      </Switch>
+    </Layout>
   );
 };
 
-export default Employee;
+export default LoggedEmployee;

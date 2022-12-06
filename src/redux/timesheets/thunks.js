@@ -16,10 +16,12 @@ import {
   getByIdTimesheetsRejected
 } from './actions';
 
+const token = sessionStorage.getItem('token');
+
 export const getTimesheets = () => {
   return async (dispatch) => {
     dispatch(getTimesheetsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/timesheets`)
+    fetch(`${process.env.REACT_APP_API_URL}/timesheets`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -38,7 +40,8 @@ export const deleteTimesheets = (id) => {
   return async (dispatch) => {
     dispatch(deleteTimesheetsPending());
     fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => {
         if (response.status === 204) {
@@ -58,7 +61,8 @@ export const postTimesheets = (newTimesheet) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(newTimesheet)
       });
@@ -81,7 +85,8 @@ export const putTimesheets = (id, editedTimesheet) => {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          token
         },
         body: JSON.stringify(editedTimesheet)
       });
@@ -100,7 +105,7 @@ export const putTimesheets = (id, editedTimesheet) => {
 export const getTimesheetsById = (id) => {
   return async (dispatch) => {
     dispatch(getByIdTimesheetsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/timesheets/${id}`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {

@@ -32,7 +32,7 @@ const Projects = () => {
   const handleDelete = (id) => {
     dispatch(deleteProject(id));
     toggleModal('confirm', 'success');
-    history.push('/projects');
+    history.goBack();
   };
 
   const toggleModal = (modal, secondModal) => {
@@ -181,7 +181,7 @@ const Projects = () => {
       <Button
         text="Add Project +"
         variant="addButton"
-        onClick={() => history.push('/projects/form')}
+        onClick={() => history.push('projects/form')}
       />
       {isPending ? (
         <Spinner entity="Projects" />

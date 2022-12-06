@@ -1,51 +1,48 @@
-import Header from 'Components/Header/index';
-import Sidebar from 'Components/Sidebar/index';
-import Footer from 'Components/Footer/index';
 import Home from 'Components/Home/index';
 import styles from 'Components/Layout/layout.module.css';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
 import { Spinner } from 'Components/Shared';
+import { tokenListener } from 'helpers/firebase';
+import PrivateRoute from './privateRoute';
+import { useSelector } from 'react-redux';
 
-const Admins = lazy(() => import('./admin'));
 const SuperAdmins = lazy(() => import('./super-admin'));
-const Employees = lazy(() => import('./employee'));
-const TimeSheets = lazy(() => import('./timesheet'));
-const Tasks = lazy(() => import('./task'));
-const Projects = lazy(() => import('./project'));
+const Admins = lazy(() => import('./admin'));
+const LoggedEmployee = lazy(() => import('./employee'));
+const AuthRoutes = lazy(() => import('./auth'));
 
-const Layout = () => {
+const Routes = () => {
+  const { authenticated } = useSelector((state) => state.auth);
+  useEffect(() => {
+    tokenListener();
+  }, []);
   return (
-    <Suspense fallback={<Spinner />}>
-      <Router>
-        <div className={styles.container}>
-          <div className={styles.head}>
-            <Header />
+    <BrowserRouter>
+      <Suspense
+        fallback={
+          <div className={styles.loading}>
+            <Spinner />
           </div>
-          <div className={styles.main}>
-            <div className={styles.side}>
-              <Sidebar />
-            </div>
-            <div className={styles.content}>
-              <Switch>
-                <Route exact path={'/'} component={Home} />
-                <Route path="/admins" component={Admins} />
-                <Route path="/super-admins" component={SuperAdmins} />
-                <Route path="/projects" component={Projects} />
-                <Route path="/employees" component={Employees} />
-                <Route path="/tasks" component={Tasks} />
-                <Route path={'/time-sheets'} component={TimeSheets} />
-                <Redirect to="/" />
-              </Switch>
-            </div>
-          </div>
-          <div className={styles.foot}>
-            <Footer />
-          </div>
-        </div>
-      </Router>
-    </Suspense>
+        }
+      >
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <PrivateRoute path="/super-admins" role={['SUPER_ADMIN']} component={SuperAdmins} />
+            <PrivateRoute path="/admin" role={['ADMIN', 'SUPER_ADMIN']} component={Admins} />
+            <PrivateRoute
+              path="/employee"
+              role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
+              component={LoggedEmployee}
+            />
+            {!authenticated && <Route path="/auth" component={AuthRoutes} />}
+            <Redirect to="/" component={Home} />
+          </Switch>
+        </Router>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 
-export default Layout;
+export default Routes;
