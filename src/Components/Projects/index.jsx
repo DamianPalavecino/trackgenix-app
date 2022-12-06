@@ -6,6 +6,8 @@ import { getProjects, deleteProject, assignEmployee } from 'redux/projects/thunk
 import { useHistory, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { getEmployees } from 'redux/employees/thunks';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { employeeSchema } from './validations';
 
 const Projects = () => {
   const [showModal, setShowModal] = useState({
@@ -20,8 +22,13 @@ const Projects = () => {
   const dispatch = useDispatch();
   const { list: projectsList, isPending, message } = useSelector((state) => state.projects);
   const { list: employeeList } = useSelector((state) => state.employees);
-  const { register, handleSubmit } = useForm({
-    mode: 'onChange'
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(employeeSchema)
   });
 
   useEffect(() => {
@@ -75,7 +82,7 @@ const Projects = () => {
   };
 
   const showAssignEmployeeModal = (id) => {
-    history.push(`/projects/${id}/assign`);
+    history.push(`/admin/projects/${id}/assign`);
     toggleModal('assign');
   };
 
@@ -128,6 +135,15 @@ const Projects = () => {
         variant={'successModal'}
       />
       <Modal
+        showModal={showModal.error}
+        variant={'errorModal'}
+        closeModal={() => {
+          toggleModal('error');
+          history.goBack();
+        }}
+        text={message}
+      ></Modal>
+      <Modal
         showModal={showModal.employees}
         closeModal={() => {
           toggleModal('employees');
@@ -157,13 +173,27 @@ const Projects = () => {
             item="lastName"
             optionValue="Employee"
             register={register}
+            error={errors.employeeId?.message}
           />
-          <Select label="Role" name="role" register={register} optionValue="Role">
+          <Select
+            label="Role"
+            name="role"
+            register={register}
+            optionValue="Role"
+            error={errors.role?.message}
+          >
             <option value="DEV">Developer</option>
             <option value="QA">Quality Assurance</option>
             <option value="TL">Tech Lead</option>
           </Select>
-          <Input label="Rate" type="number" placeholder="Rate" register={register} name="rate" />
+          <Input
+            label="Rate"
+            type="number"
+            placeholder="Rate"
+            register={register}
+            name="rate"
+            error={errors.rate?.message}
+          />
           <div>
             <Button
               variant={'cancelButton'}
