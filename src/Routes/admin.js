@@ -46,6 +46,7 @@ const Admin = () => {
         <Route exact path={'/admin/timesheets/form/:id'} component={TimeSheetsForm} />
         <Route exact path={'/admin/projects/:id/employees'} component={Projects} />
         <Route exact path={'/admin/projects/delete/:id'} component={Projects} />
+        <Route exact path={'/admin/projects/:id/assign'} component={Projects} />
         <Route exact path={'/admin/projects/form/:id'} component={ProjectForm} />
         <Route exact path={'/admin/employees/form/:id'} component={EmployeesForm} />
         <Route exact path={'/admin/employees/:id/projects'} component={Employees} />
