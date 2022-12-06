@@ -129,19 +129,22 @@ export const deleteProject = (id) => {
 export const assignEmployee = (projectId, employee) => {
   return async (dispatch) => {
     try {
+      const token = sessionStorage.getItem('token');
       dispatch(assignEmployeePending());
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/projects/${projectId}/assignEmployee`,
         {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            token
           },
           body: JSON.stringify(employee)
         }
       );
       const data = await response.json();
       if (response.ok) {
+        dispatch(getProjects());
         return dispatch(assignEmployeeFulfilled(data.message));
       } else {
         return dispatch(assignEmployeeRejected(data.message));

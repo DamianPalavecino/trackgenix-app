@@ -52,8 +52,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPending: false,
-        message: action.payload,
-        list: []
+        message: action.payload
       };
     case POST_PROJECTS_FULFILLED:
     case PUT_PROJECTS_FULFILLED:
