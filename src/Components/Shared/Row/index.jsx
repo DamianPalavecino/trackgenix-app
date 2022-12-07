@@ -1,7 +1,7 @@
 import Button from '../Button';
 import styles from './row.module.css';
 
-const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
+const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }) => {
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
@@ -20,6 +20,13 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
                 text="Delete"
                 variant="confirmButton"
               />
+              {data['employees'] && (
+                <Button
+                  onClick={() => assignEmployee(data._id)}
+                  text="Assign"
+                  variant="addButton"
+                />
+              )}
             </td>
           );
         }
