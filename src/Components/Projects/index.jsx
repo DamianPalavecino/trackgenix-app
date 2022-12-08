@@ -185,6 +185,7 @@ const Projects = () => {
             <option value="DEV">Developer</option>
             <option value="QA">Quality Assurance</option>
             <option value="TL">Tech Lead</option>
+            <option value="PM">Project Manager</option>
           </Select>
           <Input
             label="Rate"
