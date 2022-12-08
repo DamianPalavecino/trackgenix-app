@@ -25,7 +25,7 @@ const Tasks = () => {
   }
 
   const editTask = (id) => {
-    history.push(`tasks/form/${id}`);
+    history.push(`/employee/tasks/form/${id}`);
   };
 
   const toggleModal = (modal, secondModal) => {
@@ -44,7 +44,7 @@ const Tasks = () => {
   };
 
   const openDeleteModal = (id) => {
-    history.push(`tasks/delete/${id}`);
+    history.push(`/employee/tasks/delete/${id}`);
     toggleModal('confirm');
   };
 
@@ -89,7 +89,11 @@ const Tasks = () => {
         variant={'successModal'}
       ></Modal>
       <h2>Tasks</h2>
-      <Button text="Add Task +" variant="addButton" onClick={() => history.push('tasks/form')} />
+      <Button
+        text="Add Task +"
+        variant="addButton"
+        onClick={() => history.push('/employee/tasks/form')}
+      />
       {isPending ? (
         <Spinner entity="Tasks" />
       ) : (
