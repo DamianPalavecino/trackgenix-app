@@ -21,7 +21,7 @@ const EmployeeProjects = () => {
         <Spinner />
       ) : (
         <Table
-          headers={['name', 'startDate', 'endDate', 'description', 'clientName']}
+          headers={['name', 'role', 'startDate', 'endDate', 'description', 'clientName']}
           data={employee?.projects}
         />
       )}
