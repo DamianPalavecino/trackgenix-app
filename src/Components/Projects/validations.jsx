@@ -5,7 +5,7 @@ export const employeeSchema = Joi.object({
     'string.empty': '"Employee" cannot be empty',
     'any.required': '"Employee" is required'
   }),
-  role: Joi.string().valid('DEV', 'QA', 'TL').required().messages({
+  role: Joi.string().valid('DEV', 'QA', 'TL', 'PM').required().messages({
     'string.empty': '"Role" cannot be empty',
     'any.required': '"Role" is required'
   }),
