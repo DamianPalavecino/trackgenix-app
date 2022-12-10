@@ -6,10 +6,10 @@ import { loginFulfilled, logoutFulfilled, loginRejected } from 'redux/auth/actio
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_10,
+  projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appid: process.env.REACT_APP_APP_ID
+  appId: process.env.REACT_APP_APP_ID
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -22,21 +22,18 @@ export const tokenListener = () => {
       try {
         const {
           token,
-          claims: { role, email }
+          claims: { role }
         } = await user.getIdTokenResult();
-        if (token)
-          store.dispatch(
-            loginFulfilled({
-              role,
-              email
-            })
-          );
-        sessionStorage.setItem('token', token);
+        if (token) {
+          sessionStorage.setItem('token', token);
+          return store.dispatch(loginFulfilled(role));
+        }
       } catch (error) {
-        store.dispatch(loginRejected());
+        //FIXME: Should this be loginRejected or logoutFulfilled?
+        return store.dispatch(loginRejected());
       }
     } else {
-      store.dispatch(logoutFulfilled());
+      return store.dispatch(logoutFulfilled());
     }
   });
 };
