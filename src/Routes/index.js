@@ -14,9 +14,7 @@ const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
   const { authenticated } = useSelector((state) => state.auth);
-  useEffect(() => {
-    tokenListener();
-  }, []);
+  useEffect(() => tokenListener(), []);
   return (
     <BrowserRouter>
       <Suspense

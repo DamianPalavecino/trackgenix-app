@@ -21,7 +21,10 @@ export const login = (inputData) => {
         inputData.email,
         inputData.password
       );
-      const { token, claims: role } = await userCredencials.user.getIdTokenResult();
+      const {
+        token,
+        claims: { role }
+      } = await userCredencials.user.getIdTokenResult();
       sessionStorage.setItem('token', token);
       return dispatch(loginFulfilled(role));
     } catch (error) {

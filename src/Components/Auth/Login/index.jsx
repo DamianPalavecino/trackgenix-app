@@ -34,22 +34,20 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    if (Object.values(errors).length === 0) {
-      dispatch(login(data)).then((data) => {
-        if (data.type === LOGIN_FULFILLED) {
-          dispatch(getUserProfile());
-          if (data.payload.role === 'SUPER_ADMIN') {
-            history.push('/super-admins');
-          } else if (data.payload.role === 'ADMIN') {
-            history.push('/admin/employees');
-          } else {
-            history.push('/employee/home');
-          }
-        } else if (data.type === LOGIN_REJECTED) {
-          toggleModal('error');
+    dispatch(login(data)).then((data) => {
+      if (data.type === LOGIN_FULFILLED) {
+        dispatch(getUserProfile());
+        if (data.payload === 'SUPER_ADMIN') {
+          history.push('/super-admins');
+        } else if (data.payload === 'ADMIN') {
+          history.push('/admin/employees');
+        } else {
+          history.push('/employee/home');
         }
-      });
-    }
+      } else if (data.type === LOGIN_REJECTED) {
+        toggleModal('error');
+      }
+    });
   };
 
   return (
