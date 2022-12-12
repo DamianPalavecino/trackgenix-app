@@ -6,7 +6,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
-  const { data: authData } = useSelector((store) => {
+  const { data: authData, role } = useSelector((store) => {
     return store.auth;
   });
 
@@ -34,7 +34,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
             </td>
           );
         }
-        if (header === 'role') {
+        if (role.role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
