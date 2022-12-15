@@ -1,7 +1,7 @@
 .side {
   display:flex;
   flex-direction: column;
-  width : 15%;
+  width : 130px;
   background-color: #373867;
 }
 
@@ -16,13 +16,72 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 70%;
+  align-items: center;
+  padding: 40px;
   list-style-type: none;
 }
 
-@media screen and (max-width: 768px) {
+.divSidebar {
+	display: flex;
+	height: 100%;
+	background-color: #373867;
+	width: 180px;
+}
 
-  .side {
-    display: none;
-  }
+.sidebarContainer {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.closeButton {
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 800;
+}
+
+.hamburger{
+	position: absolute;
+	top: 55px;
+	left: 5px;
+    background-color: transparent;
+	border: 0px;
+	cursor:pointer;
+	padding: 0px;
+}
+._layer{
+	background:#373867;
+	margin-bottom:4px;
+	border-radius:2px;
+	width:28px;
+	height:4px;
+	opacity:1;
+}
+
+@media screen and (max-width: 1024px) {
+    .divSidebar {
+		width: 160px;
+	}
+	.ul {
+		padding: 30px;
+	}
+	.li a {
+		font-size: 15px;
+	}
+}
+
+@media screen and (max-width: 475px) {
+    .divSidebar {
+		width: 100px;
+	}
+	.ul {
+		padding: 0px;
+	}
+	.li a {
+		font-size: 13px;
+	}
+	.closeButton {
+		font-size: 10px;
+	}
 }
