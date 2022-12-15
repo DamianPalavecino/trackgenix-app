@@ -5,16 +5,16 @@
     border-radius: 5px;
     border-collapse: collapse;
     border: solid 2px #3738671a;
-    width: 800px;
-    height: 500px;
+    width: 830px;
+    height: auto;
     margin: 10px;
 }
 
 .divTable {
     overflow: auto;
-    width: 800px;
+    width: 840px;
     height: 500px;
-    margin: 20px;
+    margin-top: 20px;
     padding: 0px;
 }
 
@@ -24,10 +24,20 @@
 
 @media screen and (max-width: 1024px) {
     .table {
-        width: 500px;
+        width: 550px;
     }
 
     .divTable {
-        width: 500px;
+        width: 560px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table {
+        width: 300px;
+    }
+
+    .divTable {
+        width: 300px;
     }
 }

@@ -11,7 +11,8 @@
   }
 
   .modal, .errorModal, .successModal  {
-    max-width: 400px;
+    max-width: 850px;
+    height: auto;
     position: relative;
     border-radius: 7px;
     display: flex;
@@ -36,4 +37,11 @@
 
   .modal > :not(h3) + p, .errorModal > :not(h3) + p, .successModal > :not(h3) + p {
     font-weight: 700;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .modal, .errorModal, .successModal {
+      max-width: 550px;
+      max-width: 550px;
+    }
   }
