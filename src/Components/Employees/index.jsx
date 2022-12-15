@@ -71,7 +71,7 @@ const Employees = () => {
       ) : (
         <Table
           data={list}
-          headers={['name', 'lastName', 'phone', 'email', 'password', 'status', 'projects']}
+          headers={['name', 'lastName', 'phone', 'email', 'status', 'projects']}
           showInfo={openProjectsModal}
         />
       )}
