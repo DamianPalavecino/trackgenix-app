@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import store from 'redux/store';
-import { loginFulfilled, logoutFulfilled, loginRejected } from 'redux/auth/actions';
+import { loginFulfilled, logoutFulfilled, loginRejected, loginPending } from 'redux/auth/actions';
+import { getUserProfile } from 'redux/auth/thunks';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,6 +19,7 @@ export const auth = getAuth(firebaseApp);
 
 export const tokenListener = () => {
   onIdTokenChanged(auth, async (user) => {
+    store.dispatch(loginPending());
     if (user) {
       try {
         const {
@@ -26,10 +28,10 @@ export const tokenListener = () => {
         } = await user.getIdTokenResult();
         if (token) {
           sessionStorage.setItem('token', token);
-          return store.dispatch(loginFulfilled(role));
+          store.dispatch(getUserProfile());
+          store.dispatch(loginFulfilled(role));
         }
       } catch (error) {
-        //FIXME: Should this be loginRejected or logoutFulfilled?
         return store.dispatch(loginRejected());
       }
     } else {
