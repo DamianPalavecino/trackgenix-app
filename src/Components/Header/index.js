@@ -10,12 +10,7 @@ const Header = () => {
         </Link>
         <div className={styles.appName}>Trackgenix</div>
       </div>
-      <div className={styles.headline}>
-        <img
-          className={styles.hambMenu}
-          src={`${process.env.PUBLIC_URL}/assets/images/hamb-menu.svg`}
-        />
-      </div>
+      <div className={styles.headline}></div>
     </section>
   );
 };
