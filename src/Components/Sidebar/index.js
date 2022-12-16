@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Modal } from 'Components/Shared';
+import { Modal } from 'Components/Shared';
 import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -17,8 +17,11 @@ const Sidebar = (props) => {
       [modal]: !showModal[modal]
     });
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <aside className={styles.side}>
+    <div className={styles.sidebarContainer}>
       <Modal
         showModal={showModal.success}
         variant="successModal"
@@ -29,27 +32,68 @@ const Sidebar = (props) => {
         title="You have logged out"
         text={'Redirecting to home page...'}
       ></Modal>
-      <ul className={styles.ul}>
-        {props?.routes?.routes?.map((route) => (
-          <li className={styles.li} key={route.name}>
-            <Link to={route.path} onClick={props.onClick}>
-              {route.name}
-            </Link>
-          </li>
-        ))}
-        {authenticated && (
-          <div className={styles.li}>
-            <Button
-              onClick={() => {
-                dispatch(logout());
-                toggleModal('success');
-              }}
-              text="Logout"
-            />
+      <div className={styles.divSidebarStatic}>
+        <ul className={styles.ul}>
+          {props?.routes?.routes?.map((route) => (
+            <li className={styles.li} key={route.name}>
+              <Link to={route.path} onClick={props.onClick}>
+                {route.name}
+              </Link>
+            </li>
+          ))}
+          {authenticated && (
+            <div className={styles.li}>
+              <a
+                onClick={() => {
+                  dispatch(logout());
+                  toggleModal('success');
+                }}
+              >
+                Logout
+              </a>
+            </div>
+          )}
+        </ul>
+      </div>
+      {isOpen && (
+        <div className={styles.divSidebar}>
+          <ul className={styles.ul}>
+            {props?.routes?.routes?.map((route) => (
+              <li className={styles.li} key={route.name}>
+                <Link to={route.path} onClick={props.onClick}>
+                  {route.name}
+                </Link>
+              </li>
+            ))}
+            {authenticated && (
+              <div className={styles.li}>
+                <a
+                  onClick={() => {
+                    dispatch(logout());
+                    toggleModal('success');
+                  }}
+                >
+                  Logout
+                </a>
+              </div>
+            )}
+          </ul>
+        </div>
+      )}
+      <button className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? (
+          <div className={styles.hamburger}>
+            <span className={styles.closeButton}>X</span>
+          </div>
+        ) : (
+          <div className={styles.hamburger}>
+            <div className={styles._layer}></div>
+            <div className={styles._layer}></div>
+            <div className={styles._layer}></div>
           </div>
         )}
-      </ul>
-    </aside>
+      </button>
+    </div>
   );
 };
 
