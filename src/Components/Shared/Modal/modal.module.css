@@ -39,6 +39,10 @@
     font-weight: 700;
   }
 
+  .modalTitle {
+    margin: 0px;
+  }
+
   @media screen and (max-width: 1024px) {
     .modal, .errorModal, .successModal {
       max-width: 550px;
