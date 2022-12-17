@@ -10,6 +10,7 @@
 	font-size: 18px;
 	text-decoration: none;
 	color: #ffffff;
+	cursor: pointer;
 }
 
 .ul {
@@ -45,8 +46,20 @@
 .hamburger{
 	display: none;
 }
+
 ._layer{
 	display: none;
+}
+
+.awesomeSidebar{
+    cursor: pointer;
+    margin-right: 20px;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.liIcon{
+	display: flex;
 }
 
 @media screen and (max-width: 1024px) {

@@ -5,6 +5,8 @@ import { Button, Modal, Spinner } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimesheets, deleteTimesheets } from 'redux/timesheets/thunks';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 
 const TimeSheets = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
@@ -84,11 +86,9 @@ const TimeSheets = () => {
         variant={'successModal'}
       />
       <h2>Timesheets</h2>
-      <Button
-        text="Add Timesheet +"
-        variant="addButton"
-        onClick={() => history.push('timesheets/form')}
-      />
+      <a onClick={() => history.push('timesheets/form')} className={styles.awesomeAddTimeSheet}>
+        <FontAwesomeIcon icon={faCalendarPlus} />
+      </a>
       {isPending ? (
         <Spinner entity="Timesheets" />
       ) : (
