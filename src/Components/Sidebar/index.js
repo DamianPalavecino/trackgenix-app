@@ -5,6 +5,8 @@ import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styles from './sidebar.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = (props) => {
   const dispatch = useDispatch();
@@ -43,14 +45,22 @@ const Sidebar = (props) => {
           ))}
           {authenticated && (
             <div className={styles.li}>
-              <a
-                onClick={() => {
-                  dispatch(logout());
-                  toggleModal('success');
-                }}
-              >
-                Logout
-              </a>
+              <div className={styles.liIcon}>
+                <a
+                  onClick={() => {
+                    dispatch(logout());
+                    toggleModal('success');
+                  }}
+                  className={styles.awesomeSidebar}
+                >
+                  Logout
+                </a>
+                <div>
+                  <a>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </a>
+                </div>
+              </div>
             </div>
           )}
         </ul>
@@ -72,9 +82,15 @@ const Sidebar = (props) => {
                     dispatch(logout());
                     toggleModal('success');
                   }}
+                  className={styles.awesomeSidebar}
                 >
                   Logout
                 </a>
+                <div>
+                  <a>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </a>
+                </div>
               </div>
             )}
           </ul>
