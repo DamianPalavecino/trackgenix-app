@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { login } from 'redux/auth/thunks';
 import { LOGIN_FULFILLED, LOGIN_REJECTED } from 'redux/auth/constants';
 import { useHistory } from 'react-router-dom';
+import { getUserProfile } from 'redux/auth/thunks';
 
 const Login = () => {
   const {
@@ -36,6 +37,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     dispatch(login(data)).then((data) => {
       if (data.type === LOGIN_FULFILLED) {
+        dispatch(getUserProfile());
         if (data.payload === 'SUPER_ADMIN') {
           history.push('/super-admins');
         } else if (data.payload === 'ADMIN') {

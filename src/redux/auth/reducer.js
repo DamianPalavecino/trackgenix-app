@@ -53,6 +53,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_USER_PROFILE_FULFILLED: {
       return {
         ...state,
+        isPending: false,
         data: action.payload
       };
     }
