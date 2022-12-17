@@ -3,8 +3,7 @@ import { Spinner } from 'Components/Shared';
 import styles from './home.module.css';
 
 const EmployeeHome = () => {
-  const { data: employee } = useSelector((state) => state.auth);
-  const { isPending } = useSelector((state) => state.employees);
+  const { data: employee, isPending } = useSelector((state) => state.auth);
 
   return (
     <div className={styles.container}>
