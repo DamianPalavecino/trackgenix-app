@@ -47,14 +47,14 @@ const LoggedEmployee = () => {
     }
   ];
   return (
-    <Layout routes={data.isProjectManager ? projectManagerRoutes : employeeRoutes}>
+    <Layout routes={data?.isProjectManager ? projectManagerRoutes : employeeRoutes}>
       <Switch>
         <Route exact path={'/employee/home'} component={EmployeeHome} />
         <Route exact path={'/employee/home/:id'} component={EmployeeProjects} />
         <Route exact path={'/employee/timesheets/:id'} component={EmployeeTimeSheets} />
         <Route exact path={'/employee/timesheets/:id/create'} component={AddTimesheet} />
         <Route exact path={'/employee/profile/:id'} component={EmployeeProfile} />
-        {data.isProjectManager && (
+        {data?.isProjectManager && (
           <Switch>
             <Route exact path={'/employee/tasks'} component={Tasks} />
             <Route exact path={'/employee/tasks/delete/:id'} component={Tasks} />
