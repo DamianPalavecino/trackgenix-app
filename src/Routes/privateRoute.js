@@ -18,10 +18,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
             </div>
           );
         }
-        console.log(rest.role);
-        console.log(role);
-        console.log(rest.role.includes(role));
-        if (rest.role.includes(role)) {
+        if (rest.role === role) {
           return <RouteComponent {...routeProps} />;
         }
         return <Redirect to={authenticated ? '/' : '/auth/login'} />;
