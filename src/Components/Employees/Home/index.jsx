@@ -12,7 +12,7 @@ const EmployeeHome = () => {
         <Spinner />
       ) : (
         <div>
-          <h2>{`Welcome ${employee.name}`}</h2>
+          <h2>Welcome {employee.name || 'Employee'}</h2>
         </div>
       )}
     </div>
