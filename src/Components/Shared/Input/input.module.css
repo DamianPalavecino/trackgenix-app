@@ -31,3 +31,9 @@
     font-weight: 600;
     color: #ff0000;
 }
+
+@media screen and (max-width: 585px) {
+    .input {
+        width: 290px;
+    }
+}

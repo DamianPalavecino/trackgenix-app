@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styles from './employees.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getEmployees, deleteEmployee } from '../../redux/employees/thunks';
-import { Button, Modal, Spinner, Table } from 'Components/Shared';
+import { getEmployees } from '../../redux/employees/thunks';
+import { Modal, Spinner, Table } from 'Components/Shared';
 
 const Employees = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const params = useParams();
   const { list, isPending, error } = useSelector((state) => state.employees);
   const [showModal, setShowModal] = useState({ info: false, delete: false, success: false });
   const [projects, saveProjects] = useState([]);
@@ -32,11 +31,6 @@ const Employees = () => {
     }
   };
 
-  const openDeleteModal = (id) => {
-    history.push(`employees/delete/${id}`);
-    toggleModal('confirm');
-  };
-
   if (error) {
     return (
       <div className={styles.container}>
@@ -44,16 +38,6 @@ const Employees = () => {
       </div>
     );
   }
-
-  const onDelete = (id) => {
-    dispatch(deleteEmployee(id));
-    toggleModal('confirm', 'success');
-    history.goBack();
-  };
-
-  const editEmployee = (id) => {
-    history.push(`employees/form/${id}`);
-  };
 
   const openProjectsModal = (id) => {
     history.push(`employees/${id}/projects`);
@@ -64,34 +48,6 @@ const Employees = () => {
 
   return (
     <section className={styles.container}>
-      <Modal
-        showModal={showModal.confirm}
-        closeModal={() => {
-          toggleModal('confirm');
-          history.goBack();
-        }}
-        title="Are you sure?"
-        text="You are going to delete this employee"
-      >
-        <span>
-          <Button text="Yes" onClick={() => onDelete(params.id)} variant="deleteButton" />
-          <Button
-            text="No"
-            onClick={() => {
-              toggleModal('confirm');
-              history.goBack();
-            }}
-          />
-        </span>
-      </Modal>
-      <Modal
-        showModal={showModal.success}
-        closeModal={() => {
-          toggleModal('success');
-        }}
-        text="Employee deleted successfully"
-        variant={'successModal'}
-      />
       <Modal
         showModal={showModal.info}
         closeModal={() => {
@@ -110,30 +66,12 @@ const Employees = () => {
         )}
       </Modal>
       <h2>Employees</h2>
-      <div className={styles.addButton}>
-        <Button
-          text="Add employee +"
-          variant="addButton"
-          onClick={() => history.push('employees/form')}
-        ></Button>
-      </div>
       {isPending ? (
         <Spinner entity="Employees" />
       ) : (
         <Table
           data={list}
-          headers={[
-            'name',
-            'lastName',
-            'phone',
-            'email',
-            'password',
-            'status',
-            'projects',
-            'actions'
-          ]}
-          handleDelete={openDeleteModal}
-          editItem={editEmployee}
+          headers={['name', 'lastName', 'phone', 'email', 'status', 'projects']}
           showInfo={openProjectsModal}
         />
       )}

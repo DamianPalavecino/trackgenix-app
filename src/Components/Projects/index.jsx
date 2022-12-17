@@ -1,20 +1,39 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
-import { Table, Spinner, Button, Modal } from 'Components/Shared';
+import { Table, Spinner, Button, Modal, Select, Input } from 'Components/Shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProjects, deleteProject } from 'redux/projects/thunks';
+import { getProjects, deleteProject, assignEmployee } from 'redux/projects/thunks';
 import { useHistory, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { getEmployees } from 'redux/employees/thunks';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { employeeSchema } from './validations';
 
 const Projects = () => {
-  const [showModal, setShowModal] = useState({ confirm: false, success: false, employees: false });
+  const [showModal, setShowModal] = useState({
+    confirm: false,
+    success: false,
+    employees: false,
+    assign: false
+  });
   const [employees, saveEmployees] = useState([]);
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const { list: projectsList, isPending } = useSelector((state) => state.projects);
+  const { list: projectsList, isPending, message } = useSelector((state) => state.projects);
+  const { list: employeeList } = useSelector((state) => state.employees);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(employeeSchema)
+  });
 
   useEffect(() => {
     dispatch(getProjects());
+    dispatch(getEmployees());
   }, []);
 
   const handleDelete = (id) => {
@@ -51,7 +70,29 @@ const Projects = () => {
     history.push(`projects/${id}/employees`);
     toggleModal('employees');
     const data = projectsList.find((project) => project._id === id);
-    saveEmployees(data.employees);
+    saveEmployees(
+      data.employees.map((employee) => {
+        return {
+          ...employee.employeeId,
+          rate: employee.rate,
+          role: employee.role
+        };
+      })
+    );
+  };
+
+  const showAssignEmployeeModal = (id) => {
+    history.push(`/admin/projects/${id}/assign`);
+    toggleModal('assign');
+  };
+
+  const onSubmit = async (employee) => {
+    const response = await dispatch(assignEmployee(params.id, employee));
+    if (response.type === 'ASSIGN_EMPLOYEE_FULFILLED') {
+      toggleModal('assign', 'success');
+    } else if (response.type === 'ASSIGN_EMPLOYEE_REJECTED') {
+      toggleModal('assign', 'error');
+    }
   };
 
   return (
@@ -86,10 +127,22 @@ const Projects = () => {
       </Modal>
       <Modal
         showModal={showModal.success}
-        closeModal={() => toggleModal('success')}
-        text="Project deleted successfully"
+        closeModal={() => {
+          toggleModal('success');
+          history.goBack();
+        }}
+        text={message}
         variant={'successModal'}
       />
+      <Modal
+        showModal={showModal.error}
+        variant={'errorModal'}
+        closeModal={() => {
+          toggleModal('error');
+          history.goBack();
+        }}
+        text={message}
+      ></Modal>
       <Modal
         showModal={showModal.employees}
         closeModal={() => {
@@ -99,10 +152,61 @@ const Projects = () => {
         title="Employees List"
       >
         {employees.length > 0 ? (
-          <Table headers={['rate', 'role']} data={employees} />
+          <Table headers={['name', 'lastName', 'email', 'rate', 'role']} data={employees} />
         ) : (
           <p>There are no employees in this project</p>
         )}
+      </Modal>
+      <Modal
+        showModal={showModal.assign}
+        closeModal={() => {
+          toggleModal('assign');
+          history.goBack();
+        }}
+        title="Assign Employee to Project"
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Select
+            label="Employee"
+            name="employeeId"
+            optionsData={employeeList}
+            item="lastName"
+            optionValue="Employee"
+            register={register}
+            error={errors.employeeId?.message}
+          />
+          <Select
+            label="Role"
+            name="role"
+            register={register}
+            optionValue="Role"
+            error={errors.role?.message}
+          >
+            <option value="DEV">Developer</option>
+            <option value="QA">Quality Assurance</option>
+            <option value="TL">Tech Lead</option>
+            <option value="PM">Project Manager</option>
+          </Select>
+          <Input
+            label="Rate"
+            type="number"
+            placeholder="Rate"
+            register={register}
+            name="rate"
+            error={errors.rate?.message}
+          />
+          <div>
+            <Button
+              variant={'cancelButton'}
+              text="Back"
+              onClick={() => {
+                toggleModal('assign');
+                history.goBack();
+              }}
+            />
+            <Button type="submit" variant="addButton" text="Assign" />
+          </div>
+        </form>
       </Modal>
       <h2>Projects</h2>
       <Button
@@ -128,6 +232,7 @@ const Projects = () => {
           handleDelete={openDeleteModal}
           editItem={editRow}
           showInfo={showEmployeesModal}
+          assignEmployee={showAssignEmployeeModal}
         />
       )}
     </div>

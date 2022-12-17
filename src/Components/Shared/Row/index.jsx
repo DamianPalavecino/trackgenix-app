@@ -1,10 +1,14 @@
 import Button from '../Button';
 import styles from './row.module.css';
+import { useSelector } from 'react-redux';
 
-const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
+const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }) => {
   const fixDate = (date) => {
     return date.slice(0, 10);
   };
+  const { data: authData, role } = useSelector((store) => {
+    return store.auth;
+  });
 
   return (
     <tr className={styles.row} key={data._id}>
@@ -20,8 +24,21 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo }) => {
                 text="Delete"
                 variant="confirmButton"
               />
+              {data['employees'] && (
+                <Button
+                  onClick={() => assignEmployee(data._id)}
+                  text="Assign"
+                  variant="addButton"
+                />
+              )}
             </td>
           );
+        }
+        if (role.role === 'EMPLOYEE' && header === 'role') {
+          const findEmployee = data.employees.find(
+            (employee) => employee.employeeId === authData._id
+          );
+          return <td>{findEmployee?.role}</td>;
         }
         if (data[header] && header === 'project') return <td>{data[header].name}</td>;
         if (data[header] && header === 'task') return <td>{data[header].description}</td>;

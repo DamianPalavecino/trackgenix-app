@@ -1,11 +1,11 @@
 import Row from '../Row';
 import styles from './table.module.css';
 
-const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
+const Table = ({ headers, data, handleDelete, editItem, showInfo, assignEmployee }) => {
   return (
     <div className={styles.divTable}>
       <table className={styles.table}>
-        <thead>
+        <thead className={styles.thead}>
           <tr>
             {headers.map((header, index) => {
               return <th key={index}>{header}</th>;
@@ -23,6 +23,7 @@ const Table = ({ headers, data, handleDelete, editItem, showInfo }) => {
                   handleDelete={handleDelete}
                   editItem={editItem}
                   showInfo={showInfo}
+                  assignEmployee={assignEmployee}
                 />
               );
             })

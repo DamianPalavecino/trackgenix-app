@@ -13,7 +13,10 @@ import {
   getByIdProjectRejected,
   deleteProjectPending,
   deleteProjectFulfilled,
-  deleteProjectRejected
+  deleteProjectRejected,
+  assignEmployeePending,
+  assignEmployeeFulfilled,
+  assignEmployeeRejected
 } from './actions';
 
 export const getProjects = () => {
@@ -120,5 +123,34 @@ export const deleteProject = (id) => {
       .catch((error) => {
         dispatch(deleteProjectRejected(error.toString()));
       });
+  };
+};
+
+export const assignEmployee = (projectId, employee) => {
+  return async (dispatch) => {
+    try {
+      const token = sessionStorage.getItem('token');
+      dispatch(assignEmployeePending());
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/projects/${projectId}/assignEmployee`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            token
+          },
+          body: JSON.stringify(employee)
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(getProjects());
+        return dispatch(assignEmployeeFulfilled(data.message));
+      } else {
+        return dispatch(assignEmployeeRejected(data.message));
+      }
+    } catch (error) {
+      return dispatch(assignEmployeeRejected(error.toString()));
+    }
   };
 };

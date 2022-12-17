@@ -26,12 +26,7 @@
 }
 
 @media screen and (max-width: 768px) {
-
   li > img {
-    display: none;
-  }
-
-  .side {
     display: none;
   }
 }

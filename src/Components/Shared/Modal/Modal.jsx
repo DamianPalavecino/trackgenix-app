@@ -10,7 +10,7 @@ const Modal = ({ children, variant = 'modal', showModal, closeModal, text, title
     <div className={styles.modalContainer}>
       <div className={styles[variant]}>
         <Button variant={'closeButton'} onClick={closeModal} text="X" />
-        {title ? <h3>{title}</h3> : null}
+        {title ? <h3 className={styles.modalTitle}>{title}</h3> : null}
         <p>{text}</p>
         {children}
       </div>

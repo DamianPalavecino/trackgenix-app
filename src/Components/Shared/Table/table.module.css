@@ -1,33 +1,48 @@
 .table {
     background-color: #3738671a;
     box-shadow: inset 0px 2px 0px #E0E0E0;
-    text-transform: capitalize;
     border-radius: 5px;
     border-collapse: collapse;
     border: solid 2px #3738671a;
-    width: 800px;
-    height: 500px;
+    width: 830px;
+    height: auto;
     margin: 10px;
 }
 
 .divTable {
     overflow: auto;
-    width: 800px;
+    width: 840px;
     height: 500px;
-    margin: 20px;
+    margin: 20px 0px 20px 0px;
     padding: 0px;
+    border-color: transparent;
 }
 
 .noData {
     color: #ff0000;
 }
 
+.thead {
+    height: 50px;
+    text-transform: capitalize;
+}
+
 @media screen and (max-width: 1024px) {
     .table {
-        width: 500px;
+        width: 550px;
     }
 
     .divTable {
-        width: 500px;
+        width: 560px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table {
+        width: 300px;
+    }
+
+    .divTable {
+        width: 300px;
     }
 }
