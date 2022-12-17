@@ -33,7 +33,7 @@ const Profile = () => {
       phone: employee?.phone,
       email: employee?.email
     });
-  }, []);
+  }, [employee]);
 
   const redirect = () => {
     history.goBack();

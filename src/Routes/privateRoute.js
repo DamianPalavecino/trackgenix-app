@@ -5,9 +5,8 @@ import { Route, Redirect } from 'react-router-dom';
 import { Spinner } from 'Components/Shared';
 
 const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const { isPending, role, authenticated } = useSelector((store) => {
-    return store.auth;
-  });
+  const { isPending, role, authenticated } = useSelector((store) => store.auth);
+
   return (
     <Route
       {...rest}
@@ -19,7 +18,7 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
             </div>
           );
         }
-        if (rest.role.includes(role?.role)) {
+        if (rest.role === role) {
           return <RouteComponent {...routeProps} />;
         }
         return <Redirect to={authenticated ? '/' : '/auth/login'} />;
