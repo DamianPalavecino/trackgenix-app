@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Table, Button, Spinner } from 'Components/Shared';
+import { Table, Spinner } from 'Components/Shared';
 import styles from './timeSheets.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimesheets } from 'redux/timesheets/thunks';
 import { getByIdEmployees } from 'redux/employees/thunks';
 import { useHistory, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Timesheets = () => {
   const history = useHistory();
@@ -33,11 +35,17 @@ const Timesheets = () => {
   return (
     <div className={styles.container}>
       <h2>List of your Timesheets</h2>
-      <Button
+      <a
+        onClick={() => history.push(`/employee/timesheets/${id}/create`)}
+        className={styles.awesomeAddTimeSheet}
+      >
+        <FontAwesomeIcon icon={faCalendarPlus} />
+      </a>
+      {/* <Button
         text="Add Timesheet +"
         variant="addButton"
         onClick={() => history.push(`/employee/timesheets/${id}/create`)}
-      />
+      /> */}
       {isPending ? (
         <Spinner entity="Timesheets" />
       ) : (
