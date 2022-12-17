@@ -48,9 +48,9 @@ export const logout = () => {
 };
 
 export const getUserProfile = () => {
-  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getUserProfilePending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/auth/getUserProfile`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {

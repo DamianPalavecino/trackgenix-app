@@ -27,9 +27,9 @@ export const tokenListener = () => {
           claims: { role }
         } = await user.getIdTokenResult();
         if (token) {
-          store.dispatch(loginFulfilled(role));
           sessionStorage.setItem('token', token);
           store.dispatch(getUserProfile());
+          store.dispatch(loginFulfilled(role));
         }
       } catch (error) {
         return store.dispatch(loginRejected());
