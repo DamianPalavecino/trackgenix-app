@@ -34,7 +34,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
             </td>
           );
         }
-        if (role.role === 'EMPLOYEE' && header === 'role') {
+        if (role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
