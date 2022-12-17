@@ -1,6 +1,7 @@
-import Button from '../Button';
 import styles from './row.module.css';
 import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPenToSquare, faUserPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }) => {
   const fixDate = (date) => {
@@ -16,25 +17,26 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (header === 'actions') {
           return (
             <td key={index}>
-              <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />
-              <Button
+              <a
                 onClick={() => {
                   handleDelete(data._id);
                 }}
-                text="Delete"
-                variant="confirmButton"
-              />
+                className={styles.awesomeAction}
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </a>
+              <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </a>
               {data['employees'] && (
-                <Button
-                  onClick={() => assignEmployee(data._id)}
-                  text="Assign"
-                  variant="addButton"
-                />
+                <a onClick={() => assignEmployee(data._id)} className={styles.awesomeAction}>
+                  <FontAwesomeIcon icon={faUserPlus} />
+                </a>
               )}
             </td>
           );
         }
-        if (role.role === 'EMPLOYEE' && header === 'role') {
+        if (role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
@@ -48,12 +50,14 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
-              <Button
+              <a
                 onClick={() => {
                   showInfo(data._id);
                 }}
-                text={header}
-              />
+                className={styles.awesomeAction}
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </a>
             </td>
           );
         } else {

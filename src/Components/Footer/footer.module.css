@@ -13,11 +13,22 @@
   margin: 1%;
 }
 
-.icon {
-  height: 35px;
-}
-
 .copyright {
   font-size: 1rem;
   margin-bottom: 1%;
+}
+
+.awesomeBrand {
+  display: flex;
+  justify-content:space-evenly;
+  margin: 1%;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #000000;
+  font-size: 35px;
+}
+
+.awesomeBrand :hover {
+  cursor: pointer;
+  color: #000000;
 }

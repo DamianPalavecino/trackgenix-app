@@ -14,9 +14,7 @@ const AuthRoutes = lazy(() => import('./auth'));
 
 const Routes = () => {
   const { authenticated } = useSelector((state) => state.auth);
-  useEffect(() => {
-    tokenListener();
-  }, []);
+  useEffect(() => tokenListener(), []);
   return (
     <BrowserRouter>
       <Suspense
@@ -29,13 +27,9 @@ const Routes = () => {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
-            <PrivateRoute path="/super-admins" role={['SUPER_ADMIN']} component={SuperAdmins} />
-            <PrivateRoute path="/admin" role={['ADMIN', 'SUPER_ADMIN']} component={Admins} />
-            <PrivateRoute
-              path="/employee"
-              role={['EMPLOYEE', 'ADMIN', 'SUPER_ADMIN']}
-              component={LoggedEmployee}
-            />
+            <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmins} />
+            <PrivateRoute path="/admin" role="ADMIN" component={Admins} />
+            <PrivateRoute path="/employee" role="EMPLOYEE" component={LoggedEmployee} />
             {!authenticated && <Route path="/auth" component={AuthRoutes} />}
             <Redirect to="/" component={Home} />
           </Switch>

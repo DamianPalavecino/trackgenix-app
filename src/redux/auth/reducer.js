@@ -15,7 +15,7 @@ import {
 } from './constants';
 
 const INITIAL_STATE = {
-  isPending: false,
+  isPending: true,
   authenticated: false,
   role: '',
   email: '',
@@ -45,9 +45,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOGIN_FULFILLED: {
       return {
         ...state,
+        role: action.payload,
         isPending: false,
-        authenticated: true,
-        role: action.payload
+        authenticated: true
       };
     }
     case GET_USER_PROFILE_FULFILLED: {

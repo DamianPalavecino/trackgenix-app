@@ -21,8 +21,12 @@ export const login = (inputData) => {
         inputData.email,
         inputData.password
       );
-      const { token, claims: role } = await userCredencials.user.getIdTokenResult();
+      const {
+        token,
+        claims: { role }
+      } = await userCredencials.user.getIdTokenResult();
       sessionStorage.setItem('token', token);
+      getUserProfile();
       return dispatch(loginFulfilled(role));
     } catch (error) {
       return dispatch(loginRejected(error.message));
@@ -44,9 +48,9 @@ export const logout = () => {
 };
 
 export const getUserProfile = () => {
-  const token = sessionStorage.getItem('token');
   return async (dispatch) => {
     dispatch(getUserProfilePending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/auth/getUserProfile`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
