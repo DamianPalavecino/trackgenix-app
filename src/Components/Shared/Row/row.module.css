@@ -19,3 +19,15 @@
     display: flex;
     justify-content: center;
 }
+
+.awesomeAction{
+    cursor: pointer;
+    margin-left: 10px;
+    color: #373867;
+    font-size: 20px;
+}
+
+.awesomeAction :hover{
+    cursor: pointer;
+    color: #4646b6;
+}
