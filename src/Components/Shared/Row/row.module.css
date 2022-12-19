@@ -21,6 +21,9 @@
 }
 
 .awesomeAction{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     cursor: pointer;
     margin-left: 10px;
     color: #373867;
@@ -30,4 +33,14 @@
 .awesomeAction :hover{
     cursor: pointer;
     color: #4646b6;
+}
+
+.actionsRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divActions {
+    display: flex;
 }

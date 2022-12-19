@@ -17,22 +17,30 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (header === 'actions') {
           return (
             <td key={index}>
-              <a
-                onClick={() => {
-                  handleDelete(data._id);
-                }}
-                className={styles.awesomeAction}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </a>
-              <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </a>
-              {data['employees'] && (
-                <a onClick={() => assignEmployee(data._id)} className={styles.awesomeAction}>
-                  <FontAwesomeIcon icon={faUserPlus} />
-                </a>
-              )}
+              <div className={styles.divActions}>
+                <div className={styles.actionsDiv}>
+                  <a
+                    onClick={() => {
+                      handleDelete(data._id);
+                    }}
+                    className={styles.awesomeAction}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </a>
+                </div>
+                <div className={styles.actionsDiv}>
+                  <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </a>
+                </div>
+                {data['employees'] && (
+                  <div className={styles.actionsDiv}>
+                    <a onClick={() => assignEmployee(data._id)} className={styles.awesomeAction}>
+                      <FontAwesomeIcon icon={faUserPlus} />
+                    </a>
+                  </div>
+                )}
+              </div>
             </td>
           );
         }
