@@ -34,6 +34,13 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
             </td>
           );
         }
+        if (header === 'action' && authData?.isProjectManager) {
+          const foundEmployee = data['employees'].find(
+            (employee) => employee.employeeId === authData._id && employee.role === 'PM'
+          );
+          if (foundEmployee)
+            return <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />;
+        }
         if (role.role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
