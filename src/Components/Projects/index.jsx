@@ -14,7 +14,8 @@ const Projects = () => {
     confirm: false,
     success: false,
     employees: false,
-    assign: false
+    assign: false,
+    assignSuccess: false
   });
   const [employees, saveEmployees] = useState([]);
   const history = useHistory();
@@ -89,7 +90,7 @@ const Projects = () => {
   const onSubmit = async (employee) => {
     const response = await dispatch(assignEmployee(params.id, employee));
     if (response.type === 'ASSIGN_EMPLOYEE_FULFILLED') {
-      toggleModal('assign', 'success');
+      toggleModal('assign', 'assignSuccess');
     } else if (response.type === 'ASSIGN_EMPLOYEE_REJECTED') {
       toggleModal('assign', 'error');
     }
@@ -127,8 +128,14 @@ const Projects = () => {
       </Modal>
       <Modal
         showModal={showModal.success}
+        closeModal={() => toggleModal('success')}
+        text={message}
+        variant={'successModal'}
+      />
+      <Modal
+        showModal={showModal.assignSuccess}
         closeModal={() => {
-          toggleModal('success');
+          toggleModal('assignSuccess');
           history.goBack();
         }}
         text={message}
@@ -185,7 +192,6 @@ const Projects = () => {
             <option value="DEV">Developer</option>
             <option value="QA">Quality Assurance</option>
             <option value="TL">Tech Lead</option>
-            <option value="PM">Project Manager</option>
           </Select>
           <Input
             label="Rate"
