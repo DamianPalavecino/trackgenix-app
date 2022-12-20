@@ -5,3 +5,37 @@
     justify-content: center;
     align-items: center;
   }
+
+  .awesomeIcon {
+    display: flex;
+    color: #8e8e8e;
+    font-size: 150px;
+    margin: auto;
+    padding-top: 20px;
+  }
+
+  .dataContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .awesomeData{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .capitalizeData{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    padding: 20px;
+    align-items: center;
+  }
+
+  .spaceData {
+    margin-left: 20px;
+  }
