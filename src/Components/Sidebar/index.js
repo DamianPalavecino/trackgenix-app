@@ -5,6 +5,9 @@ import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styles from './sidebar.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faRectangleXmark } from '@fortawesome/free-regular-svg-icons';
 
 const Sidebar = (props) => {
   const dispatch = useDispatch();
@@ -43,14 +46,22 @@ const Sidebar = (props) => {
           ))}
           {authenticated && (
             <div className={styles.li}>
-              <a
-                onClick={() => {
-                  dispatch(logout());
-                  toggleModal('success');
-                }}
-              >
-                Logout
-              </a>
+              <div className={styles.liIcon}>
+                <a
+                  onClick={() => {
+                    dispatch(logout());
+                    toggleModal('success');
+                  }}
+                  className={styles.awesomeSidebar}
+                >
+                  Logout
+                </a>
+                <div>
+                  <a>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </a>
+                </div>
+              </div>
             </div>
           )}
         </ul>
@@ -72,27 +83,31 @@ const Sidebar = (props) => {
                     dispatch(logout());
                     toggleModal('success');
                   }}
+                  className={styles.awesomeSidebar}
                 >
                   Logout
                 </a>
+                <div>
+                  <a>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </a>
+                </div>
               </div>
             )}
           </ul>
         </div>
       )}
-      <button className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
+      <a onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
-          <div className={styles.hamburger}>
-            <span className={styles.closeButton}>X</span>
-          </div>
+          <a className={styles.awesomeCloseMenu}>
+            <FontAwesomeIcon icon={faRectangleXmark} />
+          </a>
         ) : (
-          <div className={styles.hamburger}>
-            <div className={styles._layer}></div>
-            <div className={styles._layer}></div>
-            <div className={styles._layer}></div>
-          </div>
+          <a className={styles.awesomeMenu}>
+            <FontAwesomeIcon icon={faBars} />
+          </a>
         )}
-      </button>
+      </a>
     </div>
   );
 };

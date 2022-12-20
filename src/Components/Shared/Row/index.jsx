@@ -1,6 +1,7 @@
-import Button from '../Button';
 import styles from './row.module.css';
 import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPenToSquare, faUserPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }) => {
   const fixDate = (date) => {
@@ -16,21 +17,30 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (header === 'actions') {
           return (
             <td key={index}>
-              <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />
-              <Button
-                onClick={() => {
-                  handleDelete(data._id);
-                }}
-                text="Delete"
-                variant="confirmButton"
-              />
-              {data['employees'] && (
-                <Button
-                  onClick={() => assignEmployee(data._id)}
-                  text="Assign"
-                  variant="addButton"
-                />
-              )}
+              <div className={styles.divActions}>
+                <div className={styles.actionsDiv}>
+                  <a
+                    onClick={() => {
+                      handleDelete(data._id);
+                    }}
+                    className={styles.awesomeAction}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </a>
+                </div>
+                <div className={styles.actionsDiv}>
+                  <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </a>
+                </div>
+                {data['employees'] && (
+                  <div className={styles.actionsDiv}>
+                    <a onClick={() => assignEmployee(data._id)} className={styles.awesomeAction}>
+                      <FontAwesomeIcon icon={faUserPlus} />
+                    </a>
+                  </div>
+                )}
+              </div>
             </td>
           );
         }
@@ -39,9 +49,13 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
             (employee) => employee.employeeId === authData._id && employee.role === 'PM'
           );
           if (foundEmployee)
-            return <Button onClick={() => editItem(data._id)} text="Edit" variant="editButton" />;
+            return (
+              <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </a>
+            );
         }
-        if (role.role === 'EMPLOYEE' && header === 'role') {
+        if (role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
@@ -55,12 +69,14 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
-              <Button
+              <a
                 onClick={() => {
                   showInfo(data._id);
                 }}
-                text={header}
-              />
+                className={styles.awesomeAction}
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </a>
             </td>
           );
         } else {

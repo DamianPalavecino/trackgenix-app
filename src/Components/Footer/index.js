@@ -1,4 +1,13 @@
+import React from 'react';
 import styles from './footer.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faGithub,
+  faTwitter
+} from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
   return (
@@ -9,31 +18,19 @@ const Footer = () => {
           target={'_blank'}
           rel="noreferrer"
         >
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/linkedIn.svg`}
-            className={styles.icon}
-          />
+          <FontAwesomeIcon icon={faLinkedin} className={styles.awesomeBrand} />
         </a>
         <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/facebook.svg`}
-            className={styles.icon}
-          />
+          <FontAwesomeIcon icon={faFacebook} className={styles.awesomeBrand} />
         </a>
         <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/instagram.svg`}
-            className={styles.icon}
-          />
+          <FontAwesomeIcon icon={faInstagram} className={styles.awesomeBrand} />
         </a>
         <a href="https://twitter.com/radiumrocket" target={'_blank'} rel="noreferrer">
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/twitter.svg`}
-            className={styles.icon}
-          />
+          <FontAwesomeIcon icon={faTwitter} className={styles.awesomeBrand} />
         </a>
         <a href="https://github.com/radiumrocketapps" target={'_blank'} rel="noreferrer">
-          <img src={`${process.env.PUBLIC_URL}/assets/images/github.svg`} className={styles.icon} />
+          <FontAwesomeIcon icon={faGithub} className={styles.awesomeBrand} />
         </a>
       </div>
       <div className={styles.copyright}>Rosario, Argentina</div>

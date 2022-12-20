@@ -5,3 +5,15 @@
   align-items: center;
   flex-direction: column;
 }
+
+.awesomeAddTimeSheet{
+  cursor: pointer;
+  margin-left: 10px;
+  color: #373867;
+  font-size: 40px;
+}
+
+.awesomeAddTimeSheet :hover{
+  cursor: pointer;
+  color: #4646b6;
+}

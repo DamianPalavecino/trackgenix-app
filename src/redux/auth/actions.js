@@ -74,10 +74,10 @@ export const logoutRejected = (error) => {
   };
 };
 
-export const setAuthentication = (role) => {
+export const setAuthentication = (payload) => {
   return {
     type: SET_AUTHENTICATION,
-    payload: role
+    payload
   };
 };
 

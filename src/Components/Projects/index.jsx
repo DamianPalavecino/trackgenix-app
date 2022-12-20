@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { getEmployees } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeSchema } from './validations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 const Projects = () => {
   const [showModal, setShowModal] = useState({
@@ -138,7 +140,7 @@ const Projects = () => {
           toggleModal('assignSuccess');
           history.goBack();
         }}
-        text={message}
+        text={'Project deleted successfullly'}
         variant={'successModal'}
       />
       <Modal
@@ -215,11 +217,9 @@ const Projects = () => {
         </form>
       </Modal>
       <h2>Projects</h2>
-      <Button
-        text="Add Project +"
-        variant="addButton"
-        onClick={() => history.push('projects/form')}
-      />
+      <a onClick={() => history.push('projects/form')} className={styles.awesomeAddProject}>
+        <FontAwesomeIcon icon={faFileCirclePlus} />
+      </a>
       {isPending ? (
         <Spinner entity="Projects" />
       ) : (

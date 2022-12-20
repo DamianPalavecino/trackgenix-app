@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { schema } from './validations';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch } from 'react-redux';
-import { login, getUserProfile } from 'redux/auth/thunks';
+import { login } from 'redux/auth/thunks';
 import { LOGIN_FULFILLED, LOGIN_REJECTED } from 'redux/auth/constants';
 import { useHistory } from 'react-router-dom';
 
@@ -34,22 +34,19 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    if (Object.values(errors).length === 0) {
-      dispatch(login(data)).then((data) => {
-        if (data.type === LOGIN_FULFILLED) {
-          dispatch(getUserProfile());
-          if (data.payload.role === 'SUPER_ADMIN') {
-            history.push('/super-admins');
-          } else if (data.payload.role === 'ADMIN') {
-            history.push('/admin/employees');
-          } else {
-            history.push('/employee/home');
-          }
-        } else if (data.type === LOGIN_REJECTED) {
-          toggleModal('error');
+    dispatch(login(data)).then((data) => {
+      if (data.type === LOGIN_FULFILLED) {
+        if (data.payload === 'SUPER_ADMIN') {
+          history.push('/super-admins');
+        } else if (data.payload === 'ADMIN') {
+          history.push('/admin/employees');
+        } else {
+          history.push('/employee/home');
         }
-      });
-    }
+      } else if (data.type === LOGIN_REJECTED) {
+        toggleModal('error');
+      }
+    });
   };
 
   return (
@@ -70,7 +67,9 @@ const Login = () => {
           placeholder="Password"
           error={errors.password?.message}
         />
-        <Button variant="addButton" type="submit" text="Sign In" />
+        <div className={styles.buttonDiv}>
+          <Button variant="addButton" type="submit" text="Sign In" />
+        </div>
       </form>
     </div>
   );
