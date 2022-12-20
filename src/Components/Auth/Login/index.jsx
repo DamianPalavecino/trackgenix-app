@@ -67,7 +67,9 @@ const Login = () => {
           placeholder="Password"
           error={errors.password?.message}
         />
-        <Button variant="addButton" type="submit" text="Sign In" />
+        <div className={styles.buttonDiv}>
+          <Button variant="addButton" type="submit" text="Sign In" />
+        </div>
       </form>
     </div>
   );
