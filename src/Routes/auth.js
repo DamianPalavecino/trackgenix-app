@@ -9,8 +9,7 @@ const AuthRoutes = () => {
     <Layout
       routes={[
         { name: 'SignUp', path: '/auth/signup' },
-        { name: 'Login', path: '/auth/login' },
-        { name: 'Home', path: '/' }
+        { name: 'Login', path: '/auth/login' }
       ]}
     >
       <Switch>
