@@ -133,7 +133,7 @@ const Projects = () => {
           toggleModal('success');
           history.goBack();
         }}
-        text={message}
+        text={'Project deleted successfullly'}
         variant={'successModal'}
       />
       <Modal

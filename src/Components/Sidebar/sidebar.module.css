@@ -39,18 +39,6 @@
 	align-items: center;
 }
 
-.closeButton {
-	display: none;
-}
-
-.hamburger{
-	display: none;
-}
-
-._layer{
-	display: none;
-}
-
 .awesomeSidebar{
     cursor: pointer;
     margin-right: 20px;
@@ -60,6 +48,14 @@
 
 .liIcon{
 	display: flex;
+}
+
+.awesomeCloseMenu {
+	display: none;
+}
+
+.awesomeMenu {
+	display: none;
 }
 
 @media screen and (max-width: 1024px) {
@@ -79,31 +75,21 @@
 	.divSidebarStatic {
 		display: none;
 	}
-	.closeButton {
-		display: flex;
-		color: #ffffff;
-		font-size: 15px;
-		font-weight: 800;
-	}
-	.hamburger{
-		display: flex;
-		flex-direction: column;
+	.awesomeMenu {
+		display: initial;
 		position: absolute;
-		top: 55px;
-		left: 5px;
-		background-color: transparent;
-		border: 0px;
-		cursor:pointer;
-		padding: 0px;
+		top: 105px;
+		left: 12px;
+		font-size: 30px;
+		color: #373867;
 	}
-	._layer{
-		display: flex;
-		background:#373867;
-		margin-bottom:4px;
-		border-radius:2px;
-		width:28px;
-		height:4px;
-		opacity:1;
+	.awesomeCloseMenu {
+		display: initial;
+		position: absolute;
+		top: 105px;
+		left: 12px;
+		font-size: 30px;
+		color: #ffffff;
 	}
 }
 

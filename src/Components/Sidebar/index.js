@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styles from './sidebar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faRectangleXmark } from '@fortawesome/free-regular-svg-icons';
 
 const Sidebar = (props) => {
   const dispatch = useDispatch();
@@ -96,19 +97,17 @@ const Sidebar = (props) => {
           </ul>
         </div>
       )}
-      <button className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
+      <a onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
-          <div className={styles.hamburger}>
-            <span className={styles.closeButton}>X</span>
-          </div>
+          <a className={styles.awesomeCloseMenu}>
+            <FontAwesomeIcon icon={faRectangleXmark} />
+          </a>
         ) : (
-          <div className={styles.hamburger}>
-            <div className={styles._layer}></div>
-            <div className={styles._layer}></div>
-            <div className={styles._layer}></div>
-          </div>
+          <a className={styles.awesomeMenu}>
+            <FontAwesomeIcon icon={faBars} />
+          </a>
         )}
-      </button>
+      </a>
     </div>
   );
 };
