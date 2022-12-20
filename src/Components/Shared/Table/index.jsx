@@ -2,13 +2,25 @@ import Row from '../Row';
 import styles from './table.module.css';
 
 const Table = ({ headers, data, handleDelete, editItem, showInfo, assignEmployee }) => {
+  function insertSpace(s) {
+    return s
+      .split('')
+      .map((c, i, arr) => {
+        if (i > 0 && c.toUpperCase() === c && arr[i - 1].toLowerCase() === arr[i - 1]) {
+          return ' ' + c;
+        }
+        return c;
+      })
+      .join('');
+  }
+
   return (
     <div className={styles.divTable}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
             {headers.map((header, index) => {
-              return <th key={index}>{header}</th>;
+              return <th key={index}>{insertSpace(header)}</th>;
             })}
           </tr>
         </thead>
