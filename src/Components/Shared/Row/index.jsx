@@ -69,14 +69,16 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
         if (Array.isArray(data[header])) {
           return (
             <td key={index}>
-              <a
-                onClick={() => {
-                  showInfo(data._id);
-                }}
-                className={styles.awesomeAction}
-              >
-                <FontAwesomeIcon icon={faEye} />
-              </a>
+              <div className={styles.divActions}>
+                <a
+                  onClick={() => {
+                    showInfo(data._id);
+                  }}
+                  className={styles.awesomeAction}
+                >
+                  <FontAwesomeIcon icon={faEye} />
+                </a>
+              </div>
             </td>
           );
         } else {
