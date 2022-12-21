@@ -140,7 +140,7 @@ const Projects = () => {
           toggleModal('assignSuccess');
           history.goBack();
         }}
-        text={'Project deleted successfullly'}
+        text={message}
         variant={'successModal'}
       />
       <Modal
@@ -191,6 +191,7 @@ const Projects = () => {
             optionValue="Role"
             error={errors.role?.message}
           >
+            <option value="PM">Project Manager</option>
             <option value="DEV">Developer</option>
             <option value="QA">Quality Assurance</option>
             <option value="TL">Tech Lead</option>
