@@ -85,7 +85,7 @@ const Form = () => {
           toggleModal('success');
           redirect();
         }}
-        text={message}
+        text={idAdmin ? 'Admin was edited succesfully' : message}
         variant="successModal"
       />
       <h2>{idAdmin ? 'Edit' : 'Create'} Admin</h2>
