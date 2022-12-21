@@ -44,11 +44,22 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
             </td>
           );
         }
+        if (header === 'action' && authData?.isProjectManager) {
+          const foundEmployee = data['employees'].find(
+            (employee) => employee.employeeId === authData._id && employee.role === 'PM'
+          );
+          if (foundEmployee)
+            return (
+              <a onClick={() => editItem(data._id)} className={styles.awesomeActionEdit}>
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </a>
+            );
+        }
         if (role === 'EMPLOYEE' && header === 'role') {
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
-          return <td>{findEmployee?.role}</td>;
+          return <td key={index}>{findEmployee?.role}</td>;
         }
         if (data[header] && header === 'project') return <td>{data[header].name}</td>;
         if (data[header] && header === 'task') return <td>{data[header].description}</td>;

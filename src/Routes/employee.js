@@ -3,6 +3,7 @@ import EmployeeProjects from 'Components/Employees/Projects';
 import EmployeeTimeSheets from 'Components/Employees/Timesheets';
 import EmployeeProfile from 'Components/Employees/Profile';
 import EmployeeHome from 'Components/Employees/Home';
+import ProjectForm from 'Components/Projects/Form';
 import AddTimesheet from 'Components/Employees/Timesheets/AddTimesheet';
 import Tasks from 'Components/Tasks';
 import TasksForm from 'Components/Tasks/Form';
@@ -16,7 +17,7 @@ const LoggedEmployee = () => {
   const projectManagerRoutes = [
     {
       name: 'Projects',
-      path: `/employee/home/${data?._id}`
+      path: `/employee/projects/${data?._id}`
     },
     {
       name: 'Timesheets',
@@ -35,7 +36,7 @@ const LoggedEmployee = () => {
   const employeeRoutes = [
     {
       name: 'Projects',
-      path: `/employee/home/${data?._id}`
+      path: `/employee/projects/${data?._id}`
     },
     {
       name: 'Timesheets',
@@ -50,7 +51,8 @@ const LoggedEmployee = () => {
     <Layout routes={data?.isProjectManager ? projectManagerRoutes : employeeRoutes}>
       <Switch>
         <Route exact path={'/employee/home'} component={EmployeeHome} />
-        <Route exact path={'/employee/home/:id'} component={EmployeeProjects} />
+        <Route exact path={'/employee/projects/:id'} component={EmployeeProjects} />
+        <Route exact path={'/employee/projects/edit/:id'} component={ProjectForm} />
         <Route exact path={'/employee/timesheets/:id'} component={EmployeeTimeSheets} />
         <Route exact path={'/employee/timesheets/:id/create'} component={AddTimesheet} />
         <Route exact path={'/employee/profile/:id'} component={EmployeeProfile} />
