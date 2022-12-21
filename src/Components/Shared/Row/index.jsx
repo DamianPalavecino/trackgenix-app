@@ -50,7 +50,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
           );
           if (foundEmployee)
             return (
-              <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
+              <a onClick={() => editItem(data._id)} className={styles.awesomeActionEdit}>
                 <FontAwesomeIcon icon={faPenToSquare} />
               </a>
             );
@@ -59,7 +59,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
           const findEmployee = data.employees.find(
             (employee) => employee.employeeId === authData._id
           );
-          return <td>{findEmployee?.role}</td>;
+          return <td key={index}>{findEmployee?.role}</td>;
         }
         if (data[header] && header === 'project') return <td>{data[header].name}</td>;
         if (data[header] && header === 'task') return <td>{data[header].description}</td>;
