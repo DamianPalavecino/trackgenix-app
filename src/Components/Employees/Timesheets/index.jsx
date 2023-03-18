@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTimesheets } from 'redux/timesheets/thunks';
 import { getByIdEmployees } from 'redux/employees/thunks';
 import { useHistory, useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Timesheets = () => {
   const history = useHistory();
@@ -39,7 +37,7 @@ const Timesheets = () => {
         onClick={() => history.push(`/employee/timesheets/${id}/create`)}
         className={styles.awesomeAddTimeSheet}
       >
-        <FontAwesomeIcon icon={faCalendarPlus} />
+        Icon
       </a>
       {/* <Button
         text="Add Timesheet +"

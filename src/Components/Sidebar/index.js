@@ -5,9 +5,6 @@ import { logout } from 'redux/auth/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styles from './sidebar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faRectangleXmark } from '@fortawesome/free-regular-svg-icons';
 
 const Sidebar = (props) => {
   const dispatch = useDispatch();
@@ -57,9 +54,7 @@ const Sidebar = (props) => {
                   Logout
                 </a>
                 <div>
-                  <a>
-                    <FontAwesomeIcon icon={faRightFromBracket} />
-                  </a>
+                  <a>Icon</a>
                 </div>
               </div>
             </div>
@@ -88,9 +83,7 @@ const Sidebar = (props) => {
                   Logout
                 </a>
                 <div>
-                  <a>
-                    <FontAwesomeIcon icon={faRightFromBracket} />
-                  </a>
+                  <a>Icon</a>
                 </div>
               </div>
             )}
@@ -99,13 +92,9 @@ const Sidebar = (props) => {
       )}
       <a onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
-          <a className={styles.awesomeCloseMenu}>
-            <FontAwesomeIcon icon={faRectangleXmark} />
-          </a>
+          <a className={styles.awesomeCloseMenu}>Icon</a>
         ) : (
-          <a className={styles.awesomeMenu}>
-            <FontAwesomeIcon icon={faBars} />
-          </a>
+          <a className={styles.awesomeMenu}>Icon</a>
         )}
       </a>
     </div>

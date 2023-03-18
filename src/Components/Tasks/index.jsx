@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteTasks, getTasks } from 'redux/tasks/thunks';
 import styles from './tasks.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 const Tasks = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
@@ -92,7 +90,7 @@ const Tasks = () => {
       ></Modal>
       <h2>Tasks</h2>
       <a onClick={() => history.push('/employee/tasks/form')} className={styles.awesomeAddTask}>
-        <FontAwesomeIcon icon={faCirclePlus} />
+        Icon
       </a>
       {isPending ? (
         <Spinner entity="Tasks" />

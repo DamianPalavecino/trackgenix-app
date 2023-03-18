@@ -1,13 +1,5 @@
 import React from 'react';
 import styles from './footer.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFacebook,
-  faInstagram,
-  faLinkedin,
-  faGithub,
-  faTwitter
-} from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
   return (
@@ -18,19 +10,19 @@ const Footer = () => {
           target={'_blank'}
           rel="noreferrer"
         >
-          <FontAwesomeIcon icon={faLinkedin} className={styles.awesomeBrand} />
+          Icon
         </a>
         <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
-          <FontAwesomeIcon icon={faFacebook} className={styles.awesomeBrand} />
+          Icon
         </a>
         <a href={'https://www.instagram.com/radium.rocket/'} target={'_blank'} rel="noreferrer">
-          <FontAwesomeIcon icon={faInstagram} className={styles.awesomeBrand} />
+          Icon
         </a>
         <a href="https://twitter.com/radiumrocket" target={'_blank'} rel="noreferrer">
-          <FontAwesomeIcon icon={faTwitter} className={styles.awesomeBrand} />
+          Icon
         </a>
         <a href="https://github.com/radiumrocketapps" target={'_blank'} rel="noreferrer">
-          <FontAwesomeIcon icon={faGithub} className={styles.awesomeBrand} />
+          Icon
         </a>
       </div>
       <div className={styles.copyright}>Rosario, Argentina</div>

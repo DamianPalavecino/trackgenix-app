@@ -1,7 +1,5 @@
 import styles from './row.module.css';
 import { useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare, faUserPlus, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }) => {
   const fixDate = (date) => {
@@ -25,18 +23,18 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
                     }}
                     className={styles.awesomeAction}
                   >
-                    <FontAwesomeIcon icon={faTrash} />
+                    Icon
                   </a>
                 </div>
                 <div className={styles.actionsDiv}>
                   <a onClick={() => editItem(data._id)} className={styles.awesomeAction}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
+                    Icon
                   </a>
                 </div>
                 {data['employees'] && (
                   <div className={styles.actionsDiv}>
                     <a onClick={() => assignEmployee(data._id)} className={styles.awesomeAction}>
-                      <FontAwesomeIcon icon={faUserPlus} />
+                      Icon
                     </a>
                   </div>
                 )}
@@ -51,7 +49,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
           if (foundEmployee)
             return (
               <a onClick={() => editItem(data._id)} className={styles.awesomeActionEdit}>
-                <FontAwesomeIcon icon={faPenToSquare} />
+                Icon
               </a>
             );
         }
@@ -76,7 +74,7 @@ const Row = ({ data, headers, handleDelete, editItem, showInfo, assignEmployee }
                   }}
                   className={styles.awesomeAction}
                 >
-                  <FontAwesomeIcon icon={faEye} />
+                  Icon
                 </a>
               </div>
             </td>

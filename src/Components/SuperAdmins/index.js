@@ -5,8 +5,6 @@ import styles from './super-admins.module.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteAdmins, getAdmins } from 'redux/super-admins/thunks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const SuperAdmins = () => {
   const [showModal, setShowModal] = useState({ confirm: false, success: false });
@@ -93,7 +91,7 @@ const SuperAdmins = () => {
       />
       <h2>Admins</h2>
       <a onClick={() => history.push('super-admins/form')} className={styles.awesomeAddAdmin}>
-        <FontAwesomeIcon icon={faUserPlus} />
+        Icon
       </a>
       {isPending ? (
         <Spinner entity="Admins" />

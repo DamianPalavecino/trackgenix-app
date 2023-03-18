@@ -8,8 +8,6 @@ import { useForm } from 'react-hook-form';
 import { getEmployees } from 'redux/employees/thunks';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeSchema } from './validations';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 const Projects = () => {
   const [showModal, setShowModal] = useState({
@@ -219,7 +217,7 @@ const Projects = () => {
       </Modal>
       <h2>Projects</h2>
       <a onClick={() => history.push('projects/form')} className={styles.awesomeAddProject}>
-        <FontAwesomeIcon icon={faFileCirclePlus} />
+        Icon
       </a>
       {isPending ? (
         <Spinner entity="Projects" />
